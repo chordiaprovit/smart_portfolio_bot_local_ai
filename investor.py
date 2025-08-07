@@ -1,5 +1,6 @@
 import yfinance as yf
 from datetime import datetime
+import pandas as pd
 
 virtual_portfolio = {}
 
@@ -80,3 +81,46 @@ def suggest_diversification(tickers, meta_df, merged_df, sector_perf_df):
 
     return dominant_sector, suggestions
 
+def suggest_diversificatio_corr(tickers, file_path="data/snp500_30day.csv", threshold=0.85):
+    # Load CSV
+    df = pd.read_csv(file_path)
+
+    # Check which tickers are actually in file
+    available_cols = df.columns.tolist()
+    missing = [t for t in tickers if t not in available_cols]
+    if missing:
+        return f"⚠️ Missing tickers in data: {', '.join(missing)}. Cannot compute correlation."
+
+    # Keep only relevant columns
+    df = df[["Date"] + tickers]
+    df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+    df = df.sort_values("Date").set_index("Date")
+
+    # Handle NaNs — forward fill then drop remaining
+    df = df.ffill().dropna()
+
+    if df.empty:
+        return "⚠️ Not enough historical data to compute correlation."
+
+    # Calculate daily returns
+    returns = df.pct_change().dropna()
+
+    # Correlation matrix
+    corr_matrix = returns.corr()
+
+    # Identify highly correlated pairs
+    high_corr_pairs = []
+    for i in range(len(tickers)):
+        for j in range(i + 1, len(tickers)):
+            corr = corr_matrix.iloc[i, j]
+            if abs(corr) > threshold:
+                high_corr_pairs.append((tickers[i], tickers[j], corr))
+
+    if high_corr_pairs:
+        msg = "📊 Highly correlated pairs detected:\n"
+        for t1, t2, c in high_corr_pairs:
+            msg += f"- {t1} and {t2}: corr = {c:.2f}\n"
+        msg += "✅ Consider diversifying into different sectors or less correlated assets."
+        return msg
+
+    return "No highly correlated pairs detected. Portfolio is reasonably diversified."
