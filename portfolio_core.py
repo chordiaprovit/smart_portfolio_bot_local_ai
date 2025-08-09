@@ -20,35 +20,59 @@ def create_virtual_portfolio(tickers, allocations):
     virtual_portfolio["$1000_sim"] = portfolio
     return portfolio
 
-def evaluate_virtual_portfolio(tickers, allocations, start_date):
+def evaluate_virtual_portfolio(tickers, lookback_days: int = 365):
+    """
+    Return a wide price DataFrame with columns=tickers and rows=dates (daily).
+    Uses a lookback period to avoid empty frames for 'today' and holidays.
+    """
+    # Use period instead of start/end to avoid empty data on same-day or holidays
+    df = yf.download(
+        tickers=tickers,
+        period=f"{lookback_days}d",
+        interval="1d",
+        auto_adjust=False,      # be explicit (default changed upstream)
+        actions=False,          # don’t include dividends/splits columns
+        group_by="column",      # avoid MultiIndex columns
+        progress=False,
+        threads=True
+    )
 
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.Timestamp.today()
+    # If yfinance returns a single column (single ticker), normalize to wide
+    if isinstance(df.columns, pd.MultiIndex):
+        # If MultiIndex still slipped in, try 'Close' level first
+        if ("Close" in df.columns.get_level_values(0)):
+            df = df["Close"].copy()
+        else:
+            # Last level as columns
+            df.columns = df.columns.get_level_values(-1)
 
-    data = yf.download(tickers, start=start_date, end=end_date, interval="1d", progress=False)["Close"]
+    # If we got the big OHLCV frame, pick Close explicitly
+    if {"Open", "High", "Low", "Close"}.issubset(set(df.columns)):
+        df = df[["Close"]].copy()
+        df.columns = ["Close"]
 
-    result = {}
-    total_value = 0
-    for i, ticker in enumerate(tickers):
-        try:
-            price_start = data[ticker].iloc[0]
-            price_now = data[ticker].iloc[-1]
-            shares = allocations[i] / price_start
-            value_now = shares * price_now
-            pct_gain = ((price_now - price_start) / price_start) * 100
+    # If it's a single Close series (one ticker), make it a 1-column DataFrame
+    if isinstance(df, pd.Series):
+        df = df.to_frame()
 
-            result[ticker] = {
-                "buy_price": round(price_start, 2),
-                "current_price": round(price_now, 2),
-                "allocation": allocations[i],
-                "value_now": round(value_now, 2),
-                "pct_gain": round(pct_gain, 2)
-            }
-            total_value += value_now
-        except Exception as e:
-            result[ticker] = {"error": str(e)}
+    # Now, if df has columns for each ticker already, great; otherwise we try to
+    # build the close matrix by refetching with column-per-ticker behavior:
+    # yfinance with multiple tickers and group_by='column' usually returns
+    # columns ['AAPL', 'MSFT', ...] already. If not, try to fix:
+    if not all(t in df.columns for t in tickers):
+        # Attempt to select only tickers columns if present
+        present = [c for c in df.columns if c in tickers]
+        if present:
+            df = df[present]
+        # If still missing, we’ll leave it—simulate layer will normalize.
 
-    return result, round(total_value, 2)
+    # Ensure sorted datetime index, drop empty rows
+    if not isinstance(df.index, pd.DatetimeIndex):
+        df.index = pd.to_datetime(df.index, errors="coerce")
+    df = df.dropna(how="all")
+    df = df.sort_index()
+
+    return df
 
 def suggest_diversification(tickers, meta_df, merged_df, sector_perf_df):
     from collections import Counter
@@ -79,7 +103,7 @@ def suggest_diversification(tickers, meta_df, merged_df, sector_perf_df):
 
     return dominant_sector, suggestions
 
-def suggest_diversificatio_corr(tickers, file_path="data/snp500_30day.csv", threshold=0.50):
+def suggest_diversificatio_corr(tickers, file_path="data/snp500_30day.csv", threshold=0.85):
     # Load CSV
     df = pd.read_csv(file_path)
 
