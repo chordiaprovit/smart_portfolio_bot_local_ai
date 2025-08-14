@@ -1,4 +1,7 @@
 import streamlit as st
+import os
+import csv
+from datetime import datetime, timezone
 import threading
 import pandas as pd
 import numpy as np
@@ -7,9 +10,10 @@ from agent import agent_portfolio_recommendation
 from portfolio_simulator import simulate_portfolio
 from chat import query_local_model
 from screener import get_sector_for_ticker
-from investor import suggest_diversificatio_corr, evaluate_virtual_portfolio
+from investor import  evaluate_virtual_portfolio
 from portfolio_analyzer import build_portfolio_analysis_prompt
 from data_saver import save_user_simulation, get_last_simulation
+from agent_runner import portfolio_agent
 from sector_snapshot import get_sector_performance_from_snapshot, get_tickers_by_sector
 
 FONT_SIZE = "15px"
@@ -72,7 +76,7 @@ with tab1:
     st.markdown("<h3 class='custom-font'>📈 Sector Performance (Past 30 Days)</h3>", unsafe_allow_html=True)
 
     sector_gainers, sector_losers, gain_df, loss_df, merged = get_sector_performance_from_snapshot(
-        "data/snp500_30day.csv", "data/snp500.csv"
+        "data/snp500_30day_wide.csv", "data/snp500.csv"
     )
 
     def _pick_col(df, candidates):
@@ -190,7 +194,7 @@ with tab2:
         return df
 
     hist_df = load_hist()
-
+    
     # ---------- session state (non-widget) ----------
     st.session_state.setdefault(
         "sim_df",
@@ -280,17 +284,49 @@ with tab2:
             )
 
         # 5) AI analysis
-        try:
-            prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
-            ai_response = query_local_model(prompt)
-            st.markdown("### 🤖 AI Portfolio Analysis")
-            st.markdown(ai_response)
-        except Exception as e:
-            st.warning(f"⚠️ AI analysis failed: {e}")
+        st.markdown("### 🤖 Analysis")
+        use_agent = st.toggle("Use Agentic suggestions (Yahoo→AV fallback, tips, correlation)", value=True)
 
-        st.text("You can edit the form above to change your portfolio and re-run the simulation.")
-        
-    # ---------- UI (no forms so it updates as you type) ----------
+        if use_agent:
+            try:
+                with st.spinner("Agent is planning, fetching and analyzing..."):
+                    out = portfolio_agent(tickers, prefer="yahoo", allow_fallback=True)
+
+                st.markdown("#### 📋 Tip Sheet")
+                for t in out["tips"]:
+                    st.markdown(f"- {t}")
+
+                st.markdown("#### 💡 Suggestions (view-only)")
+                st.info(out["suggestions"]["message"])
+                if out["suggestions"]["high_corr_pairs"]:
+                    st.caption(
+                        "High-corr pairs: " +
+                        ", ".join([f"{a}-{b} ({c:.2f})" for a,b,c in out["suggestions"]["high_corr_pairs"]])
+                    )
+
+                with st.expander("🧠 Agent Log"):
+                    st.code("\n".join(out["log"]))
+            except Exception as e:
+                st.warning(f"Agent failed: {e}")
+                st.caption("Falling back to LLM analysis…")
+                try:
+                    prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
+                    ai_response = query_local_model(prompt)
+                    st.markdown("#### LLM Portfolio Analysis")
+                    st.markdown(ai_response)
+                except Exception as e2:
+                    st.warning(f"LLM analysis failed: {e2}")
+        else:
+            try:
+                prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
+                ai_response = query_local_model(prompt)
+                st.markdown("#### LLM Portfolio Analysis")
+                st.markdown(ai_response)
+            except Exception as e:
+                st.warning(f"LLM analysis failed: {e}")
+
+        st.text("You can edit the form above to change your portfolio and re-run the simulation.")        
+            # ---------- UI (no forms so it updates as you type) ----------
 
     # Build your $1,000 portfolio with a form
     st.markdown('#### Simulate $1,000 portfolio')
@@ -410,3 +446,49 @@ with tab2:
                 st.warning(f"⚠️ Unable to load previous simulation: {e}")
         else:
             st.warning("No previous simulation found for this email.")
+
+    if st.button("🔄 Reset Simulation & Data", key="reset_simulation"):
+        try:
+            st.cache_data.clear()
+        except Exception:
+            pass
+        # Clear simulation-related session_state keys
+        for k in list(st.session_state.keys()):
+            if k.startswith("sim_") or k in ["tickers", "allocations", "simulation_results"]:
+                del st.session_state[k]
+        st.toast("Simulation inputs & data cleared. Reloading…")
+        st.rerun()
+
+def append_feedback(row: list[str]):
+    os.makedirs(os.path.dirname(FEEDBACK_CSV_PATH), exist_ok=True)
+    is_new = not os.path.exists(FEEDBACK_CSV_PATH)
+    with open(FEEDBACK_CSV_PATH, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if is_new:
+            w.writerow(["timestamp", "email", "rating", "feedback"])
+        w.writerow(row)
+
+FEEDBACK_CSV_PATH = "data/feedback.csv"
+
+with st.sidebar.expander("💬 Feedback"):
+    email_default = st.session_state.get("user_email", "")
+    email = st.text_input("Email (optional)", value=email_default, placeholder="you@example.com", key="feedback_email")
+    rating = st.select_slider("How satisfied are you?", options=[1,2,3,4,5], value=4, key="feedback_rating")
+    feedback = st.text_area("What should we improve?", height=120, placeholder="Be as specific as possible…", key="feedback_text")
+
+    if st.button("Submit feedback", use_container_width=True):
+        if not feedback.strip():
+            st.warning("Please add a short note before submitting.")
+        else:
+            append_feedback([
+                datetime.now().isoformat(timespec="seconds"),
+                email.strip(),
+                str(rating),
+                feedback.strip()
+            ])
+            st.success("Thanks! Your feedback was saved.")
+
+            # 🔹 Clear fields after submit
+            st.session_state.feedback_email = ""
+            st.session_state.feedback_rating = 4
+            st.session_state.feedback_text = ""

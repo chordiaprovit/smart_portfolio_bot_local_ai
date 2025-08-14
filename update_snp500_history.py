@@ -2,7 +2,6 @@ import os
 import time
 from datetime import datetime, timedelta
 import random
-
 import pandas as pd
 import yfinance as yf
 
@@ -200,7 +199,7 @@ def fetch_or_update_price_history(
 
     # Nothing new?
     if max_existing is not None and pd.to_datetime(start_date) > pd.to_datetime(end_date):
-        df_long = _trim_to_last_n_trading_days(existing, n=30)
+        df_long = _trim_to_last_n_trading_days(existing, n=400)
         _save_outputs(df_long, output_long)
         print(f"✅ Up-to-date: {output_long}")
         return
@@ -234,7 +233,7 @@ def fetch_or_update_price_history(
     combined["Date"] = pd.to_datetime(combined["Date"]).dt.normalize()
     combined = combined.dropna(subset=["Close"]).drop_duplicates(subset=["Date", "Ticker"], keep="last")
 
-    df_long = _trim_to_last_n_trading_days(combined, n=30)
+    df_long = _trim_to_last_n_trading_days(combined, n=400)
     _save_outputs(df_long, output_long)
     print(f"✅ Saved {len(df_long):,} rows to {output_long} (plus wide file).")
 
@@ -250,6 +249,6 @@ if __name__ == "__main__":
     fetch_or_update_price_history(
         tickers,
         output_long="data/snp500_30day.csv",
-        lookback_days=45,   # gives headroom to ensure 30 trading days
+        lookback_days=400,   # gives headroom to ensure 30 trading days
         batch_size=50,
     )
