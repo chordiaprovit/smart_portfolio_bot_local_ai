@@ -1,0 +1,54 @@
+name: Daily Portfolio Simulation
+
+on:
+  schedule:
+    # Daily at 18:00 UTC (6pm)
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-simulator:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run simulator
+        run: |
+          python scripts/smart-portfolio-simulator.py
+
+      - name: Commit updated data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/snp500_30day.csv || true
+          git commit -m "Update S&P 500 data [skip ci]" || echo "No changes to commit"
+          git push
+
+      # Optional: upload outputs as workflow artifacts
+      # - name: Upload outputs
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: simulator-outputs
+      #     path: |
+      #       data/*.csv
+      #       outputs/**
