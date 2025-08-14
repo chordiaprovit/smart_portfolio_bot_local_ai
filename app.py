@@ -15,10 +15,13 @@ from portfolio_analyzer import build_portfolio_analysis_prompt
 from data_saver import save_user_simulation, get_last_simulation
 from agent_runner import portfolio_agent
 from sector_snapshot import get_sector_performance_from_snapshot, get_tickers_by_sector
+from dotenv import load_dotenv
+
 
 FONT_SIZE = "15px"
 FONT_SIZE_LARGE = "18px"
 st.set_page_config(page_title="SmartPortfolioBot", layout="wide")
+load_dotenv()
 
 st.markdown(f"""
     <style>
