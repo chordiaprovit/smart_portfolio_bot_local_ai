@@ -73,9 +73,95 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-tab1, tab2 = st.tabs(["📈 Sector Performance", "💰 Portfolio Simulator"])
+tab1, tab3, tab4 = st.tabs(["ℹ️ About", "📈 Sector Performance", "💰 Portfolio Simulator"])
 
 with tab1:
+    # --- Lightweight CSS polish ---
+    st.markdown("""
+    <style>
+      .about-card {
+        border: 1px solid rgba(128,128,128,0.2);
+        padding: 1rem 1.2rem;
+        border-radius: 14px;
+        background: rgba(250,250,250,0.6);
+      }
+      .about-h1 {
+        font-size: 1.4rem; margin: 0 0 .5rem 0; font-weight: 700;
+      }
+      .about-muted { color: #666; font-size: .95rem; }
+      .kpi {
+        border: 1px solid rgba(128,128,128,0.18);
+        border-radius: 12px; padding: .75rem 1rem; background: white;
+      }
+      .kpi h3 { margin: 0 0 .25rem 0; font-size: .95rem; }
+      .bullets ul { margin-top: .35rem; }
+      .step {
+        display:flex; gap:.6rem; align-items:flex-start; margin-bottom:.6rem;
+      }
+      .step-num {
+        width: 26px; height: 26px; border-radius: 50%;
+        background: #eee; display:flex; align-items:center; justify-content:center;
+        font-weight:700;
+      }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # --- Title & subtitle ---
+    st.markdown("<div class='about-h1'>Smart Portfolio Simulator</div>", unsafe_allow_html=True)
+    st.markdown("<div class='about-muted'>Test strategies with real market data and AI insights—before risking capital.</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.divider()
+
+    # --- Quick KPIs / value props ---
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown("🧠 AI Insights")
+        st.markdown("Detect high correlations and suggest diversification.")
+
+    with c2:
+        st.markdown("📈 Sector View")
+        st.markdown("Track daily gainers and losers by sector.")
+
+    with c3:
+        st.markdown("💾 Save & Revisit")
+        st.markdown("Store portfolios and compare runs over time.")
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # --- What it does / How it works ---
+    left, right = st.columns([1.05, 1])
+    with left:
+        st.markdown("**What it does**")
+        st.markdown("""
+        - Simulate portfolios with real market data  
+        - AI-based diversification insights  
+        - Track sector gainers/losers  
+        - Save & revisit simulations  
+        """)
+    with right:
+        st.markdown("**How it works**")
+        st.markdown("""
+        - Select tickers
+        - Choose timeframe
+        - Run simulation
+        - Read AI insights & adjust
+        """, unsafe_allow_html=True)
+
+    # --- Optional: collapsible tips ---
+    with st.expander("Tips for best results"):
+        st.markdown("""
+        - Keep weights normalized (sum to 1.0) for clean comparisons.  
+        - Avoid over-concentration: watch for **corr > 0.85** across holdings.  
+        - Compare multiple runs (e.g., growth vs. value vs. defensive).  
+        - Past performance isn’t predictive — use this as a learning tool.
+        """)
+
+    st.info("Educational use only — not financial advice.")
+
+    
+with tab3:
     st.markdown("<h3 class='custom-font'>📈 Sector Performance (Past 30 Days)</h3>", unsafe_allow_html=True)
 
     sector_gainers, sector_losers, gain_df, loss_df, merged = get_sector_performance_from_snapshot(
@@ -186,7 +272,7 @@ def load_history(path="data/snp500_30day.csv"):
 
 hist_df = load_history()
 
-with tab2:
+with tab4:
     st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
 
     @st.cache_data(show_spinner=False)
