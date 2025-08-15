@@ -34,7 +34,7 @@ jobs:
 
       - name: Run simulator
         run: |
-          python scripts/smart-portfolio-simulator.py
+          python update_snp500_history.py
 
       - name: Commit updated data
         run: |
