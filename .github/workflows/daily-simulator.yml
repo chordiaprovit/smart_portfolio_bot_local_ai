@@ -2,8 +2,8 @@ name: Daily Portfolio Simulation
 
 on:
   schedule:
-    # Daily at 18:00 UTC (6pm)
-    - cron: "0 18 * * *"
+    # Monday to Friday at 18:00 UTC (6pm)
+    - cron: "0 18 * * 1-5"
   workflow_dispatch:
 
 jobs:
