@@ -364,7 +364,27 @@ with tab4:
         col3.metric("Sharpe Ratio", f"{result['sharpe_ratio']:.2f}")
 
         with st.expander("📈 Correlation Matrix"):
-            st.dataframe(result['corr_matrix'].style.format("{:.2f}"))
+            import plotly.graph_objects as go
+
+            corr_matrix = result['corr_matrix']
+            fig = go.Figure(
+                data=go.Heatmap(
+                    z=corr_matrix.values,
+                    x=corr_matrix.columns,
+                    y=corr_matrix.index,
+                    colorscale='RdBu',
+                    zmin=-1, zmax=1,
+                    colorbar=dict(title="Correlation")
+                )
+            )
+            fig.update_layout(
+                title="Correlation Matrix Heatmap",
+                xaxis_title="Ticker",
+                yaxis_title="Ticker",
+                width=500,
+                height=500
+            )
+            st.plotly_chart(fig, use_container_width=True)
 
         if result['high_corr_pairs']:
             st.warning(
@@ -394,7 +414,12 @@ with tab4:
                     )
 
                 with st.expander("🧠 Agent Log"):
-                    st.code("\n".join(out["log"]))
+                    # Show only lines that start with "Fetched prices from "
+                    filtered_log = [line for line in out["log"] if line.strip().startswith("Fetched prices from ")]
+                    if filtered_log:
+                        st.code("\n".join(filtered_log))
+                    else:
+                        st.code("No price fetch log found.")
             except Exception as e:
                 st.warning(f"Agent failed: {e}")
                 st.caption("Falling back to LLM analysis…")
