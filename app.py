@@ -16,6 +16,8 @@ from data_saver import save_user_simulation, get_last_simulation
 from agent_runner import portfolio_agent
 from sector_snapshot import get_sector_performance_from_snapshot, get_tickers_by_sector
 from dotenv import load_dotenv
+import plotly.graph_objects as go
+from statsmodels.tsa.arima.model import ARIMA
 
 
 FONT_SIZE = "15px"
@@ -73,7 +75,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-tab1, tab3, tab4 = st.tabs(["ℹ️ About", "📈 Sector Performance", "💰 Portfolio Simulator"])
+tab1, tab3, tab4, tab5 = st.tabs(["ℹ️ About", "📈 Sector Performance", "💰 Portfolio Simulator", "Macro Simulator"])
 
 with tab1:
     # --- Lightweight CSS polish ---
@@ -364,7 +366,6 @@ with tab4:
         col3.metric("Sharpe Ratio", f"{result['sharpe_ratio']:.2f}")
 
         with st.expander("📈 Correlation Matrix"):
-            import plotly.graph_objects as go
 
             corr_matrix = result['corr_matrix']
             fig = go.Figure(
@@ -606,3 +607,191 @@ with st.sidebar.expander("💬 Feedback"):
             st.session_state.feedback_email = ""
             st.session_state.feedback_rating = 4
             st.session_state.feedback_text = ""
+
+@st.cache_data
+def load_wide_data(path="data/snp500_30day_wide.csv"):
+    df = pd.read_csv(path)
+    df["Date"] = pd.to_datetime(df["Date"], format="%m/%d/%y", errors="coerce")
+    df = df.set_index("Date")
+    return df
+
+with tab5:
+    st.markdown("<h3 class='custom-font'>🌐 Macro Economic Scenario Simulator</h3>", unsafe_allow_html=True)
+    st.info("Simulate how economic shocks might affect S&P 500 prices with macro factor shocks and compare to ARIMA.")
+
+    df_wide = load_wide_data()
+    tickers = list(df_wide.columns)
+    selected_ticker = st.selectbox(
+        "Select ticker to simulate",
+        options=tickers,
+        index=tickers.index("AAPL") if "AAPL" in tickers else 0
+    )
+
+    st.markdown("#### Adjust Economic Factors")
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        interest_rate = st.slider("Interest Rate Δ (pp)", -2.0, 2.0, 0.0, 0.1)
+        unemployment = st.slider("Unemployment Δ (pp)", -2.0, 2.0, 0.0, 0.1)
+        credit_spread = st.slider("Credit Spreads Δ (pp)", -2.0, 3.0, 0.0, 0.1)
+    with c2:
+        inflation = st.slider("Inflation (CPI) Shock (%)", -3.0, 5.0, 0.0, 0.1)
+        retail_sales = st.slider("Retail Sales Shock (%)", -5.0, 10.0, 0.0, 0.5)
+        usd = st.slider("USD Index Shock (%)", -10.0, 10.0, 0.0, 0.5)
+    with c3:
+        pmi_manu = st.slider("PMI Manufacturing Δ (pts)", -10.0, 10.0, 0.0, 0.5)
+        pmi_serv = st.slider("PMI Services Δ (pts)", -10.0, 10.0, 0.0, 0.5)
+        curve_slope = st.slider("Yield Curve (10y–2y) Δ (pp)", -2.0, 2.0, 0.0, 0.1)
+    with c4:
+        sentiment = st.slider("Sentiment Δ (pts)", -30.0, 30.0, 0.0, 1.0)
+        vix = st.slider("VIX Δ (pts)", -10.0, 20.0, 0.0, 0.5)
+        user_vol_mult = st.slider("Base Volatility Multiplier", 0.5, 2.0, 1.0, 0.05)
+
+    n_sim = st.number_input("Number of Monte Carlo Simulations", min_value=100, max_value=10000, value=500, step=100)
+
+    st.markdown("---")
+
+    if st.button("Run Simulation"):
+        with st.spinner("Running Monte Carlo + ARIMA..."):
+            # --- Pull price series
+            px_series = df_wide[selected_ticker].dropna()
+
+            # === Monte Carlo with macro-adjusted drift/vol ===
+            rets = px_series.pct_change().dropna()
+            logrets = np.log1p(rets)
+            mu_hist = logrets.mean()
+            resid = logrets - mu_hist
+
+            # Drift betas (monthly % impact per unit; see notes)
+            drift_betas = {
+                "interest_rate": -0.40, "inflation": -0.30, "unemployment": -0.35,
+                "retail_sales": 0.25, "pmi_manu": 0.05, "pmi_serv": 0.04,
+                "credit_spread": -0.50, "usd": -0.10, "curve_slope": 0.10, "sentiment": 0.02,
+            }
+            vol_betas = {
+                "vix": 0.03, "credit_spread": 0.10, "usd": 0.01, "inflation": 0.02,
+                "pmi_manu": -0.005, "pmi_serv": -0.004,
+            }
+
+            factors = {
+                "interest_rate": interest_rate, "inflation": inflation, "unemployment": unemployment,
+                "retail_sales": retail_sales, "pmi_manu": pmi_manu, "pmi_serv": pmi_serv,
+                "credit_spread": credit_spread, "usd": usd, "curve_slope": curve_slope,
+                "sentiment": sentiment, "vix": vix
+            }
+
+            # Monthly → daily drift (fraction/day)
+            monthly_drift_pct = sum(drift_betas[k] * v for k, v in factors.items() if k in drift_betas)
+            drift_adj_daily = (monthly_drift_pct / 100.0) / 21.0
+
+            # Volatility multiplier
+            vol_influence = sum(vol_betas[k] * v for k, v in factors.items() if k in vol_betas)
+            vol_mult = float(np.clip(user_vol_mult * (1.0 + vol_influence), 0.25, 3.0))
+
+            # Vectorized bootstrap
+            rng = np.random.default_rng(42)
+            horizon = 30  # trading days
+            resid_draws = rng.choice(resid.values, size=(horizon, int(n_sim)), replace=True)
+            step_logrets = (mu_hist + drift_adj_daily) + vol_mult * resid_draws
+
+            last_price = float(px_series.iloc[-1])
+            cum_logrets = step_logrets.cumsum(axis=0)
+            sim_prices = last_price * np.exp(cum_logrets)  # (horizon, n_sim)
+            sim_index = pd.bdate_range(px_series.index[-1] + pd.Timedelta(days=1), periods=horizon)
+
+            # Fan chart quantiles
+            quantiles = [5, 25, 50, 75, 95]
+            bands = np.percentile(sim_prices, quantiles, axis=1)  # (5, horizon)
+
+            # === ARIMA baseline forecast (price-only) ===
+            # Fit on log prices for stability
+            log_px = np.log(px_series)
+            # Tiny grid search over (p,d,q) for quick AIC selection
+            best_aic, best_order, best_model = np.inf, None, None
+            for p in range(0, 3):
+                for d in range(0, 2):
+                    for q in range(0, 3):
+                        try:
+                            m = ARIMA(log_px, order=(p, d, q)).fit(method_kwargs={"warn_convergence":False})
+                            if m.aic < best_aic:
+                                best_aic, best_order, best_model = m.aic, (p, d, q), m
+                        except Exception:
+                            pass
+
+            if best_model is None:
+                # fallback simple ARIMA(1,1,1)
+                best_model = ARIMA(log_px, order=(1, 1, 1)).fit(method_kwargs={"warn_convergence":False})
+                best_order = (1, 1, 1)
+
+            arima_fc = best_model.get_forecast(steps=horizon)
+            arima_mean_log = arima_fc.predicted_mean
+            arima_ci = arima_fc.conf_int(alpha=0.10)  # 90% CI in log space
+
+            # Convert to price space
+            arima_mean = np.exp(arima_mean_log)
+            arima_lower = np.exp(arima_ci.iloc[:, 0])
+            arima_upper = np.exp(arima_ci.iloc[:, 1])
+            arima_index = pd.bdate_range(px_series.index[-1] + pd.Timedelta(days=1), periods=horizon)
+
+            # === Combined chart: MC fan chart + ARIMA line (one chart) ===
+            fig = go.Figure()
+
+            # MC 50% band
+            fig.add_trace(go.Scatter(
+                x=list(sim_index) + list(sim_index[::-1]),
+                y=list(bands[3]) + list(bands[1][::-1]),
+                fill='toself', fillcolor="rgba(0, 100, 255, 0.20)",
+                line=dict(color="rgba(0,0,0,0)"), name="MC 50% CI"
+            ))
+            # MC 90% band
+            fig.add_trace(go.Scatter(
+                x=list(sim_index) + list(sim_index[::-1]),
+                y=list(bands[4]) + list(bands[0][::-1]),
+                fill='toself', fillcolor="rgba(0, 100, 255, 0.10)",
+                line=dict(color="rgba(0,0,0,0)"), name="MC 90% CI"
+            ))
+            # MC Median
+            fig.add_trace(go.Scatter(
+                x=sim_index, y=bands[2], mode='lines', line=dict(width=2),
+                name="MC Median"
+            ))
+            # ARIMA mean
+            fig.add_trace(go.Scatter(
+                x=arima_index, y=arima_mean, mode='lines', line=dict(width=2),
+                name=f"ARIMA mean {best_order}"
+            ))
+            # (Optional) ARIMA 90% CI band—commented out to keep a single chart minimal
+            # fig.add_trace(go.Scatter(
+            #     x=list(arima_index) + list(arima_index[::-1]),
+            #     y=list(arima_upper) + list(arima_lower[::-1]),
+            #     fill='toself', fillcolor="rgba(255, 165, 0, 0.15)",
+            #     line=dict(color="rgba(0,0,0,0)"), name="ARIMA 90% CI"
+            # ))
+
+            fig.update_layout(
+                title=f"{selected_ticker} — Monte Carlo vs. ARIMA (Next {horizon} Business Days)",
+                xaxis_title="Date", yaxis_title="Price", showlegend=True
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+            # === Summary comparison table (no second chart) ===
+            final_mc = sim_prices[-1, :]
+            mc_p5, mc_p50, mc_p95 = np.percentile(final_mc, [5, 50, 95])
+            mc_mean = final_mc.mean()
+
+            last_price_val = float(px_series.iloc[-1])
+            comp_df = pd.DataFrame({
+                "Metric": ["Start Price", "MC Mean Final", "ARIMA Final (mean)"],
+                "Value": [
+                    f"${last_price_val:,.2f}",
+                    f"${mc_mean:,.2f}",
+                    f"${float(np.asarray(arima_mean)[-1]):,.2f}",
+                ]
+            })
+            st.markdown("#### Model Comparison (End of Horizon)")
+            st.dataframe(comp_df, hide_index=True, use_container_width=True)
+
+            st.caption(
+                "Notes: Monte Carlo uses macro‑adjusted drift and volatility (residual bootstrap). "
+                "ARIMA is a univariate time‑series baseline (price‑only)."
+            )
