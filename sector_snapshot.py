@@ -16,6 +16,9 @@ def get_sector_performance_from_snapshot(price_csv, metadata_csv):
     melted = price_df.melt(id_vars=["Date"], var_name="Ticker", value_name="Close")
     melted['Date'] = pd.to_datetime(melted['Date'], format="%m/%d/%y")
 
+    last_30_dates = melted['Date'].sort_values().unique()[-30:]
+    melted = melted[melted['Date'].isin(last_30_dates)]
+
     # Get start and end prices
     start_date = melted['Date'].min()
     end_date = melted['Date'].max()
