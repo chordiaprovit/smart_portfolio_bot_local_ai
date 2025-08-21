@@ -615,6 +615,13 @@ def load_wide_data(path="data/snp500_30day_wide.csv"):
     df = df.set_index("Date")
     return df
 
+def sslider(label, min_v, max_v, default, step, help_text, key=None):
+    return st.slider(
+        label,
+        min_value=min_v, max_value=max_v, value=default, step=step,
+        help=help_text, key=key
+    )
+
 with tab5:
     st.markdown("<h3 class='custom-font'>🌐 Macro Economic Scenario Simulator</h3>", unsafe_allow_html=True)
     st.info("Simulate how economic shocks might affect S&P 500 prices with macro factor shocks and compare to ARIMA.")
@@ -630,22 +637,62 @@ with tab5:
     st.markdown("#### Adjust Economic Factors")
 
     c1, c2, c3, c4 = st.columns(4)
+
     with c1:
-        interest_rate = st.slider("Interest Rate Δ (pp)", -2.0, 2.0, 0.0, 0.1)
-        unemployment = st.slider("Unemployment Δ (pp)", -2.0, 2.0, 0.0, 0.1)
-        credit_spread = st.slider("Credit Spreads Δ (pp)", -2.0, 3.0, 0.0, 0.1)
+        interest_rate = sslider(
+            "Interest Rate Δ (pp)", -2.0, 2.0, 0.0, 0.1,
+            "Fed policy rate. Higher = costlier loans; lower = cheaper borrowing."
+        )
+        unemployment = sslider(
+            "Unemployment Δ (pp)", -2.0, 2.0, 0.0, 0.1,
+            "Share of people out of work. Higher unemployment usually slows spending."
+        )
+        credit_spread = sslider(
+            "Credit Spreads Δ (pp)", -2.0, 3.0, 0.0, 0.1,
+            "Gap between risky and safe bonds. Wider gap = more financial stress."
+        )
+
     with c2:
-        inflation = st.slider("Inflation (CPI) Shock (%)", -3.0, 5.0, 0.0, 0.1)
-        retail_sales = st.slider("Retail Sales Shock (%)", -5.0, 10.0, 0.0, 0.5)
-        usd = st.slider("USD Index Shock (%)", -10.0, 10.0, 0.0, 0.5)
+        inflation = sslider(
+            "Inflation (CPI) Shock (%)", -3.0, 5.0, 0.0, 0.1,
+            "Rising prices of goods/services. High inflation erodes purchasing power."
+        )
+        retail_sales = sslider(
+            "Retail Sales Shock (%)", -5.0, 10.0, 0.0, 0.5,
+            "How much consumers are buying. Growth shows confidence."
+        )
+        usd = sslider(
+            "USD Index Shock (%)", -10.0, 10.0, 0.0, 0.5,
+            "Strength of the dollar vs other currencies. Strong USD can hurt exporters."
+        )
+
     with c3:
-        pmi_manu = st.slider("PMI Manufacturing Δ (pts)", -10.0, 10.0, 0.0, 0.5)
-        pmi_serv = st.slider("PMI Services Δ (pts)", -10.0, 10.0, 0.0, 0.5)
-        curve_slope = st.slider("Yield Curve (10y–2y) Δ (pp)", -2.0, 2.0, 0.0, 0.1)
+        pmi_manu = sslider(
+            "PMI Manufacturing Δ (pts)", -10.0, 10.0, 0.0, 0.5,
+            "Survey of manufacturers. Above 50 = expansion; below 50 = contraction."
+        )
+        pmi_serv = sslider(
+            "PMI Services Δ (pts)", -10.0, 10.0, 0.0, 0.5,
+            "Survey of services firms. Above 50 = expansion; below 50 = slowdown."
+        )
+        curve_slope = sslider(
+            "Yield Curve (10y–2y) Δ (pp)", -2.0, 2.0, 0.0, 0.1,
+            "Difference between long- and short-term rates. Inversion can signal recession."
+        )
+
     with c4:
-        sentiment = st.slider("Sentiment Δ (pts)", -30.0, 30.0, 0.0, 1.0)
-        vix = st.slider("VIX Δ (pts)", -10.0, 20.0, 0.0, 0.5)
-        user_vol_mult = st.slider("Base Volatility Multiplier", 0.5, 2.0, 1.0, 0.05)
+        sentiment = sslider(
+            "Sentiment Δ (pts)", -30.0, 30.0, 0.0, 1.0,
+            "How optimistic/pessimistic consumers and investors feel."
+        )
+        vix = sslider(
+            "VIX Δ (pts)", -10.0, 20.0, 0.0, 0.5,
+            "Market’s “fear index”. Higher = more expected volatility."
+        )
+        user_vol_mult = sslider(
+            "Base Volatility Multiplier", 0.5, 2.0, 1.0, 0.05,
+            "Scales overall market volatility to test calm vs turbulent conditions."
+        )
 
     n_sim = st.number_input("Number of Monte Carlo Simulations", min_value=100, max_value=10000, value=500, step=100)
 
@@ -690,7 +737,7 @@ with tab5:
 
             # Vectorized bootstrap
             rng = np.random.default_rng(42)
-            horizon = 30  # trading days
+            horizon = 30  
             resid_draws = rng.choice(resid.values, size=(horizon, int(n_sim)), replace=True)
             step_logrets = (mu_hist + drift_adj_daily) + vol_mult * resid_draws
 
@@ -703,10 +750,7 @@ with tab5:
             quantiles = [5, 25, 50, 75, 95]
             bands = np.percentile(sim_prices, quantiles, axis=1)  # (5, horizon)
 
-            # === ARIMA baseline forecast (price-only) ===
-            # Fit on log prices for stability
             log_px = np.log(px_series)
-            # Tiny grid search over (p,d,q) for quick AIC selection
             best_aic, best_order, best_model = np.inf, None, None
             for p in range(0, 3):
                 for d in range(0, 2):
@@ -725,7 +769,7 @@ with tab5:
 
             arima_fc = best_model.get_forecast(steps=horizon)
             arima_mean_log = arima_fc.predicted_mean
-            arima_ci = arima_fc.conf_int(alpha=0.10)  # 90% CI in log space
+            arima_ci = arima_fc.conf_int(alpha=0.10)  
 
             # Convert to price space
             arima_mean = np.exp(arima_mean_log)
@@ -733,7 +777,6 @@ with tab5:
             arima_upper = np.exp(arima_ci.iloc[:, 1])
             arima_index = pd.bdate_range(px_series.index[-1] + pd.Timedelta(days=1), periods=horizon)
 
-            # === Combined chart: MC fan chart + ARIMA line (one chart) ===
             fig = go.Figure()
 
             # MC 50% band
@@ -760,13 +803,6 @@ with tab5:
                 x=arima_index, y=arima_mean, mode='lines', line=dict(width=2),
                 name=f"ARIMA mean {best_order}"
             ))
-            # (Optional) ARIMA 90% CI band—commented out to keep a single chart minimal
-            # fig.add_trace(go.Scatter(
-            #     x=list(arima_index) + list(arima_index[::-1]),
-            #     y=list(arima_upper) + list(arima_lower[::-1]),
-            #     fill='toself', fillcolor="rgba(255, 165, 0, 0.15)",
-            #     line=dict(color="rgba(0,0,0,0)"), name="ARIMA 90% CI"
-            # ))
 
             fig.update_layout(
                 title=f"{selected_ticker} — Monte Carlo vs. ARIMA (Next {horizon} Business Days)",
@@ -774,7 +810,14 @@ with tab5:
             )
             st.plotly_chart(fig, use_container_width=True)
 
-            # === Summary comparison table (no second chart) ===
+            with st.expander("ℹ️ What do these forecasts mean?"):
+                st.markdown("""
+                - **Trend Projection (ARIMA):** Extends the recent price trend forward. Good for short-term signals.
+                - **Range of Outcomes (Monte Carlo):** Runs hundreds of random scenarios based on historical patterns. Good for seeing uncertainty and possible swings.
+                
+                Together, they show both the *most likely trend* and the *range of possible futures*.
+                """)
+
             final_mc = sim_prices[-1, :]
             mc_p5, mc_p50, mc_p95 = np.percentile(final_mc, [5, 50, 95])
             mc_mean = final_mc.mean()
