@@ -259,16 +259,8 @@ with tab3:
         else:
             default_idx = available_tickers.index("AAPL") if "AAPL" in available_tickers else 0
             sel_t = st.selectbox("Select a ticker", options=available_tickers, index=default_idx, key="sector_perf_ticker")
-            # Pick available columns safely
-            ticker_col = 'Ticker' if 'Ticker' in merged.columns else ('Symbol' if 'Symbol' in merged.columns else None)
-            name_col   = next((c for c in ['Security','Name','Company','Company Name'] if c in merged.columns), None)
+            sel_security = merged.loc[merged['Ticker'] == sel_t, 'Security'].values
 
-            sel_security = np.array([])
-            if ticker_col and name_col:
-                sel_mask = merged[ticker_col].astype(str).str.upper() == str(sel_t).upper()
-                sel_security = merged.loc[sel_mask, name_col].values
-            if len(sel_security) == 0:
-                sel_security = sel_t
             # Find sector using merged snapshot mapping if available, else fallback
             sector_name = None
             try:
@@ -299,7 +291,7 @@ with tab3:
                 tdf = tdf.dropna(subset=["Date", "Close"]).sort_values("Date")
                 # Title reflects length (e.g., 30 vs 300)
                 n_days = tdf["Date"].nunique()
-                title = f"{sel_security[0]} Price History ({n_days} days)"
+                title = f"{sel_t} Price History ({n_days} days)"
                 fig_line = px.line(tdf, x="Date", y="Close", title=title)
                 fig_line.update_layout(margin=dict(t=50, b=10, l=10, r=10))
                 st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
