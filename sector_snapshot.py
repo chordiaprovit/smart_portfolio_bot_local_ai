@@ -31,7 +31,7 @@ def get_sector_performance_from_snapshot(price_csv, metadata_csv):
     price_change['Pct_Change'] = ((price_change['Close_End'] - price_change['Close_Start']) / price_change['Close_Start']) * 100
 
     # Merge with sector info
-    merged = price_change.merge(meta_df[['Ticker', 'GICS Sector']], on="Ticker", how="left")
+    merged = price_change.merge(meta_df[['Ticker', 'GICS Sector', 'Security']], on="Ticker", how="left")
 
     # Sector performance
     sector_perf = merged.groupby("GICS Sector")["Pct_Change"].mean().reset_index()
@@ -49,4 +49,4 @@ def get_sector_performance_from_snapshot(price_csv, metadata_csv):
     )
 
 def get_tickers_by_sector(sector, merged_df):
-    return merged_df[merged_df["GICS Sector"] == sector][["Ticker", "Close_Start", "Close_End", "Pct_Change"]]
+    return merged_df[merged_df["GICS Sector"] == sector][["Ticker", "Security", "Close_Start", "Close_End", "Pct_Change"]]

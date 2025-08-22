@@ -169,6 +169,7 @@ with tab3:
     sector_gainers, sector_losers, gain_df, loss_df, merged = get_sector_performance_from_snapshot(
         "data/snp500_30day_wide.csv", "data/snp500.csv"
     )
+    st.write(merged.head(1))
 
     def _pick_col(df, candidates):
         """Return the first matching column name from candidates or None."""
@@ -259,12 +260,12 @@ with tab3:
         else:
             default_idx = available_tickers.index("AAPL") if "AAPL" in available_tickers else 0
             sel_t = st.selectbox("Select a ticker", options=available_tickers, index=default_idx, key="sector_perf_ticker")
-
+            sel_security = merged.loc[merged['Ticker'] == sel_t, 'Security'].values
             # Find sector using merged snapshot mapping if available, else fallback
             sector_name = None
             try:
                 if 'Sector' in merged.columns and 'Ticker' in merged.columns:
-                    row = merged.loc[merged['Ticker'].astype(str).str.upper() == str(sel_t).upper()]
+                    row = merged.loc[merged['Security'].astype(str).str.upper() == str(sel_t).upper()]
                     if not row.empty:
                         sector_name = str(row.iloc[0]['Sector'])
             except Exception:
@@ -290,7 +291,7 @@ with tab3:
                 tdf = tdf.dropna(subset=["Date", "Close"]).sort_values("Date")
                 # Title reflects length (e.g., 30 vs 300)
                 n_days = tdf["Date"].nunique()
-                title = f"{sel_t} Price History ({n_days} days)"
+                title = f"{sel_security[0]} Price History ({n_days} days)"
                 fig_line = px.line(tdf, x="Date", y="Close", title=title)
                 fig_line.update_layout(margin=dict(t=50, b=10, l=10, r=10))
                 st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
