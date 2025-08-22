@@ -169,7 +169,6 @@ with tab3:
     sector_gainers, sector_losers, gain_df, loss_df, merged = get_sector_performance_from_snapshot(
         "data/snp500_30day_wide.csv", "data/snp500.csv"
     )
-    st.write(merged.head(1))
 
     def _pick_col(df, candidates):
         """Return the first matching column name from candidates or None."""
@@ -261,6 +260,8 @@ with tab3:
             default_idx = available_tickers.index("AAPL") if "AAPL" in available_tickers else 0
             sel_t = st.selectbox("Select a ticker", options=available_tickers, index=default_idx, key="sector_perf_ticker")
             sel_security = merged.loc[merged['Ticker'] == sel_t, 'Security'].values
+            if len(sel_security) == 0:
+                sel_security = sel_t
             # Find sector using merged snapshot mapping if available, else fallback
             sector_name = None
             try:
