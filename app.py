@@ -218,61 +218,83 @@ with tab3:
         plotly_pie_chart(loss_df, "🔽 Losing Sectors", gain=False)
 
 
-    # --- EXISTING TABLES ---
-    with st.expander("🔍 View Sector Performance", expanded=False):
-        col1, col2 = st.columns(2)
+    @st.cache_data(show_spinner=False)
+    def load_history(path="data/snp500_30day.csv"):
+        df = pd.read_csv(path)
+        # Handle common date formats robustly
+        df["Date"] = pd.to_datetime(df["Date"], format="%m/%d/%y", errors="coerce")
+        # Normalize column names if needed
+        cols = {c: c.strip() for c in df.columns}
+        df.rename(columns=cols, inplace=True)
+        # Expect long format: Date, Ticker, Close
+        if not set(["Date", "Ticker", "Close"]).issubset(df.columns):
+            # If file is in wide format (Date + many tickers), melt it
+            id_cols = ["Date"]
+            value_cols = [c for c in df.columns if c not in id_cols]
+            df = df.melt(id_vars="Date", value_vars=value_cols, var_name="Ticker", value_name="Close")
+        df = df.dropna(subset=["Date", "Ticker", "Close"])
+        df["Ticker"] = df["Ticker"].str.upper().str.strip()
+        df = df.sort_values(["Ticker", "Date"]).reset_index(drop=True)
+        return df
 
-        with col1:
-            st.markdown(
-                "<p class='custom-font'><b>🔼 Top Gaining Sectors</b></p>",
-                unsafe_allow_html=True
-            )
-            for sector in gain_df['Sector']:
-                with st.expander(f"{sector}"):
-                    st.dataframe(
-                        get_tickers_by_sector(sector, merged),
-                        hide_index=True
-                    )
+    hist_df = load_history()
 
-        with col2:
-            st.markdown(
-                "<p class='custom-font'><b>🔽 Top Losing Sectors</b></p>",
-                unsafe_allow_html=True
-            )
-            for sector in loss_df['Sector']:
-                with st.expander(f"{sector}"):
-                    st.dataframe(
-                        get_tickers_by_sector(sector, merged),
-                        hide_index=True
-                    )
-
-        # --- Sector Search Dropdown ---
     with st.expander("### 🔍 Explore a Sector", expanded=False):
         all_sectors = sorted(set(merged["GICS Sector"].dropna()))
         selected_sector = st.selectbox("Select Sector", options=all_sectors)
         if selected_sector:
             st.dataframe(get_tickers_by_sector(selected_sector, merged), hide_index=True)
+        
 
-@st.cache_data(show_spinner=False)
-def load_history(path="data/snp500_30day.csv"):
-    df = pd.read_csv(path)
-    # Handle common date formats robustly
-    df["Date"] = pd.to_datetime(df["Date"], format="%m/%d/%y", errors="coerce")
-    # Normalize column names if needed
-    cols = {c: c.strip() for c in df.columns}
-    df.rename(columns=cols, inplace=True)
-    # Expect long format: Date, Ticker, Close
-    if not set(["Date", "Ticker", "Close"]).issubset(df.columns):
-        # If file is in wide format (Date + many tickers), melt it
-        id_cols = ["Date"]
-        value_cols = [c for c in df.columns if c not in id_cols]
-        df = df.melt(id_vars="Date", value_vars=value_cols, var_name="Ticker", value_name="Close")
-    df = df.dropna(subset=["Date", "Ticker", "Close"])
-    df["Ticker"] = df["Ticker"].str.upper().str.strip()
-    df = df.sort_values(["Ticker", "Date"]).reset_index(drop=True)
-    return df
 
-hist_df = load_history()
+       # --- New: Ticker details & full price history ---
+    with st.expander("🔎 Ticker details & price history", expanded=False):
+        try:
+            available_tickers = sorted(hist_df["Ticker"].dropna().unique().tolist())
+        except Exception:
+            available_tickers = []
+
+        if not available_tickers:
+            st.warning("No tickers found in the loaded price history.")
+        else:
+            default_idx = available_tickers.index("AAPL") if "AAPL" in available_tickers else 0
+            sel_t = st.selectbox("Select a ticker", options=available_tickers, index=default_idx, key="sector_perf_ticker")
+
+            # Find sector using merged snapshot mapping if available, else fallback
+            sector_name = None
+            try:
+                if 'Sector' in merged.columns and 'Ticker' in merged.columns:
+                    row = merged.loc[merged['Ticker'].astype(str).str.upper() == str(sel_t).upper()]
+                    if not row.empty:
+                        sector_name = str(row.iloc[0]['Sector'])
+            except Exception:
+                pass
+            if not sector_name:
+                try:
+                    sector_name = get_sector_for_ticker(str(sel_t))
+                except Exception:
+                    sector_name = None
+
+            if sector_name:
+                st.markdown(f"**Sector:** {sector_name}")
+            else:
+                st.markdown("**Sector:** _Unknown_")
+
+            # Filter history for selected ticker and plot
+            tdf = hist_df.loc[hist_df["Ticker"].astype(str).str.upper() == str(sel_t).upper()].copy()
+            if tdf.empty:
+                st.info("No price history found for the selected ticker in the loaded file.")
+            else:
+                # Ensure proper dtypes and sorting
+                tdf["Date"] = pd.to_datetime(tdf["Date"], errors="coerce")
+                tdf = tdf.dropna(subset=["Date", "Close"]).sort_values("Date")
+                # Title reflects length (e.g., 30 vs 300)
+                n_days = tdf["Date"].nunique()
+                title = f"{sel_t} Price History ({n_days} days)"
+                fig_line = px.line(tdf, x="Date", y="Close", title=title)
+                fig_line.update_layout(margin=dict(t=50, b=10, l=10, r=10))
+                st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
+
 
 with tab4:
     st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
