@@ -259,7 +259,14 @@ with tab3:
         else:
             default_idx = available_tickers.index("AAPL") if "AAPL" in available_tickers else 0
             sel_t = st.selectbox("Select a ticker", options=available_tickers, index=default_idx, key="sector_perf_ticker")
-            sel_security = merged.loc[merged['Ticker'] == sel_t, 'Security'].values
+            # Pick available columns safely
+            ticker_col = 'Ticker' if 'Ticker' in merged.columns else ('Symbol' if 'Symbol' in merged.columns else None)
+            name_col   = next((c for c in ['Security','Name','Company','Company Name'] if c in merged.columns), None)
+
+            sel_security = np.array([])
+            if ticker_col and name_col:
+                sel_mask = merged[ticker_col].astype(str).str.upper() == str(sel_t).upper()
+                sel_security = merged.loc[sel_mask, name_col].values
             if len(sel_security) == 0:
                 sel_security = sel_t
             # Find sector using merged snapshot mapping if available, else fallback
