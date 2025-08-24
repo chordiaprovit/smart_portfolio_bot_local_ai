@@ -18,6 +18,7 @@ from sector_snapshot import get_sector_performance_from_snapshot, get_tickers_by
 from dotenv import load_dotenv
 import plotly.graph_objects as go
 from statsmodels.tsa.arima.model import ARIMA
+from investor import suggest_diversificatio_corr
 
 
 FONT_SIZE = "15px"
@@ -295,8 +296,7 @@ with tab3:
                 fig_line = px.line(tdf, x="Date", y="Close", title=title)
                 fig_line.update_layout(margin=dict(t=50, b=10, l=10, r=10))
                 st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
-
-
+    
 with tab4:
     st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
 
@@ -330,7 +330,7 @@ with tab4:
 
     def _run_simulation(tickers, allocations):
         try:
-            from investor import suggest_diversificatio_corr
+            
             correlation_msg = suggest_diversificatio_corr(tickers)
             if correlation_msg:
                 st.info(f"📊 Diversification Tip: {correlation_msg}")
@@ -383,10 +383,26 @@ with tab4:
         #simulate_portfolio
         result = simulate_portfolio(tickers, investment=1000.0, start_date=None, high_corr_threshold=0.85, risk_free_rate=0.0)
 
+        def interpret_sharpe(sharpe_ratio: float) -> tuple[str, str]:
+            if sharpe_ratio < 1.0:
+                return "Low Risk", "❌ Poor Return"
+            elif 1.0 <= sharpe_ratio < 2.0:
+                return "Moderate Risk", "✅ Good Return"
+            elif 2.0 <= sharpe_ratio < 3.0:
+                return "High Risk", "🌟 Great Return"
+            else:
+                return "Very High Risk", "🚀 Excellent Return"
+        
         col1, col2, col3 = st.columns(3)
         col1.metric("Annualized Return", f"{result['return_annualized']:.2%}")
         col2.metric("Annualized Volatility", f"{result['volatility_annualized']:.2%}")
-        col3.metric("Sharpe Ratio", f"{result['sharpe_ratio']:.2f}")
+        sharpe = result['sharpe_ratio']
+        risk_level, verdict = interpret_sharpe(sharpe)
+        col3.metric(
+            "Sharpe Ratio",
+            f"{sharpe:.2f}",
+            help=f" {risk_level} , {verdict}"
+        )
 
         with st.expander("📈 Correlation Matrix"):
 
@@ -515,14 +531,7 @@ with tab4:
                 })
                 st.rerun()
 
-        # Show last result persistently
-        if st.session_state.sim_result_text:
-            st.text(st.session_state.sim_result_text)
-            if st.session_state.sim_total_val is not None:
-                st.markdown(
-                    f"<p class='custom-font'><b>Total Value:</b> ${st.session_state.sim_total_val:,.2f}</p>",
-                    unsafe_allow_html=True
-                )
+                # )
             # --- Ask for email before Save Portfolio ---
             email = st.text_input("Enter your email", key="sim_email")
             st.text("💾 Save your portfolio to monitor progress over 1 month.")

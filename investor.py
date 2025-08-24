@@ -79,13 +79,14 @@ def suggest_diversification(tickers, meta_df, merged_df, sector_perf_df):
 
     return dominant_sector, suggestions
 
-def suggest_diversificatio_corr(tickers, file_path="data/snp500_30day.csv", threshold=0.50):
+def suggest_diversificatio_corr(tickers, file_path="data/snp500.csv", threshold=0.50):
     # Load CSV
     df = pd.read_csv(file_path)
 
     # Check which tickers are actually in file
-    available_cols = df.columns.tolist()
-    missing = [t for t in tickers if t not in available_cols]
+    available_tickers = df["Ticker"].dropna().unique().tolist()
+    missing = [t for t in tickers if t not in available_tickers]
+    
     if missing:
         return f"⚠️ Missing tickers in data: {', '.join(missing)}. Cannot compute correlation."
 
