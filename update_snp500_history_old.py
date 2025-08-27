@@ -133,8 +133,6 @@ def _download_single(ticker, start_date, end_date, max_retries=3):
 # ------------------------------
 # 3) Save (long + wide)
 # ------------------------------
-
-
 def _save_outputs(df_long, output_long="data/snp500_30day.csv", also_wide=True):
     # m/d/yy to match your Streamlit parsing
     if os.name != "nt":
@@ -142,96 +140,24 @@ def _save_outputs(df_long, output_long="data/snp500_30day.csv", also_wide=True):
     else:
         fmt = "%#m/%#d/%y"
 
-    # Normalize and prepare long data
     save_df = df_long.copy()
-    save_df["Date"] = pd.to_datetime(save_df["Date"]).dt.normalize()
+    save_df["Date"] = pd.to_datetime(save_df["Date"]).dt.normalize().dt.strftime(fmt)
+    save_df = save_df.sort_values(["Date", "Ticker"])
 
-    # Merge with existing long CSV if present
     os.makedirs(os.path.dirname(output_long), exist_ok=True)
-    if os.path.exists(output_long):
-        try:
-            old = pd.read_csv(output_long, parse_dates=["Date"])
-        except Exception:
-            old = pd.read_csv(output_long)
-            if "Date" in old.columns:
-                old["Date"] = pd.to_datetime(old["Date"], errors="coerce")
-    else:
-        old = pd.DataFrame(columns=save_df.columns)
-
-    combined = pd.concat([old, save_df], ignore_index=True)
-    # Dedup by Date+Ticker if available
-    if set(["Date", "Ticker"]).issubset(combined.columns):
-        combined = combined.drop_duplicates(subset=["Date", "Ticker"], keep="last")
-    else:
-        combined = combined.drop_duplicates(keep="last")
-
-    # FINAL: sort strictly by Date (chronological), then Ticker
-    if "Date" in combined.columns:
-        combined["_Date_dt"] = pd.to_datetime(combined["Date"], errors="coerce")
-        sort_cols = ["_Date_dt"] + (["Ticker"] if "Ticker" in combined.columns else [])
-        combined = combined.sort_values(sort_cols)
-        # Format for output
-        combined["Date"] = combined["_Date_dt"].dt.strftime(fmt)
-        combined = combined.drop(columns=["_Date_dt"])
-
-    combined.to_csv(output_long, index=False)
+    save_df.to_csv(output_long, index=False)
 
     if also_wide:
-        # Build wide table from the sorted combined (use datetime for index to keep order correct)
-        tmp = combined.copy()
-        tmp["_Date_dt"] = pd.to_datetime(tmp["Date"], errors="coerce")
-
         wide = (
-            tmp.pivot(index="_Date_dt", columns="Ticker", values="Close")
+            df_long.pivot(index="Date", columns="Ticker", values="Close")
             .sort_index()
             .reset_index()
         )
-        # Add human-readable Date column but KEEP _Date_dt for reliable merge
-        wide["Date"] = wide["_Date_dt"].dt.strftime(fmt)
-
+        wide["Date"] = pd.to_datetime(wide["Date"]).dt.strftime(fmt)
         wide_out = output_long.replace(".csv", "_wide.csv")
-
-        # Merge with existing wide CSV on true datetime to preserve order
-        if os.path.exists(wide_out):
-            try:
-                wide_old = pd.read_csv(wide_out)
-            except Exception:
-                wide_old = pd.DataFrame()
-
-            if not wide_old.empty:
-                # Build _Date_dt in old from Date if needed
-                if "_Date_dt" not in wide_old.columns:
-                    if "Date" in wide_old.columns:
-                        wide_old["_Date_dt"] = pd.to_datetime(wide_old["Date"], errors="coerce")
-                    else:
-                        wide_old = pd.DataFrame()
-
-            if not wide_old.empty and "_Date_dt" in wide_old.columns:
-                merged = pd.merge(wide_old, wide, on="_Date_dt", how="outer", suffixes=("_old", ""))
-
-                # Resolve duplicate ticker columns, prefer NEW values
-                for col in list(merged.columns):
-                    if col.endswith("_old"):
-                        base = col[:-4]
-                        if base in merged.columns:
-                            merged[base] = merged[base].combine_first(merged[col])
-                            merged = merged.drop(columns=[col])
-                # Ensure chronological order and rebuild Date
-                merged = merged.sort_values("_Date_dt")
-                merged["Date"] = merged["_Date_dt"].dt.strftime(fmt)
-                # Put Date first
-                cols = ["Date"] + [c for c in merged.columns if c not in {"Date"}]
-                wide = merged[cols]
-
-        # Ensure final wide is sorted by true datetime
-        if "_Date_dt" not in wide.columns:
-            wide["_Date_dt"] = pd.to_datetime(wide["Date"], errors="coerce")
-        wide = wide.sort_values("_Date_dt")
-
-        # Drop helper datetime col for CSV
-        wide = wide.drop(columns=["_Date_dt"])
-
         wide.to_csv(wide_out, index=False)
+
+
 def _trim_to_last_n_trading_days(df_long, n=30):
     df = df_long.copy()
     df = df.sort_values(["Date", "Ticker"])
@@ -326,4 +252,3 @@ if __name__ == "__main__":
         lookback_days=400,   # gives headroom to ensure 30 trading days
         batch_size=50,
     )
-    
