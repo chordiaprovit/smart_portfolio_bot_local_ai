@@ -49,4 +49,19 @@ def get_sector_performance_from_snapshot(price_csv, metadata_csv):
     )
 
 def get_tickers_by_sector(sector, merged_df):
-    return merged_df[merged_df["GICS Sector"] == sector][["Ticker", "Security", "Close_Start", "Close_End", "Pct_Change"]]
+    df = merged_df[merged_df["GICS Sector"] == sector][
+        ["Ticker", "Security", "Close_Start", "Close_End", "Pct_Change"]
+    ].copy()
+
+    # Rename columns for clarity
+    df.rename(
+        columns={
+            "Ticker": "📈 Ticker",
+            "Security": "Company",
+            "Close_Start": "Price (30d Ago)",
+            "Close_End": "Price (Today)",
+            "Pct_Change": "% Change (30d)"
+        },
+        inplace=True
+    )
+    return df
