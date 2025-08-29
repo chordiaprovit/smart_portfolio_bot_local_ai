@@ -51,20 +51,20 @@ def fetch_ai_response(prompt):
     st.session_state.ai_response = response
     st.session_state.ai_running = False
 
-st.sidebar.markdown("<p class='custom-font'><b>💬 Ask the AI Assistant</b></p>", unsafe_allow_html=True)
-user_prompt = st.sidebar.text_area("Ask your question", key="user_input")
+# st.sidebar.markdown("<p class='custom-font'><b>💬 Ask the AI Assistant</b></p>", unsafe_allow_html=True)
+# user_prompt = st.sidebar.text_area("Ask your question", key="user_input")
 
-if st.sidebar.button("Ask") and not st.session_state.ai_running:
-    st.session_state.ai_running = True
-    st.session_state.ai_response = ""
-    thread = threading.Thread(target=fetch_ai_response, args=(user_prompt,))
-    thread.start()
+# if st.sidebar.button("Ask") and not st.session_state.ai_running:
+#     st.session_state.ai_running = True
+#     st.session_state.ai_response = ""
+#     thread = threading.Thread(target=fetch_ai_response, args=(user_prompt,))
+#     thread.start()
 
-if st.session_state.ai_running:
-    st.sidebar.info("💭 Assistant is thinking...")
-elif st.session_state.ai_response:
-    st.sidebar.markdown("<p class='custom-font'><b>Assistant:</b></p>", unsafe_allow_html=True)
-    st.sidebar.markdown(f"<p class='custom-font'>{st.session_state.ai_response}</p>", unsafe_allow_html=True)
+# if st.session_state.ai_running:
+#     st.sidebar.info("💭 Assistant is thinking...")
+# elif st.session_state.ai_response:
+#     st.sidebar.markdown("<p class='custom-font'><b>Assistant:</b></p>", unsafe_allow_html=True)
+#     st.sidebar.markdown(f"<p class='custom-font'>{st.session_state.ai_response}</p>", unsafe_allow_html=True)
 
 st.markdown("""
     <style>
