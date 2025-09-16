@@ -240,13 +240,71 @@ with tab3:
 
     hist_df = load_history()
 
-    with st.expander("### 🔍 Explore a Sector", expanded=False):
+    def get_top_movers_by_sector(df, n=2, sector=None):
+        d = df.copy()
+
+        # Compute % change if missing (supports your earlier rename, too)
+        if "Pct_Change" not in d.columns:
+            if {"Close_Start", "Close_End"}.issubset(d.columns):
+                d["Pct_Change"] = (d["Close_End"] - d["Close_Start"]) / d["Close_Start"] * 100.0
+            elif {"Start Price", "End Price"}.issubset(d.columns):
+                d["Pct_Change"] = (d["End Price"] - d["Start Price"]) / d["Start Price"] * 100.0
+
+        # Optional sector filter
+        if sector:
+            d = d[d["GICS Sector"] == sector]
+
+        if d.empty:
+            return pd.DataFrame()
+
+        result = []
+        for s in d["GICS Sector"].dropna().unique():
+            sdf = d[d["GICS Sector"] == s]
+            if sdf.empty:
+                continue
+            top_g = sdf.nlargest(min(n, len(sdf)), "Pct_Change").assign(Category="Top Gainer")
+            top_l = sdf.nsmallest(min(n, len(sdf)), "Pct_Change").assign(Category="Top Loser")
+            movers = pd.concat([top_g, top_l], ignore_index=True)
+            movers.insert(0, "Sector", s)
+            result.append(movers[["Sector", "Category", "Ticker", "Security", "Pct_Change"]])
+
+        return pd.concat(result, ignore_index=True) if result else pd.DataFrame()
+
+    with st.expander("📈 Top 2 Gainers & Losers by Sector", expanded=False):
+        all_sectors = sorted(set(merged["GICS Sector"].dropna()))
+        default_sector = st.session_state.get("selected_sector")
+
+        sector_choice = st.selectbox(
+            "Filter sector (optional)",
+            options=["All"] + all_sectors,
+            index=(all_sectors.index(default_sector) + 1) if default_sector in all_sectors else 0
+        )
+        sector_filter = None if sector_choice == "All" else sector_choice
+
+        movers_df = get_top_movers_by_sector(merged, n=2, sector=sector_filter)
+
+        if movers_df.empty:
+            st.info("No data available for sector movers.")
+        else:
+            # Apply row-level coloring
+            def highlight_rows(row):
+                if row["Category"] == "Top Gainer":
+                    return ["color: green; font-weight: 600;"] * len(row)
+                elif row["Category"] == "Top Loser":
+                    return ["color: red; font-weight: 600;"] * len(row)
+                return [""] * len(row)
+
+            styled_df = movers_df.style.apply(highlight_rows, axis=1)
+            st.dataframe(styled_df, hide_index=True, use_container_width=True)
+
+    # 🔍 Explore a Sector SECOND
+    with st.expander("### 🔍 Explore all tickers in a Sector", expanded=False):
         all_sectors = sorted(set(merged["GICS Sector"].dropna()))
         selected_sector = st.selectbox("Select Sector", options=all_sectors)
         if selected_sector:
             st.dataframe(get_tickers_by_sector(selected_sector, merged), hide_index=True)
-        
-
+            # stash selection for reuse
+            st.session_state["selected_sector"] = selected_sector
 
        # --- New: Ticker details & full price history ---
     with st.expander("🔎 Ticker details & price history", expanded=False):
