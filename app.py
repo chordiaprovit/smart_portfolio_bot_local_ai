@@ -165,7 +165,18 @@ with tab1:
 
     
 with tab3:
-    st.markdown("<h3 class='custom-font'>📈 Sector Performance (Past 30 Days)</h3>", unsafe_allow_html=True)
+    latest_date = None
+    try:
+        df_sector = pd.read_csv("data/snp500_30day_wide.csv")
+        df_sector["Date"] = pd.to_datetime(df_sector["Date"], format="%m/%d/%y", errors="coerce")
+        latest_date = df_sector["Date"].max()
+    except Exception:
+        pass
+
+    if latest_date:
+        st.markdown(f"<h3 class='custom-font'>📈 Sector Performance (Latest: {latest_date.strftime('%Y-%m-%d')})</h3>", unsafe_allow_html=True)
+    else:
+        st.markdown("<h3 class='custom-font'>📈 Sector Performance</h3>", unsafe_allow_html=True)
 
     sector_gainers, sector_losers, gain_df, loss_df, merged = get_sector_performance_from_snapshot(
         "data/snp500_30day_wide.csv", "data/snp500.csv"
@@ -348,7 +359,6 @@ with tab3:
                 # Ensure proper dtypes and sorting
                 tdf["Date"] = pd.to_datetime(tdf["Date"], errors="coerce")
                 tdf = tdf.dropna(subset=["Date", "Close"]).sort_values("Date")
-                # Title reflects length (e.g., 30 vs 300)
                 n_days = tdf["Date"].nunique()
                 title = f"{sel_t} Price History ({n_days} days)"
                 fig_line = px.line(tdf, x="Date", y="Close", title=title)
