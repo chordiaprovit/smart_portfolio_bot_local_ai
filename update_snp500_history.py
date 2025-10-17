@@ -177,6 +177,8 @@ def _save_outputs(df_long, output_long="data/snp500_30day.csv", also_wide=True):
     combined.to_csv(output_long, index=False)
 
     if also_wide:
+        wide_out = output_long.replace(".csv", "_wide.csv")
+
         # Build wide table from the sorted combined (use datetime for index to keep order correct)
         tmp = combined.copy()
         tmp["_Date_dt"] = pd.to_datetime(tmp["Date"], errors="coerce")
@@ -188,8 +190,6 @@ def _save_outputs(df_long, output_long="data/snp500_30day.csv", also_wide=True):
         )
         # Add human-readable Date column but KEEP _Date_dt for reliable merge
         wide["Date"] = wide["_Date_dt"].dt.strftime(fmt)
-
-        wide_out = output_long.replace(".csv", "_wide.csv")
 
         # Merge with existing wide CSV on true datetime to preserve order
         if os.path.exists(wide_out):
@@ -326,4 +326,3 @@ if __name__ == "__main__":
         lookback_days=400,   # gives headroom to ensure 30 trading days
         batch_size=50,
     )
-    
