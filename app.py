@@ -924,3 +924,14 @@ with tab5:
                 "Notes: Monte Carlo uses macro‑adjusted drift and volatility (residual bootstrap). "
                 "ARIMA is a univariate time‑series baseline (price‑only)."
             )
+
+    st.markdown("""
+    <style>
+    /* Hide the "View on GitHub" button and Streamlit footer */
+    .st-emotion-cache-j7qwjs {display: none !important;}
+    footer {visibility: hidden;}
+    /* For older Streamlit versions, also try: */
+    .css-164nlkn.egzxvld1 {display: none !important;}
+    .css-1v0mbdj.eknhn3m4 {display: none !important;}
+    </style>
+""", unsafe_allow_html=True)
