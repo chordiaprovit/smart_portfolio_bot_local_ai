@@ -237,6 +237,75 @@ with tab3:
 
     hist_df = load_history()
 
+    def compute_trend_scores(history_df: pd.DataFrame, window: int = 20, min_points: int = 10) -> pd.DataFrame:
+        """
+        For each ticker:
+        - Take the last `window` days of prices
+        - Fit a simple linear regression (slope)
+        - Normalize slope by mean price to get a trend score
+        """
+        if history_df is None or history_df.empty:
+            return pd.DataFrame()
+
+        # Ensure sorted by Ticker, Date
+        d = history_df.dropna(subset=["Ticker", "Date", "Close"]).copy()
+        d = d.sort_values(["Ticker", "Date"])
+
+        rows = []
+        for ticker, grp in d.groupby("Ticker"):
+            # Look at last `window` points
+            grp = grp.tail(window)
+            if len(grp) < min_points:
+                continue
+
+            y = grp["Close"].astype(float).values
+            x = np.arange(len(y), dtype=float)
+
+            # Simple linear regression using numpy
+            slope, intercept = np.polyfit(x, y, 1)
+            mean_price = y.mean()
+            if mean_price == 0 or np.isnan(mean_price):
+                continue
+
+            trend_score = slope / mean_price  # normalized slope
+
+            # Label based on the normalized slope
+            if trend_score > 0.02:
+                label = "Strong Uptrend"
+            elif trend_score > 0.0:
+                label = "Uptrend"
+            elif trend_score > -0.02:
+                label = "Sideways"
+            else:
+                label = "Downtrend"
+
+            start_price = float(grp["Close"].iloc[0])
+            end_price = float(grp["Close"].iloc[-1])
+            pct_change = (end_price - start_price) / start_price * 100.0
+
+            rows.append(
+                {
+                    "Ticker": ticker,
+                    "TrendLabel": label,
+                    "TrendScore": trend_score,
+                    "Slope": slope,
+                    "StartDate": grp["Date"].iloc[0],
+                    "EndDate": grp["Date"].iloc[-1],
+                    "StartPrice": start_price,
+                    "EndPrice": end_price,
+                    "PctChange": pct_change,
+                }
+            )
+
+        if not rows:
+            return pd.DataFrame()
+
+        out = pd.DataFrame(rows)
+        # Highest trend score = strongest uptrend
+        out = out.sort_values("TrendScore", ascending=False).reset_index(drop=True)
+        return out
+
+
     def get_top_movers_by_sector(df, n=2, sector=None):
         d = df.copy()
 
@@ -266,6 +335,84 @@ with tab3:
             result.append(movers[["Sector", "Category", "Ticker", "Security", "Pct_Change"]])
 
         return pd.concat(result, ignore_index=True) if result else pd.DataFrame()
+
+        # --- New UI: Trending stocks (slope-based) ---
+    with st.expander("📈 Trending stocks (slope-based momentum)", expanded=False):
+        st.caption(
+            "Uses last N days of closing prices and a simple linear regression slope "
+            "normalized by price to classify stocks as Strong Uptrend / Uptrend / Sideways / Downtrend."
+        )
+
+        col_left, col_right = st.columns([2, 1])
+
+        with col_right:
+            lookback = st.slider(
+                "Lookback window (days)",
+                min_value=10,
+                max_value=60,
+                value=30,
+                step=5,
+                key="trend_lookback_days",
+            )
+            top_n = st.slider(
+                "How many tickers to show",
+                min_value=5,
+                max_value=50,
+                value=20,
+                step=5,
+                key="trend_top_n",
+            )
+            filter_choice = st.selectbox(
+                "Filter by trend",
+                (
+                    "Strong Uptrend only",
+                    "Uptrend (incl. strong)",
+                    "All (incl. sideways)",
+                    "Downtrend only",
+                ),
+                index=1,
+                key="trend_filter_choice",
+            )
+
+        # Compute scores
+        trend_df = compute_trend_scores(hist_df, window=lookback)
+
+        with col_left:
+            if trend_df.empty:
+                st.info("Not enough history to compute trend scores.")
+            else:
+                df_view = trend_df.copy()
+
+                if filter_choice == "Strong Uptrend only":
+                    df_view = df_view[df_view["TrendLabel"] == "Strong Uptrend"]
+                elif filter_choice == "Uptrend (incl. strong)":
+                    df_view = df_view[df_view["TrendLabel"].isin(["Strong Uptrend", "Uptrend"])]
+                elif filter_choice == "Downtrend only":
+                    df_view = df_view[df_view["TrendLabel"] == "Downtrend"]
+                # "All (incl. sideways)" → no additional filter
+
+                df_view = df_view.head(top_n)
+
+                # Nice compact view
+                display_cols = [
+                    "Ticker",
+                    "TrendLabel",
+                    "TrendScore",
+                    "PctChange",
+                    "StartDate",
+                    "EndDate",
+                    "StartPrice",
+                    "EndPrice",
+                ]
+                # Only keep columns that exist
+                display_cols = [c for c in display_cols if c in df_view.columns]
+
+                st.dataframe(
+                    df_view[display_cols],
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
 
     with st.expander("📈 Top 2 Gainers & Losers by Sector", expanded=False):
         all_sectors = sorted(set(merged["GICS Sector"].dropna()))
