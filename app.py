@@ -381,8 +381,15 @@ with tab3:
             if trend_df.empty:
                 st.info("Not enough history to compute trend scores.")
             else:
-                df_view = trend_df.copy()
+                global_start = trend_df["StartDate"].iloc[0]
+                global_end = trend_df["EndDate"].iloc[0]
 
+                st.markdown(
+                    f"**Trend Window:** `{global_start}` → `{global_end}` "
+                    f"({lookback} days)"
+                )
+
+                df_view = trend_df.copy()
                 if filter_choice == "Strong Uptrend only":
                     df_view = df_view[df_view["TrendLabel"] == "Strong Uptrend"]
                 elif filter_choice == "Uptrend (incl. strong)":
@@ -399,8 +406,6 @@ with tab3:
                     "TrendLabel",
                     "TrendScore",
                     "PctChange",
-                    "StartDate",
-                    "EndDate",
                     "StartPrice",
                     "EndPrice",
                 ]
