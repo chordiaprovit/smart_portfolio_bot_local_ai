@@ -337,7 +337,7 @@ with tab3:
         return pd.concat(result, ignore_index=True) if result else pd.DataFrame()
 
         # --- New UI: Trending stocks (slope-based) ---
-    with st.expander("📈 Trending stocks (slope-based momentum)", expanded=False):
+    with st.expander("📈 Trending stocks momentum", expanded=False):
         st.caption(
             "Uses last N days of closing prices and a simple linear regression slope "
             "normalized by price to classify stocks as Strong Uptrend / Uptrend / Sideways / Downtrend."
@@ -373,6 +373,24 @@ with tab3:
                 index=1,
                 key="trend_filter_choice",
             )
+            hist_dates = pd.to_datetime(hist_df["Date"])
+            all_dates = np.sort(hist_dates.unique())
+
+            if len(all_dates) >= lookback:
+                global_start = all_dates[-lookback]
+                global_end = all_dates[-1]
+            else:
+                global_start = all_dates[0]
+                global_end = all_dates[-1]
+
+            start_date_display = pd.Timestamp(global_start).date()
+            end_date_display = pd.Timestamp(global_end).date()
+
+            st.markdown(
+                f"**Trend Window:** `{start_date_display}` → `{end_date_display}`  "
+                f"· {lookback} trading days "
+                f"(~{(end_date_display - start_date_display).days} calendar days)"
+            )
 
         # Compute scores
         trend_df = compute_trend_scores(hist_df, window=lookback)
@@ -381,13 +399,6 @@ with tab3:
             if trend_df.empty:
                 st.info("Not enough history to compute trend scores.")
             else:
-                global_start = trend_df["StartDate"].iloc[0]
-                global_end = trend_df["EndDate"].iloc[0]
-
-                st.markdown(
-                    f"**Trend Window:** `{global_start}` → `{global_end}` "
-                    f"({lookback} days)"
-                )
 
                 df_view = trend_df.copy()
                 if filter_choice == "Strong Uptrend only":
