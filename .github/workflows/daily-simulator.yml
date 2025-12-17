@@ -32,16 +32,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run simulator
+      - name: Run S&P 500 simulator
         run: |
           python update_snp500_history.py
+
+      - name: Run ETF updater
+        run: |
+          python etf_updates.py
 
       - name: Commit updated data
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/snp500_30day.csv data/snp500_30day_wide.csv || true
-          git commit -m "Update S&P 500 data [skip ci]" || echo "No changes to commit"
+          git add data/snp500_30day.csv data/snp500_30day_wide.csv data/polygon_etf_prices.csv || true
+          git commit -m "Update S&P 500 and ETF data [skip ci]" || echo "No changes to commit"
           git push
 
       # Optional: upload outputs as workflow artifacts
