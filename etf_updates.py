@@ -32,6 +32,7 @@ fetch_date = today
 if today.weekday() >= 5:  
     fetch_date = today - timedelta(days=today.weekday() - 4)
 fetch_date_str = fetch_date.strftime("%Y-%m-%d")
+print("fetch_date_str", fetch_date_str)
 
 all_data = {}
 
