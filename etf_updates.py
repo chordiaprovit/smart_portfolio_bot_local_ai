@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(mes
 client = RESTClient("plDhfpfV12E0qcxoJqhnsCvKl2Axwtgp")
 
 TICKERS_FILE = "etf_symbols.txt"
-CSV_FILE = "data/etf_prices.csv"
+CSV_FILE = "data/etf_prices_converted.csv"
 
 # Load tickers
 try:
