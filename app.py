@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 import plotly.graph_objects as go
 from statsmodels.tsa.arima.model import ARIMA
 from investor import suggest_diversificatio_corr
+from analytics_engine import load_analytics_pack, suggest_starter_from_pack
 
 
 FONT_SIZE = "15px"
@@ -62,7 +63,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-tab3, tab4, tab5, tab1 = st.tabs(["📈 Sector Performance", "💰 Portfolio Simulator", "Macro Simulator", "ℹ️ About", ])
+tab3, tab4, tab5, tab1 = st.tabs(["📈 Sector Performance", "💰 Portfolio Suggestor", "Macro Simulator", "ℹ️ About", ])
 
 with tab1:
     # --- Lightweight CSS polish ---
@@ -515,313 +516,397 @@ with tab3:
                 st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
     
 with tab4:
-    st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
+    # st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
 
-    @st.cache_data(show_spinner=False)
-    def load_hist():
-        df = pd.read_csv("data/snp500_30day.csv")
-        # Use robust parsing without deprecated args
-        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
-        return df
+    # @st.cache_data(show_spinner=False)
+    # def load_hist():
+    #     df = pd.read_csv("data/snp500_30day.csv")
+    #     # Use robust parsing without deprecated args
+    #     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+    #     return df
 
-    hist_df = load_hist()
+    # hist_df = load_hist()
     
-    # ---------- session state (non-widget) ----------
-    st.session_state.setdefault(
-        "sim_df",
-        pd.DataFrame(
-            {"Ticker": ["", "", ""], "Allocation": [400.0, 350.0, 250.0]}
-        )
-    )
-    st.session_state.setdefault("sim_result_text", "")
-    st.session_state.setdefault("sim_total_val", None)
-    st.session_state.setdefault("sim_suggestion_msg", "")
-    st.session_state.setdefault("sim_new_tickers", "")
-    st.session_state.setdefault("sim_new_allocs", None)
+    # # ---------- session state (non-widget) ----------
+    # st.session_state.setdefault(
+    #     "sim_df",
+    #     pd.DataFrame(
+    #         {"Ticker": ["", "", ""], "Allocation": [400.0, 350.0, 250.0]}
+    #     )
+    # )
+    # st.session_state.setdefault("sim_result_text", "")
+    # st.session_state.setdefault("sim_total_val", None)
+    # st.session_state.setdefault("sim_suggestion_msg", "")
+    # st.session_state.setdefault("sim_new_tickers", "")
+    # st.session_state.setdefault("sim_new_allocs", None)
 
-    def _normalize_to_1000(values):
-        s = sum(values)
-        if s <= 0:
-            return [1000.0/3.0]*3
-        return [v * (1000.0 / s) for v in values]
+    # def _normalize_to_1000(values):
+    #     s = sum(values)
+    #     if s <= 0:
+    #         return [1000.0/3.0]*3
+    #     return [v * (1000.0 / s) for v in values]
 
-    def _run_simulation(tickers, allocations):
-        try:
+    # def _run_simulation(tickers, allocations):
+    #     try:
             
-            correlation_msg = suggest_diversificatio_corr(tickers)
-            if correlation_msg:
-                st.info(f"📊 Diversification Tip: {correlation_msg}")
-        except Exception:
-            pass
+    #         correlation_msg = suggest_diversificatio_corr(tickers)
+    #         if correlation_msg:
+    #             st.info(f"📊 Diversification Tip: {correlation_msg}")
+    #     except Exception:
+    #         pass
 
-        # 2) Agentic suggestion
-        try:
-            sectors = [get_sector_for_ticker(t) for t in tickers]
-            suggestion_msg, new_tickers, new_allocs = agent_portfolio_recommendation(tickers, allocations, sectors)
-        except Exception:
-            suggestion_msg, new_tickers, new_allocs = "", None, None
+    #     # 2) Agentic suggestion
+    #     try:
+    #         sectors = [get_sector_for_ticker(t) for t in tickers]
+    #         suggestion_msg, new_tickers, new_allocs = agent_portfolio_recommendation(tickers, allocations, sectors)
+    #     except Exception:
+    #         suggestion_msg, new_tickers, new_allocs = "", None, None
 
-        st.session_state.sim_suggestion_msg = suggestion_msg or ""
-        st.session_state.sim_new_tickers = new_tickers
-        st.session_state.sim_new_allocs = new_allocs
-        if suggestion_msg:
-            st.info(f"🤖 Agentic Suggestion: {suggestion_msg}")
+    #     st.session_state.sim_suggestion_msg = suggestion_msg or ""
+    #     st.session_state.sim_new_tickers = new_tickers
+    #     st.session_state.sim_new_allocs = new_allocs
+    #     if suggestion_msg:
+    #         st.info(f"🤖 Agentic Suggestion: {suggestion_msg}")
 
-        # 3) Compute 30-day performance
-        latest_date = hist_df["Date"].max()
-        start_date  = hist_df["Date"].min()
+    #     # 3) Compute 30-day performance
+    #     latest_date = hist_df["Date"].max()
+    #     start_date  = hist_df["Date"].min()
 
-        price_changes = {}
-        for tk in tickers:
-            try:
-                price_start = hist_df[(hist_df["Ticker"] == tk) & (hist_df["Date"] == start_date)]["Close"].values[0]
-                price_end   = hist_df[(hist_df["Ticker"] == tk) & (hist_df["Date"] == latest_date)]["Close"].values[0]
-                pct_change  = ((price_end - price_start) / price_start) * 100.0
-                price_changes[tk] = round(float(pct_change), 2)
-            except Exception:
-                price_changes[tk] = None
+    #     price_changes = {}
+    #     for tk in tickers:
+    #         try:
+    #             price_start = hist_df[(hist_df["Ticker"] == tk) & (hist_df["Date"] == start_date)]["Close"].values[0]
+    #             price_end   = hist_df[(hist_df["Ticker"] == tk) & (hist_df["Date"] == latest_date)]["Close"].values[0]
+    #             pct_change  = ((price_end - price_start) / price_start) * 100.0
+    #             price_changes[tk] = round(float(pct_change), 2)
+    #         except Exception:
+    #             price_changes[tk] = None
 
-        lines, total_val = [], 0.0
-        for i, tk in enumerate(tickers):
-            alloc = allocations[i]
-            line = f"{tk}: ${alloc:.2f} → "
-            if price_changes[tk] is not None:
-                growth = alloc * (1 + price_changes[tk]/100.0)
-                line += f"${growth:.2f} ({price_changes[tk]}%)"
-                total_val += growth
-            else:
-                line += "Data unavailable"
-                total_val += alloc
-            lines.append(line)
+    #     lines, total_val = [], 0.0
+    #     for i, tk in enumerate(tickers):
+    #         alloc = allocations[i]
+    #         line = f"{tk}: ${alloc:.2f} → "
+    #         if price_changes[tk] is not None:
+    #             growth = alloc * (1 + price_changes[tk]/100.0)
+    #             line += f"${growth:.2f} ({price_changes[tk]}%)"
+    #             total_val += growth
+    #         else:
+    #             line += "Data unavailable"
+    #             total_val += alloc
+    #         lines.append(line)
 
-        st.session_state.sim_result_text = "\n".join(lines)
-        st.session_state.sim_total_val = total_val
+    #     st.session_state.sim_result_text = "\n".join(lines)
+    #     st.session_state.sim_total_val = total_val
 
-        #simulate_portfolio
-        result = simulate_portfolio(tickers, investment=1000.0, start_date=None, high_corr_threshold=0.85, risk_free_rate=0.0)
+    #     #simulate_portfolio
+    #     result = simulate_portfolio(tickers, investment=1000.0, start_date=None, high_corr_threshold=0.85, risk_free_rate=0.0)
 
-        def interpret_sharpe(sharpe_ratio: float) -> tuple[str, str]:
-            if sharpe_ratio < 1.0:
-                return "Low Risk", "❌ Poor Return"
-            elif 1.0 <= sharpe_ratio < 2.0:
-                return "Moderate Risk", "✅ Good Return"
-            elif 2.0 <= sharpe_ratio < 3.0:
-                return "High Risk", "🌟 Great Return"
-            else:
-                return "Very High Risk", "🚀 Excellent Return"
+    #     def interpret_sharpe(sharpe_ratio: float) -> tuple[str, str]:
+    #         if sharpe_ratio < 1.0:
+    #             return "Low Risk", "❌ Poor Return"
+    #         elif 1.0 <= sharpe_ratio < 2.0:
+    #             return "Moderate Risk", "✅ Good Return"
+    #         elif 2.0 <= sharpe_ratio < 3.0:
+    #             return "High Risk", "🌟 Great Return"
+    #         else:
+    #             return "Very High Risk", "🚀 Excellent Return"
         
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Annualized Return", f"{result['return_annualized']:.2%}")
-        col2.metric("Annualized Volatility", f"{result['volatility_annualized']:.2%}")
-        sharpe = result['sharpe_ratio']
-        risk_level, verdict = interpret_sharpe(sharpe)
-        col3.metric(
-            "Sharpe Ratio",
-            f"{sharpe:.2f}",
-            help=f" {risk_level} , {verdict}"
+    #     col1, col2, col3 = st.columns(3)
+    #     col1.metric("Annualized Return", f"{result['return_annualized']:.2%}")
+    #     col2.metric("Annualized Volatility", f"{result['volatility_annualized']:.2%}")
+    #     sharpe = result['sharpe_ratio']
+    #     risk_level, verdict = interpret_sharpe(sharpe)
+    #     col3.metric(
+    #         "Sharpe Ratio",
+    #         f"{sharpe:.2f}",
+    #         help=f" {risk_level} , {verdict}"
+    #     )
+
+    #     with st.expander("📈 Correlation Matrix"):
+
+    #         corr_matrix = result['corr_matrix']
+    #         fig = go.Figure(
+    #             data=go.Heatmap(
+    #                 z=corr_matrix.values,
+    #                 x=corr_matrix.columns,
+    #                 y=corr_matrix.index,
+    #                 colorscale='RdBu',
+    #                 zmin=-1, zmax=1,
+    #                 colorbar=dict(title="Correlation")
+    #             )
+    #         )
+    #         fig.update_layout(
+    #             title="Correlation Matrix Heatmap",
+    #             xaxis_title="Ticker",
+    #             yaxis_title="Ticker",
+    #             width=500,
+    #             height=500
+    #         )
+    #         st.plotly_chart(fig, use_container_width=True)
+
+    #     if result['high_corr_pairs']:
+    #         st.warning(
+    #             "⚠️ Highly correlated pairs (> 0.85): " +
+    #             ", ".join([f"{a}-{b} ({c:.2f})" for a,b,c in result['high_corr_pairs']])
+    #         )
+
+    #     # 5) AI analysis
+    #     st.markdown("### 🤖 Analysis")
+    #     use_agent = st.toggle("Use Agentic suggestions (Yahoo→AV fallback, tips, correlation)", value=True)
+
+    #     if use_agent:
+    #         try:
+    #             with st.spinner("Agent is planning, fetching and analyzing..."):
+    #                 out = portfolio_agent(tickers, prefer="yahoo", allow_fallback=True)
+
+    #             st.markdown("#### 📋 Tip Sheet")
+    #             for t in out["tips"]:
+    #                 st.markdown(f"- {t}")
+
+    #             st.markdown("#### 💡 Suggestions (view-only)")
+    #             st.info(out["suggestions"]["message"])
+    #             if out["suggestions"]["high_corr_pairs"]:
+    #                 st.caption(
+    #                     "High-corr pairs: " +
+    #                     ", ".join([f"{a}-{b} ({c:.2f})" for a,b,c in out["suggestions"]["high_corr_pairs"]])
+    #                 )
+
+    #             with st.expander("🧠 Agent Log"):
+    #                 # Show only lines that start with "Fetched prices from "
+    #                 filtered_log = [line for line in out["log"] if line.strip().startswith("Fetched prices from ")]
+    #                 if filtered_log:
+    #                     st.code("\n".join(filtered_log))
+    #                 else:
+    #                     st.code("No price fetch log found.")
+    #         except Exception as e:
+    #             st.warning(f"Agent failed: {e}")
+    #             st.caption("Falling back to LLM analysis…")
+    #             try:
+    #                 prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
+    #                 ai_response = query_local_model(prompt)
+    #                 st.markdown("#### LLM Portfolio Analysis")
+    #                 st.markdown(ai_response)
+    #             except Exception as e2:
+    #                 st.warning(f"LLM analysis failed: {e2}")
+    #     else:
+    #         try:
+    #             prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
+    #             ai_response = query_local_model(prompt)
+    #             st.markdown("#### LLM Portfolio Analysis")
+    #             st.markdown(ai_response)
+    #         except Exception as e:
+    #             st.warning(f"LLM analysis failed: {e}")
+
+    #     st.text("You can edit the form above to change your portfolio and re-run the simulation.")        
+    #         # ---------- UI (no forms so it updates as you type) ----------
+
+    # # Build your $1,000 portfolio with a form
+    # st.markdown('#### Simulate $1,000 portfolio')
+    # with st.expander("Your Portfolio", expanded=False):
+    #     with st.form("sim_form", clear_on_submit=False):
+    #         df0 = st.session_state.sim_df
+
+    #         st.markdown("##### Enter your portfolio tickers and allocations (must total $1,000):")
+
+    #         col1, col2, col3 = st.columns(3)
+    #         with col1:
+    #             t1 = st.text_input("Ticker 1", value=df0.loc[0, "Ticker"], key="t1")
+    #             a1 = st.number_input("Allocation 1", value=float(df0.loc[0, "Allocation"]),
+    #                                  min_value=0.0, step=10.0, format="%.2f", key="a1")
+    #         with col2:
+    #             t2 = st.text_input("Ticker 2", value=df0.loc[1, "Ticker"], key="t2")
+    #             a2 = st.number_input("Allocation 2", value=float(df0.loc[1, "Allocation"]),
+    #                                  min_value=0.0, step=10.0, format="%.2f", key="a2")
+    #         with col3:
+    #             t3 = st.text_input("Ticker 3", value=df0.loc[2, "Ticker"], key="t3")
+    #             a3 = st.number_input("Allocation 3", value=float(df0.loc[2, "Allocation"]),
+    #                                  min_value=0.0, step=10.0, format="%.2f", key="a3")
+
+    #         st.markdown("---")
+    #         run_clicked = st.form_submit_button("Run Simulation")
+    #         total_alloc = a1 + a2 + a3
+    #         if run_clicked:
+    #             if abs(total_alloc - 1000.0) > 0.01:
+    #                 st.markdown(
+    #                 f"<span class='custom-font'>⚠️ Total allocation must be exactly 1,000. Current total: ${total_alloc:,.2f}. Please adjust your allocations.</span>",
+    #                 unsafe_allow_html=True
+    #             )               
+    #             else:
+    #                 df_new = pd.DataFrame({
+    #                     "Ticker":     [t1.strip().upper(), t2.strip().upper(), t3.strip().upper()],
+    #                     "Allocation": [a1, a2, a3]
+    #                 })
+    #                 st.session_state.sim_df = df_new
+    #                 _run_simulation(df_new["Ticker"].tolist(), [a1, a2, a3])
+
+
+    #     # Suggest using AI-suggested portfolio
+    #     if st.session_state.sim_new_tickers and st.session_state.sim_new_allocs:
+    #         if st.button('Use Suggested Portfolio'):
+    #             st.session_state.sim_df = pd.DataFrame({
+    #                 'Ticker': st.session_state.sim_new_tickers[:3],
+    #                 'Allocation': [float(x) for x in st.session_state.sim_new_allocs[:3]]
+    #             })
+    #             st.rerun()
+
+    #             # )
+    #         # --- Ask for email before Save Portfolio ---
+    #         email = st.text_input("Enter your email", key="sim_email")
+    #         st.text("💾 Save your portfolio to monitor progress over 1 month.")
+    #         if st.button("💾 Save Portfolio Now"):
+    #             if not email or email.strip() == "":
+    #                 st.warning("Please enter your email before saving your portfolio.")
+    #             else:
+    #                 try:
+    #                     success, msg = save_user_simulation(
+    #                         email.strip(),
+    #                         st.session_state.sim_df["Ticker"].tolist(),
+    #                         st.session_state.sim_df["Allocation"].tolist(),
+    #                         st.session_state.sim_total_val
+    #                     )
+    #                     (st.success if success else st.error)(msg)
+    #                 except Exception as e:
+    #                     st.warning(f"⚠️ Unable to save simulation: {e}")
+
+    # # --- RETRIEVE PREVIOUS SIMULATION (ALWAYS VISIBLE) ---
+    # st.markdown("<h3 class='custom-font'>📩 Retrieve Previous Simulation</h3>", unsafe_allow_html=True)
+    # email_to_fetch = st.text_input("Enter email to load your last simulation", key="fetch_email")
+    # if st.button("Fetch Last Simulation", key="fetch_btn"):
+    #     sim = get_last_simulation(email_to_fetch)
+    #     if sim is not None:
+    #         last = sim.iloc[0]
+    #         try:
+    #             tickers_last = [x.strip().upper() for x in last["tickers"].split(",")]
+    #             allocations_last = [float(a) for a in last["allocations"].split(",")]
+
+    #             # Fill the editor and show today’s performance
+    #             st.session_state.sim_df = pd.DataFrame(
+    #                 {"Ticker": tickers_last[:3], "Allocation": allocations_last[:3]}
+    #             )
+
+    #             st.success("Previous simulation loaded! Table updated above.")
+
+    #             result, total_val = evaluate_virtual_portfolio(tickers_last[:3], allocations_last[:3], last["date"])
+    #             if result is not None:
+    #                 df_result = pd.DataFrame.from_dict(result, orient="index").reset_index().rename(columns={"index": "Ticker"})
+    #                 st.dataframe(df_result, use_container_width=True)
+    #                 st.markdown(
+    #                     f"<p class='custom-font'><b>Total Value:</b> ${total_val:,.2f}</p>",
+    #                     unsafe_allow_html=True
+    #                 )
+    #             else:
+    #                 st.info("No portfolio evaluation available.")
+
+    #             # AI analysis of fetched portfolio
+    #             try:
+    #                 sectors_last = [get_sector_for_ticker(t) for t in tickers_last[:3]]
+    #                 prompt = build_portfolio_analysis_prompt(tickers_last[:3], allocations_last[:3], sectors_last)
+    #                 ai_response = query_local_model(prompt)
+    #                 st.markdown("### 🤖 AI Portfolio Analysis")
+    #                 st.markdown(ai_response)
+    #             except Exception as e:
+    #                 st.warning(f"⚠️ AI analysis failed: {e}")
+
+    #         except Exception as e:
+    #             st.warning(f"⚠️ Unable to load previous simulation: {e}")
+    #     else:
+    #         st.warning("No previous simulation found for this email.")
+
+    # if st.button("🔄 Reset Simulation & Data", key="reset_simulation"):
+    #     try:
+    #         st.cache_data.clear()
+    #     except Exception:
+    #         pass
+    #     # Clear simulation-related session_state keys
+    #     for k in list(st.session_state.keys()):
+    #         if k.startswith("sim_") or k in ["tickers", "allocations", "simulation_results"]:
+    #             del st.session_state[k]
+    #     st.toast("Simulation inputs & data cleared. Reloading…")
+    #     st.rerun()
+    st.header("💰 Portfolio Simulator – Starter Portfolio")
+
+    # ---- Load analytics pack once ----
+    pack = load_analytics_pack()
+    tickers_meta = pack.get("tickers", {})
+
+    # ---- Onboarding UI ----
+    st.subheader("🧭 Onboarding")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        investment_style = st.selectbox(
+            "Investment Style",
+            ["Long-term", "Conservative", "Active"],
+            index=0,
+        )
+        involvement = st.selectbox(
+            "Involvement",
+            ["Set & forget", "Monthly", "Tweak"],
+            index=0,
         )
 
-        with st.expander("📈 Correlation Matrix"):
+    with c2:
+        asset_interest = st.selectbox(
+            "Asset Interest",
+            ["Stocks", "ETFs", "Bonds", "I don’t know", "All of the above"],
+            index=0,
+        )
 
-            corr_matrix = result['corr_matrix']
-            fig = go.Figure(
-                data=go.Heatmap(
-                    z=corr_matrix.values,
-                    x=corr_matrix.columns,
-                    y=corr_matrix.index,
-                    colorscale='RdBu',
-                    zmin=-1, zmax=1,
-                    colorbar=dict(title="Correlation")
-                )
-            )
-            fig.update_layout(
-                title="Correlation Matrix Heatmap",
-                xaxis_title="Ticker",
-                yaxis_title="Ticker",
-                width=500,
-                height=500
-            )
-            st.plotly_chart(fig, use_container_width=True)
+    with c3:
+        focus = st.selectbox(
+            "Focus",
+            ["Growth", "Dividend", "Stability", "Active returns"],
+            index=0,
+        )
+        age_range = st.selectbox(
+            "Age Range (optional)",
+            ["", "20–35", "36–50", "51–65", "65+"],
+            index=0,
+        )
 
-        if result['high_corr_pairs']:
-            st.warning(
-                "⚠️ Highly correlated pairs (> 0.85): " +
-                ", ".join([f"{a}-{b} ({c:.2f})" for a,b,c in result['high_corr_pairs']])
-            )
-
-        # 5) AI analysis
-        st.markdown("### 🤖 Analysis")
-        use_agent = st.toggle("Use Agentic suggestions (Yahoo→AV fallback, tips, correlation)", value=True)
-
-        if use_agent:
-            try:
-                with st.spinner("Agent is planning, fetching and analyzing..."):
-                    out = portfolio_agent(tickers, prefer="yahoo", allow_fallback=True)
-
-                st.markdown("#### 📋 Tip Sheet")
-                for t in out["tips"]:
-                    st.markdown(f"- {t}")
-
-                st.markdown("#### 💡 Suggestions (view-only)")
-                st.info(out["suggestions"]["message"])
-                if out["suggestions"]["high_corr_pairs"]:
-                    st.caption(
-                        "High-corr pairs: " +
-                        ", ".join([f"{a}-{b} ({c:.2f})" for a,b,c in out["suggestions"]["high_corr_pairs"]])
-                    )
-
-                with st.expander("🧠 Agent Log"):
-                    # Show only lines that start with "Fetched prices from "
-                    filtered_log = [line for line in out["log"] if line.strip().startswith("Fetched prices from ")]
-                    if filtered_log:
-                        st.code("\n".join(filtered_log))
-                    else:
-                        st.code("No price fetch log found.")
-            except Exception as e:
-                st.warning(f"Agent failed: {e}")
-                st.caption("Falling back to LLM analysis…")
-                try:
-                    prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
-                    ai_response = query_local_model(prompt)
-                    st.markdown("#### LLM Portfolio Analysis")
-                    st.markdown(ai_response)
-                except Exception as e2:
-                    st.warning(f"LLM analysis failed: {e2}")
-        else:
-            try:
-                prompt = build_portfolio_analysis_prompt(tickers, allocations, sectors)
-                ai_response = query_local_model(prompt)
-                st.markdown("#### LLM Portfolio Analysis")
-                st.markdown(ai_response)
-            except Exception as e:
-                st.warning(f"LLM analysis failed: {e}")
-
-        st.text("You can edit the form above to change your portfolio and re-run the simulation.")        
-            # ---------- UI (no forms so it updates as you type) ----------
-
-    # Build your $1,000 portfolio with a form
-    st.markdown('#### Simulate $1,000 portfolio')
-    with st.expander("Your Portfolio", expanded=False):
-        with st.form("sim_form", clear_on_submit=False):
-            df0 = st.session_state.sim_df
-
-            st.markdown("##### Enter your portfolio tickers and allocations (must total $1,000):")
-
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                t1 = st.text_input("Ticker 1", value=df0.loc[0, "Ticker"], key="t1")
-                a1 = st.number_input("Allocation 1", value=float(df0.loc[0, "Allocation"]),
-                                     min_value=0.0, step=10.0, format="%.2f", key="a1")
-            with col2:
-                t2 = st.text_input("Ticker 2", value=df0.loc[1, "Ticker"], key="t2")
-                a2 = st.number_input("Allocation 2", value=float(df0.loc[1, "Allocation"]),
-                                     min_value=0.0, step=10.0, format="%.2f", key="a2")
-            with col3:
-                t3 = st.text_input("Ticker 3", value=df0.loc[2, "Ticker"], key="t3")
-                a3 = st.number_input("Allocation 3", value=float(df0.loc[2, "Allocation"]),
-                                     min_value=0.0, step=10.0, format="%.2f", key="a3")
-
-            st.markdown("---")
-            run_clicked = st.form_submit_button("Run Simulation")
-            total_alloc = a1 + a2 + a3
-            if run_clicked:
-                if abs(total_alloc - 1000.0) > 0.01:
-                    st.markdown(
-                    f"<span class='custom-font'>⚠️ Total allocation must be exactly 1,000. Current total: ${total_alloc:,.2f}. Please adjust your allocations.</span>",
-                    unsafe_allow_html=True
-                )               
-                else:
-                    df_new = pd.DataFrame({
-                        "Ticker":     [t1.strip().upper(), t2.strip().upper(), t3.strip().upper()],
-                        "Allocation": [a1, a2, a3]
-                    })
-                    st.session_state.sim_df = df_new
-                    _run_simulation(df_new["Ticker"].tolist(), [a1, a2, a3])
-
-
-        # Suggest using AI-suggested portfolio
-        if st.session_state.sim_new_tickers and st.session_state.sim_new_allocs:
-            if st.button('Use Suggested Portfolio'):
-                st.session_state.sim_df = pd.DataFrame({
-                    'Ticker': st.session_state.sim_new_tickers[:3],
-                    'Allocation': [float(x) for x in st.session_state.sim_new_allocs[:3]]
-                })
-                st.rerun()
-
-                # )
-            # --- Ask for email before Save Portfolio ---
-            email = st.text_input("Enter your email", key="sim_email")
-            st.text("💾 Save your portfolio to monitor progress over 1 month.")
-            if st.button("💾 Save Portfolio Now"):
-                if not email or email.strip() == "":
-                    st.warning("Please enter your email before saving your portfolio.")
-                else:
-                    try:
-                        success, msg = save_user_simulation(
-                            email.strip(),
-                            st.session_state.sim_df["Ticker"].tolist(),
-                            st.session_state.sim_df["Allocation"].tolist(),
-                            st.session_state.sim_total_val
-                        )
-                        (st.success if success else st.error)(msg)
-                    except Exception as e:
-                        st.warning(f"⚠️ Unable to save simulation: {e}")
-
-    # --- RETRIEVE PREVIOUS SIMULATION (ALWAYS VISIBLE) ---
-    st.markdown("<h3 class='custom-font'>📩 Retrieve Previous Simulation</h3>", unsafe_allow_html=True)
-    email_to_fetch = st.text_input("Enter email to load your last simulation", key="fetch_email")
-    if st.button("Fetch Last Simulation", key="fetch_btn"):
-        sim = get_last_simulation(email_to_fetch)
-        if sim is not None:
-            last = sim.iloc[0]
-            try:
-                tickers_last = [x.strip().upper() for x in last["tickers"].split(",")]
-                allocations_last = [float(a) for a in last["allocations"].split(",")]
-
-                # Fill the editor and show today’s performance
-                st.session_state.sim_df = pd.DataFrame(
-                    {"Ticker": tickers_last[:3], "Allocation": allocations_last[:3]}
-                )
-
-                st.success("Previous simulation loaded! Table updated above.")
-
-                result, total_val = evaluate_virtual_portfolio(tickers_last[:3], allocations_last[:3], last["date"])
-                if result is not None:
-                    df_result = pd.DataFrame.from_dict(result, orient="index").reset_index().rename(columns={"index": "Ticker"})
-                    st.dataframe(df_result, use_container_width=True)
-                    st.markdown(
-                        f"<p class='custom-font'><b>Total Value:</b> ${total_val:,.2f}</p>",
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.info("No portfolio evaluation available.")
-
-                # AI analysis of fetched portfolio
-                try:
-                    sectors_last = [get_sector_for_ticker(t) for t in tickers_last[:3]]
-                    prompt = build_portfolio_analysis_prompt(tickers_last[:3], allocations_last[:3], sectors_last)
-                    ai_response = query_local_model(prompt)
-                    st.markdown("### 🤖 AI Portfolio Analysis")
-                    st.markdown(ai_response)
-                except Exception as e:
-                    st.warning(f"⚠️ AI analysis failed: {e}")
-
-            except Exception as e:
-                st.warning(f"⚠️ Unable to load previous simulation: {e}")
-        else:
-            st.warning("No previous simulation found for this email.")
-
-    if st.button("🔄 Reset Simulation & Data", key="reset_simulation"):
+    # ---- Suggest Starter Portfolio ----
+    if st.button("✨ Suggest Starter Portfolio", use_container_width=True):
         try:
-            st.cache_data.clear()
-        except Exception:
-            pass
-        # Clear simulation-related session_state keys
-        for k in list(st.session_state.keys()):
-            if k.startswith("sim_") or k in ["tickers", "allocations", "simulation_results"]:
-                del st.session_state[k]
-        st.toast("Simulation inputs & data cleared. Reloading…")
-        st.rerun()
+            onboarding = {
+                "investmentStyle": investment_style,
+                "assetInterest": asset_interest,
+                "focus": focus,
+                "involvement": involvement,
+                "ageRange": (age_range if age_range else None),
+            }
+
+            # ✅ Function returns picks_data + notes
+            picks_data, notes = suggest_starter_from_pack(pack, onboarding, k=8)
+
+            if not picks_data:
+                st.warning("No suggestions generated.")
+            else:
+                picks = [p["ticker"] for p in picks_data]
+                allocs = [round(p["weight"] * 1000.0, 2) for p in picks_data]
+                st.session_state.sim_new_tickers = picks
+                st.session_state.sim_new_allocs = allocs  # store dollars now
+
+                rows = []
+                for p in picks_data:
+                    t = p["ticker"]
+                    alloc_pct = round(p["weight"] * 100.0, 2)
+                    meta = tickers_meta.get(t.upper(), {})
+                    rows.append({
+                        "Ticker": t,
+                        "Instrument": str(meta.get("type", "unknown")).upper(),
+                        "Name": p["name"],
+                        "Allocation (%)": alloc_pct,
+                    })
+
+                st.dataframe(pd.DataFrame(rows), use_container_width=True)
+
+                for n in notes:
+                    st.caption(f"• {n}")
+
+        except Exception as e:
+            st.error(f"Failed to generate starter portfolio: {e}")
+
 
 def append_feedback(row: list[str]):
     os.makedirs(os.path.dirname(FEEDBACK_CSV_PATH), exist_ok=True)
