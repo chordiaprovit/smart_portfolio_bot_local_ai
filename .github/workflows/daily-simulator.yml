@@ -44,17 +44,17 @@ jobs:
           git commit -m "Update S&P 500 [skip ci]" || echo "No changes to commit"
           git push
 
-      - name: Run ETF updater
-        run: |
-          python etf_updates.py
+      # - name: Run ETF updater
+      #   run: |
+      #     python etf_updates.py
 
-      - name: Commit updated data
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/etf_prices_converted.csv || true
-          git commit -m "Update ETF data [skip ci]" || echo "No changes to commit"
-          git push
+      # - name: Commit updated data
+      #   run: |
+      #     git config --global user.name "github-actions[bot]"
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      #     git add data/etf_prices_converted.csv || true
+      #     git commit -m "Update ETF data [skip ci]" || echo "No changes to commit"
+      #     git push
 
       # Optional: upload outputs as workflow artifacts
       # - name: Upload outputs
