@@ -14,7 +14,7 @@ CSV_FILE = "data/etf_prices_converted.csv"
 
 # Load tickers
 try:
-    Tickers = pd.read_csv(TICKERS_FILE, header=None)[0].tolist()
+    Tickers = pd.read_csv(TICKERS_FILE, header=None, encoding='latin1', errors='replace')[0].tolist()
 except Exception as e:
     logging.error(f"Failed to load tickers: {e}")
     sys.exit(1)
