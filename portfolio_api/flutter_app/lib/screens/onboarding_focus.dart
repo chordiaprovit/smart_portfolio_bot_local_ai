@@ -73,21 +73,25 @@ class OnboardingFocusScreen extends StatelessWidget {
 
             const Spacer(),
 
-            SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: FilledButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const OnboardingInvolvementScreen()),
-                  );
-                },
-                child: const Text(
-                  "Next",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ),
+            SafeArea(
+                  minimum: const EdgeInsets.only(bottom: 16),
+                  child:
+                SizedBox(
+                  width: double.infinity,
+                  height: 54,
+                  child: FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const OnboardingInvolvementScreen()),
+                      );
+                    },
+                    child: const Text(
+                      "Next",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                )
             ),
           ],
         ),

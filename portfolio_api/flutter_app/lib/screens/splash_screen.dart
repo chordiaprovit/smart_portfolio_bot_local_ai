@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildKeywordChip("Understand"),
-                const SizedBox(width: 8),
+                const SizedBox(width: 8, height: 10),
                 _buildKeywordChip("Balance"),
                 const SizedBox(width: 8),
                 _buildKeywordChip("De-risk"),

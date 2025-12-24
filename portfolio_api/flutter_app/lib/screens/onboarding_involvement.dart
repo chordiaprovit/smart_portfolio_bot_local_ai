@@ -63,32 +63,34 @@ class OnboardingInvolvementScreen extends StatelessWidget {
 
             const Spacer(),
 
-            SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: FilledButton(
-                onPressed: state.loading
-                    ? null
-                    : () async {
-                        // Pull starter portfolio (and optionally compute initial health)
-                        await context.read<AppState>().loadStarter();
-                        // Optional: compute health immediately if starter includes holdings later
-                        // await context.read<AppState>().computeHealth();
+           SafeArea(
+              minimum: const EdgeInsets.only(bottom: 16),
+              child: SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: FilledButton(
+                  onPressed: state.loading
+                      ? null
+                      : () async {
+                          await context.read<AppState>().loadStarter();
 
-                        if (context.mounted) {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (_) => const StarterPortfolioScreen()),
-                            (route) => false,
-                          );
-                        }
-                      },
-                child: Text(
-                  state.loading ? "Building..." : "Finish",
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          if (context.mounted) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const StarterPortfolioScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          }
+                        },
+                  child: Text(
+                    state.loading ? "Building..." : "Finish",
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
