@@ -97,63 +97,86 @@ def _calc_cagr(first: float, last: float, n_days: int) -> float:
 
 def _build_ticker_metrics(prices: pd.DataFrame) -> Dict[str, Dict]:
     # Load ETF symbols
-    etf_symbols = set()
+    etf_symbols: set[str] = set()
     try:
         with open("etf_symbols.txt", "r", encoding="utf-8") as f:
             etf_symbols = {line.strip().upper() for line in f if line.strip()}
     except FileNotFoundError:
         print("Warning: etf_symbols.txt not found, all tickers will be marked as 'stock'")
-    
-    # Load name mappings
-    name_map = {}
+
+    # Load name & sector mappings
+    name_map: Dict[str, str] = {}
+    sector_map: Dict[str, str] = {}
+
+    # Stocks: data/snp500.csv (expects 'GICS Sector' column; other column names may vary)
     try:
-        # For stocks: data/snp500.csv, first two columns (ticker, name)
         snp_df = pd.read_csv("data/snp500.csv")
-        if len(snp_df.columns) >= 2:
-            for _, row in snp_df.iterrows():
-                ticker = str(row.iloc[0]).strip().upper()
-                name = str(row.iloc[1]).strip()
+
+        ticker_col = next((c for c in ["Symbol", "Ticker", "symbol", "ticker"] if c in snp_df.columns), snp_df.columns[0])
+        name_col = next(
+            (c for c in ["Security", "Name", "Company", "company", "security", "name"] if c in snp_df.columns),
+            snp_df.columns[1] if len(snp_df.columns) >= 2 else snp_df.columns[0],
+        )
+        sector_col = "GICS Sector" if "GICS Sector" in snp_df.columns else None
+
+        for _, row in snp_df.iterrows():
+            ticker = str(row.get(ticker_col, "")).strip().upper()
+            if not ticker:
+                continue
+
+            name = str(row.get(name_col, "")).strip() if pd.notna(row.get(name_col, "")) else ""
+            if name:
                 name_map[ticker] = name
+
+            if sector_col:
+                sector = str(row.get(sector_col, "")).strip() if pd.notna(row.get(sector_col, "")) else ""
+                if sector:
+                    sector_map[ticker] = sector
     except Exception as e:
-        print(f"Warning: Could not load stock names from data/snp500.csv: {e}")
-    
+        print(f"Warning: Could not load stock names/sectors from data/snp500.csv: {e}")
+
+    # ETFs: data/etf_detail.csv, first two columns (ticker, name)
     try:
-        # For ETFs: etf_detail.csv, first two columns (ticker, name)
         etf_df = pd.read_csv("data/etf_detail.csv")
         if len(etf_df.columns) >= 2:
             for _, row in etf_df.iterrows():
                 ticker = str(row.iloc[0]).strip().upper()
                 name = str(row.iloc[1]).strip()
-                name_map[ticker] = name
+                if ticker:
+                    name_map[ticker] = name
     except Exception as e:
         print(f"Warning: Could not load ETF names from data/etf_detail.csv: {e}")
-    
+
     tickers = [c for c in prices.columns if c != "Date"]
     out: Dict[str, Dict] = {}
 
     for t in tickers:
         s = prices[t].dropna()
         if len(s) < 20:
-            # too sparse, skip
             continue
 
         first = float(s.iloc[0])
         last = float(s.iloc[-1])
         n_days = len(s)
 
-        # daily returns for vol
         r = s.pct_change().dropna()
         vol = float(r.std(ddof=1) * math.sqrt(TRADING_DAYS)) if len(r) >= 20 else float("nan")
+
+        t_upper = t.upper()
+        t_type = "etf" if t_upper in etf_symbols else "stock"
 
         out[t] = {
             "last_price": last,
             "cagr": _calc_cagr(first, last, n_days),
             "vol": vol,
             "trend": _calc_trend_log_slope(s),
-            # Metadata placeholders (fill later with your own mappings)
-            "type": "etf" if t.upper() in etf_symbols else "stock",     # e.g., "stock" | "etf" | "bond_etf"
-            "name": name_map.get(t.upper(), "unknown"),   # e.g., company or ETF name
+            "type": t_type,  # "stock" | "etf"
+            "name": name_map.get(t_upper, "unknown"),
         }
+
+        # Add sector only for stocks (ETFs intentionally have no sector)
+        if t_type == "stock":
+            out[t]["sector"] = sector_map.get(t_upper, "Unknown")
 
     return out
 

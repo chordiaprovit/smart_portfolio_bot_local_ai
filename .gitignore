@@ -1,1 +1,4 @@
 .env
+android/key.properties
+android/*.jks
+*.jks
