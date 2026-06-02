@@ -1,4 +1,13 @@
 .env
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.xlsx
+data/digests/
+.cache/
+venv/
+.venv/
 android/key.properties
 android/*.jks
 *.jks

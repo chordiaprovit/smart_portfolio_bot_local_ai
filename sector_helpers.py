@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 from typing import Tuple, List
-from trend_classifier import classify_trend, TrendResult
 
 def load_sector_map(csv_path: str) -> pd.Series:
     df = pd.read_csv(csv_path)
@@ -35,8 +34,7 @@ def aggregate_by_sector(price_df: pd.DataFrame, sector_map: pd.Series, how: str 
     out = pd.DataFrame(sec_frames).sort_index()
     return out
 
-def sector_trend_predictions(price_df: pd.DataFrame, map_csv: str, horizon: int = 5) -> Tuple[pd.DataFrame, List[TrendResult]]:
+def sector_trend_predictions(price_df: pd.DataFrame, map_csv: str, horizon: int = 5) -> Tuple[pd.DataFrame, list]:
     smap = load_sector_map(map_csv)
     sec_df = aggregate_by_sector(price_df, smap, how="mean")
-    preds = classify_trend(sec_df, horizon=horizon) if not sec_df.empty else []
-    return sec_df, preds
+    return sec_df, []
