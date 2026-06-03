@@ -2,13 +2,16 @@ name: Daily Portfolio Simulation
 
 on:
   schedule:
-    # Monday to Friday at 18:00 UTC (6pm)
+    # Monday to Friday at 18:00 UTC (6pm) — S&P data update
     - cron: "0 18 * * 1-5"
+    # Monday to Friday at 11:30 UTC (6:30 AM ET) — Morning digest
+    - cron: "30 11 * * 1-5"
   workflow_dispatch:
 
 jobs:
   run-simulator:
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && contains(github.event.schedule, '0 18'))
 
     steps:
       - name: Checkout
@@ -35,7 +38,7 @@ jobs:
       - name: Run S&P 500 simulator
         run: |
           python update_snp500_history.py
-      
+
       - name: Commit updated data
         run: |
           git config --global user.name "github-actions[bot]"
@@ -56,11 +59,34 @@ jobs:
       #     git commit -m "Update ETF data [skip ci]" || echo "No changes to commit"
       #     git push
 
-      # Optional: upload outputs as workflow artifacts
-      # - name: Upload outputs
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: simulator-outputs
-      #     path: |
-      #       data/*.csv
-      #       outputs/**
+  send_morning_digest:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && contains(github.event.schedule, '30 11'))
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-digest-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-digest-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt feedparser edgartools
+
+      - name: Send morning digest
+        run: python digest_mailer.py --send
+        env:
+          DIGEST_SENDER_EMAIL: ${{ secrets.DIGEST_SENDER_EMAIL }}
+          DIGEST_SENDER_PASS: ${{ secrets.DIGEST_SENDER_PASS }}

@@ -100,6 +100,42 @@ Then open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ---
 
+## 📧 Email Digest Setup
+
+The app sends a daily intelligence digest at **6:30 AM ET** (Mon–Fri) covering convergence picks, insider buys, news signals, and hedge fund moves.
+
+### 1. Add GitHub Secrets
+
+Go to **Settings → Secrets → Actions** and add:
+
+| Secret | Value |
+|--------|-------|
+| `DIGEST_SENDER_EMAIL` | Your Gmail address |
+| `DIGEST_SENDER_PASS` | Gmail App Password (**not** your regular password) |
+
+Get an App Password: <https://myaccount.google.com/apppasswords>
+
+### 2. Add recipients
+
+Create `data/digest_recipients.txt` with one email per line:
+
+```
+user1@gmail.com
+user2@outlook.com
+```
+
+### 3. That's it
+
+The digest sends automatically at **6:30 AM ET** on weekdays via GitHub Actions.
+
+To preview locally without sending:
+```bash
+python digest_mailer.py --preview
+# HTML saved to data/digests/digest_YYYYMMDD.html
+```
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome!  
