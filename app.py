@@ -20,6 +20,9 @@ import plotly.graph_objects as go
 from statsmodels.tsa.arima.model import ARIMA
 from investor import suggest_diversificatio_corr
 from analytics_engine import load_analytics_pack, suggest_starter_from_pack
+from news_fetcher import get_news_signals
+from speech_backtest import get_signal_leaderboard
+from hedge_fund_mirror import get_fund_holdings, FUNDS
 
 
 FONT_SIZE = "15px"
@@ -63,9 +66,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-tab3, tab4, tab5, tab1 = st.tabs(["📈 Sector Performance", "💰 Portfolio Suggestor", "Macro Simulator", "ℹ️ About", ])
+tab_sector, tab_portfolio, tab_macro, tab_intel, tab_hedge, tab_alerts, tab_about = st.tabs([
+    "📈 Sector Performance",
+    "💰 Portfolio Suggestor",
+    "🔮 Macro Simulator",
+    "🧠 Intelligence",
+    "🐳 Hedge Funds",
+    "🚨 Alerts",
+    "ℹ️ About",
+])
 
-with tab1:
+with tab_about:
     # --- Lightweight CSS polish ---
     st.markdown("""
     <style>
@@ -151,7 +162,7 @@ with tab1:
     st.info("Educational use only — not financial advice.")
 
     
-with tab3:
+with tab_sector:
     latest_date = None
     try:
         df_sector = pd.read_csv("data/snp500_30day_wide.csv")
@@ -515,7 +526,7 @@ with tab3:
                 fig_line.update_layout(margin=dict(t=50, b=10, l=10, r=10))
                 st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
     
-with tab4:
+with tab_portfolio:
     # st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
 
     # @st.cache_data(show_spinner=False)
@@ -908,6 +919,241 @@ with tab4:
             st.error(f"Failed to generate starter portfolio: {e}")
 
 
+# ── 🧠 Intelligence Tab ────────────────────────────────────────────────────────
+with tab_intel:
+    st.markdown("### 🧠 Intelligence")
+
+    # Section 1: Political Signal Backtest leaderboard
+    st.subheader("📊 Political Signal Backtest")
+    st.caption("More data accumulates daily — signals strengthen over time.")
+    try:
+        board = get_signal_leaderboard()
+        if board:
+            board_df = pd.DataFrame(board)[
+                ["keyword", "ticker", "direction", "hit_rate", "avg_return_5d", "sample_size"]
+            ].copy()
+            board_df["hit_rate"] = (board_df["hit_rate"] * 100).round(1).astype(str) + "%"
+            board_df["avg_return_5d"] = board_df["avg_return_5d"].apply(
+                lambda x: f"{x*100:+.2f}%" if x is not None else "N/A"
+            )
+            board_df.columns = ["Keyword", "Ticker", "Dir", "Hit Rate", "Avg 5d Return", "Sample Size"]
+            st.dataframe(board_df, use_container_width=True, hide_index=True)
+        else:
+            st.info("No backtest data with sufficient sample size yet. Run `python speech_backtest.py --run` to populate.")
+    except Exception as e:
+        st.warning(f"Could not load backtest results: {e}")
+
+    st.divider()
+
+    # Section 2: Today's News Signals
+    st.subheader("🗞️ Today's News Signals")
+    default_intel_tickers = ["NVDA", "AAPL", "MSFT", "AMZN", "GOOGL", "META", "TSLA", "JPM", "MU", "DELL"]
+    try:
+        with st.spinner("Fetching latest news signals..."):
+            news_sigs = get_news_signals(default_intel_tickers, use_cache=True)
+        if news_sigs:
+            news_df = pd.DataFrame(news_sigs[:15])[
+                ["ticker", "direction", "keyword", "score", "headline", "source"]
+            ].copy()
+            news_df.columns = ["Ticker", "Dir", "Keyword", "Score", "Headline", "Source"]
+            news_df["Score"] = news_df["Score"].round(1)
+            st.dataframe(news_df, use_container_width=True, hide_index=True)
+        else:
+            st.info("No keyword-matched news signals at the moment.")
+    except Exception as e:
+        st.warning(f"News signals unavailable: {e}")
+
+
+# ── 🐳 Hedge Funds Tab ────────────────────────────────────────────────────────
+with tab_hedge:
+    st.markdown("### 🐳 Hedge Fund Holdings Mirror")
+    st.caption("Latest 13F filings via SEC EDGAR. Updated quarterly.")
+
+    fund_choice = st.selectbox("Select Fund", options=list(FUNDS.keys()), key="hedge_fund_select")
+
+    if st.button("Load Holdings", key="load_hedge"):
+        with st.spinner(f"Fetching {fund_choice} 13F..."):
+            try:
+                df_fund = get_fund_holdings(fund_choice)
+                st.session_state["hedge_df"] = df_fund
+                st.session_state["hedge_fund_name"] = fund_choice
+            except Exception as e:
+                st.error(f"Failed to load {fund_choice}: {e}")
+
+    if "hedge_df" in st.session_state and st.session_state.get("hedge_fund_name") == fund_choice:
+        df_fund = st.session_state["hedge_df"]
+        st.markdown(f"**{fund_choice}** — {len(df_fund)} positions")
+
+        display_df = df_fund.copy()
+        display_df["market_value"] = display_df["market_value"].apply(lambda x: f"${x:,.0f}")
+        display_df["shares"] = display_df["shares"].apply(lambda x: f"{x:,.0f}")
+        display_df["pct_portfolio"] = display_df["pct_portfolio"].apply(lambda x: f"{x:.2f}%")
+        display_df.columns = ["Ticker", "Issuer", "Shares", "Market Value", "% Portfolio"]
+        st.dataframe(display_df, use_container_width=True, hide_index=True)
+
+        # Bar chart — top 10 by weight
+        top10 = df_fund.head(10).copy()
+        fig_hf = px.bar(
+            top10, x="ticker", y="pct_portfolio",
+            labels={"ticker": "Ticker", "pct_portfolio": "% of Portfolio"},
+            title=f"{fund_choice} — Top 10 Positions by Weight",
+            color="pct_portfolio",
+            color_continuous_scale="Blues",
+        )
+        fig_hf.update_layout(showlegend=False, margin=dict(t=50, b=20))
+        st.plotly_chart(fig_hf, use_container_width=True)
+    else:
+        st.info("Select a fund and click **Load Holdings** to view positions.")
+
+
+# ── 🚨 Alerts Tab ─────────────────────────────────────────────────────────────
+with tab_alerts:
+    st.markdown("### 🚨 Smart Money Alerts")
+
+    if st.button("🔄 Refresh All Signals", key="refresh_signals"):
+        with st.spinner("Re-running convergence scores..."):
+            try:
+                import subprocess
+                subprocess.run(
+                    ["python3", "convergence_score.py", "--tickers",
+                     "NVDA", "AAPL", "MSFT", "AMZN", "GOOGL", "META", "TSLA", "JPM", "MU", "DELL"],
+                    capture_output=True, timeout=300
+                )
+                st.success("Signals refreshed.")
+            except Exception as e:
+                st.warning(f"Refresh failed: {e}")
+
+    # Section 1: Convergence Picks
+    st.subheader("📡 Smart Money Convergence Picks")
+    _VERDICT_COLOR = {"STRONG BUY": "🟢", "BUY": "🟢", "WATCH": "🟡", "NEUTRAL": "⚪", "AVOID": "🔴"}
+    try:
+        scores_path = "data/convergence_scores.json"
+        if os.path.exists(scores_path):
+            scores_data = pd.read_json(scores_path)
+            scores_list = scores_data.get("scores", []) if isinstance(scores_data, dict) else []
+            if not scores_list:
+                import json as _json
+                with open(scores_path) as _f:
+                    scores_list = _json.load(_f).get("scores", [])
+
+            opportunities = [s for s in scores_list if s.get("verdict") in ("STRONG BUY", "BUY")]
+            if opportunities:
+                cols = st.columns(min(len(opportunities), 4))
+                for i, opp in enumerate(opportunities[:8]):
+                    with cols[i % len(cols)]:
+                        icon = _VERDICT_COLOR.get(opp["verdict"], "")
+                        st.metric(
+                            label=f"{icon} {opp['ticker']}",
+                            value=opp["verdict"],
+                            delta=f"Score: {opp['convergence_score']:.1f}/10",
+                        )
+                        for reason in opp.get("reasons", [])[:2]:
+                            st.caption(f"• {reason}")
+            else:
+                st.info("No STRONG BUY or BUY signals right now. Click Refresh to re-score.")
+        else:
+            st.info("No convergence data yet. Run `python convergence_score.py --tickers ...` first.")
+    except Exception as e:
+        st.warning(f"Could not load convergence scores: {e}")
+
+    st.divider()
+
+    # Section 2: Insider Buys
+    st.subheader("🕵️ High-Conviction Insider Buys")
+    try:
+        insider_path = "data/insider_signals.json"
+        if os.path.exists(insider_path):
+            import json as _json
+            with open(insider_path) as _f:
+                insider_data = _json.load(_f)
+            high_signals = [s for s in insider_data.get("signals", []) if s.get("signal_strength") == "HIGH"]
+            if high_signals:
+                ins_df = pd.DataFrame(high_signals)[
+                    ["ticker", "insider_name", "insider_role", "total_value", "transaction_date"]
+                ].copy()
+                ins_df["total_value"] = ins_df["total_value"].apply(lambda x: f"${x:,.0f}")
+                ins_df.columns = ["Ticker", "Insider", "Role", "Total Value", "Date"]
+                st.dataframe(ins_df, use_container_width=True, hide_index=True)
+            else:
+                st.info("No HIGH conviction insider buys in the current lookback window.")
+        else:
+            st.info("No insider data yet. Run `python insider_tracker.py --tickers ...` first.")
+    except Exception as e:
+        st.warning(f"Could not load insider signals: {e}")
+
+    st.divider()
+
+    # Section 3: Triple Convergence
+    st.subheader("⚡ Triple Convergence — High Score + Insider Buy + Upcoming Earnings")
+    try:
+        from datetime import timedelta
+        triple = []
+        if os.path.exists("data/convergence_scores.json") and os.path.exists("data/insider_signals.json"):
+            import json as _json
+            with open("data/convergence_scores.json") as _f:
+                all_scores = _json.load(_f).get("scores", [])
+            with open("data/insider_signals.json") as _f:
+                all_insiders = _json.load(_f).get("signals", [])
+
+            high_insider_tickers = {s["ticker"] for s in all_insiders if s.get("signal_strength") == "HIGH"}
+            top_score_tickers = {s["ticker"] for s in all_scores if s.get("convergence_score", 0) >= 7}
+            candidates = high_insider_tickers & top_score_tickers
+
+            for ticker in candidates:
+                try:
+                    cal = yf.Ticker(ticker).calendar
+                    if cal is not None and not cal.empty:
+                        earnings_dates = cal.get("Earnings Date", pd.Series())
+                        if not earnings_dates.empty:
+                            next_earnings = pd.to_datetime(earnings_dates.iloc[0]).date()
+                            days_away = (next_earnings - datetime.utcnow().date()).days
+                            if 0 <= days_away <= 14:
+                                triple.append({
+                                    "Ticker": ticker,
+                                    "Earnings Date": str(next_earnings),
+                                    "Days Away": days_away,
+                                })
+                except Exception:
+                    pass
+
+        if triple:
+            st.dataframe(pd.DataFrame(triple), use_container_width=True, hide_index=True)
+        else:
+            st.info("No triple convergence signals at the moment (requires score ≥7 + HIGH insider buy + earnings ≤14 days).")
+    except Exception as e:
+        st.warning(f"Triple convergence check failed: {e}")
+
+    st.divider()
+
+    # Section 4: Email Digest
+    st.subheader("📧 Email Digest")
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.caption("Digest sends daily at 6:30 AM ET to recipients in data/digest_recipients.txt")
+        recipients_path = "data/digest_recipients.txt"
+        if os.path.exists(recipients_path):
+            with open(recipients_path) as _rf:
+                st.code(_rf.read(), language=None)
+        else:
+            st.info("No recipients file found. Create data/digest_recipients.txt")
+    with col2:
+        if st.button("📧 Send Digest Now", key="send_digest_btn"):
+            try:
+                from digest_mailer import run_digest
+                with st.spinner("Sending..."):
+                    run_digest()
+                st.success("Sent!")
+            except Exception as e:
+                st.error(f"Send failed: {e}")
+        if st.button("👁️ Preview Digest", key="preview_digest_btn"):
+            try:
+                import subprocess
+                subprocess.run(["python3", "digest_mailer.py", "--preview"], capture_output=True, timeout=60)
+                st.success("Saved to data/digests/")
+            except Exception as e:
+                st.error(f"Preview failed: {e}")
+
+
 def append_feedback(row: list[str]):
     os.makedirs(os.path.dirname(FEEDBACK_CSV_PATH), exist_ok=True)
     is_new = not os.path.exists(FEEDBACK_CSV_PATH)
@@ -956,7 +1202,7 @@ def sslider(label, min_v, max_v, default, step, help_text, key=None):
         help=help_text, key=key
     )
 
-with tab5:
+with tab_macro:
     st.markdown("<h3 class='custom-font'>🌐 Macro Economic Scenario Simulator</h3>", unsafe_allow_html=True)
     st.info("Simulate how economic shocks might affect S&P 500 prices with macro factor shocks and compare to ARIMA.")
 
