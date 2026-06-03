@@ -15,3 +15,4 @@ gspread>=5.7.2
 google-auth>=2.20.0
 statsmodels>=0.13.0
 polygon-api-client>=1.7.0
+edgartools>=5.0
