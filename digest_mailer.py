@@ -5,8 +5,8 @@ Sends at 9:00 PM ET on weekdays via GitHub Actions.
 Reads pre-cached data files — does NOT re-fetch live data.
 
 Email sections:
-  1. 📊 What's Happening Today
-  2. 🔎 Stocks Worth Watching Today
+  1. 📊 What Happened Today
+  2. 🔎 Stocks Worth Watching Tommorow
   3. 👀 Company Insiders Are Buying Their Own Stock
   4. 📰 News That Could Move Stocks
   5. 🐳 What Big Investors Are Doing
@@ -282,7 +282,7 @@ def build_email_html() -> str:
     strong_buys = [s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")][:5]
     high_insider = [s for s in insider if s.get("signal_strength") == "HIGH"]
 
-    # ── Section 1: What's Happening Today ────────────────────────────────────
+    # ── Section 1: What Happened Today ────────────────────────────────────
     total_buy = len([s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")])
     total_watch = len([s for s in convergence if s.get("verdict") == "WATCH"])
     pulse_body = f"""
@@ -293,9 +293,9 @@ def build_email_html() -> str:
         👀 <strong>{total_watch}</strong> stock{'s' if total_watch != 1 else ''} we're keeping an eye on &nbsp;|&nbsp;
         🏢 <strong>{len(high_insider)}</strong> company executive{'s' if len(high_insider) != 1 else ''} bought their own company's stock recently
       </p>"""
-    pulse_section = _section("📊 What's Happening Today", pulse_body)
+    pulse_section = _section("📊 What Happened Today", pulse_body)
 
-    # ── Section 2: Stocks Worth Watching Today ────────────────────────────────
+    # ── Section 2: Stocks Worth Watching Tomorrow ────────────────────────────────
     if strong_buys:
         rows = ""
         for s in strong_buys:
@@ -323,7 +323,7 @@ def build_email_html() -> str:
           </table>"""
     else:
         picks_body = "<p style='color:#6b7280;'>Nothing stands out today — check back tomorrow.</p>"
-    picks_section = _section("🔎 Stocks Worth Watching Today", picks_body)
+    picks_section = _section("🔎 Stocks Worth Watching Tomorrow", picks_body)
 
     # ── Section 3: Insider Buying ─────────────────────────────────────────────
     if high_insider:
@@ -482,7 +482,7 @@ def _build_subject() -> str:
     high_ins = len([s for s in insider if s.get("signal_strength") == "HIGH"])
     parts = []
     if strong:
-        parts.append(f"{strong} stock{'s' if strong > 1 else ''} worth watching today")
+        parts.append(f"{strong} stock{'s' if strong > 1 else ''} worth watching tomorrow")
     if high_ins:
         parts.append(f"{high_ins} exec{'s' if high_ins > 1 else ''} bought their own stock")
     suffix = " · ".join(parts) if parts else "your daily update"
