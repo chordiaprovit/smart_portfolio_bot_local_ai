@@ -66,14 +66,15 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-tab_sector, tab_portfolio, tab_macro, tab_intel, tab_hedge, tab_alerts, tab_about = st.tabs([
+tab_sector, tab_etf, tab_portfolio, tab_macro, tab_intel, tab_hedge, tab_alerts, tab_about = st.tabs([
     "📈 Sector Performance",
+    "📊 ETF Explorer",
     "💰 Portfolio Suggestor",
     "🔮 Macro Simulator",
     "🧠 Intelligence",
     "🐳 Hedge Funds",
     "🚨 Alerts",
-    "ℹ️ About",
+    "ℹ️  About",
 ])
 
 with tab_about:
@@ -526,6 +527,147 @@ with tab_sector:
                 fig_line.update_layout(margin=dict(t=50, b=10, l=10, r=10))
                 st.plotly_chart(fig_line, use_container_width=True, theme="streamlit")
     
+with tab_etf:
+    st.markdown("### 📊 ETF Explorer")
+
+    @st.cache_data(ttl=3600)
+    def load_etf_prices():
+        df = pd.read_csv("data/etf_prices_converted.csv", index_col=0, parse_dates=True)
+        df.index = pd.to_datetime(df.index)
+        return df.sort_index()
+
+    @st.cache_data(ttl=3600)
+    def load_etf_symbols_list():
+        with open("etf_symbols.txt", "r", encoding="utf-8") as f:
+            return [ln.strip().upper() for ln in f if ln.strip() and not ln.strip().startswith("#")]
+
+    try:
+        etf_df = load_etf_prices()
+        etf_symbols_list = load_etf_symbols_list()
+        available_etfs = [s for s in etf_symbols_list if s in etf_df.columns]
+        last_date = etf_df.index.max()
+
+        # ── Section 1: ETF Price Chart ─────────────────────────────────────────
+        st.subheader("📈 ETF Price Chart")
+        col_sel, col_range = st.columns([2, 1])
+        with col_sel:
+            sel_etf = st.selectbox("Select ETF", options=available_etfs, index=0, key="etf_sel")
+        with col_range:
+            time_range = st.radio("Time Range", ["30D", "90D", "1YR"], horizontal=True, key="etf_range")
+
+        range_days = {"30D": 30, "90D": 90, "1YR": 365}[time_range]
+        cutoff = last_date - pd.Timedelta(days=range_days)
+        etf_series = etf_df[sel_etf].dropna()
+        etf_slice = etf_series.loc[cutoff:]
+
+        if not etf_slice.empty:
+            last_price = float(etf_slice.iloc[-1])
+            prev_price = float(etf_series.iloc[-2]) if len(etf_series) >= 2 else last_price
+            s30 = etf_series.loc[etf_series.index <= (last_date - pd.Timedelta(days=30))]
+            s1yr = etf_series.loc[etf_series.index <= (last_date - pd.Timedelta(days=365))]
+            chg_1d = (last_price - prev_price) / prev_price * 100 if prev_price else 0
+            chg_30d = (last_price - float(s30.iloc[-1])) / float(s30.iloc[-1]) * 100 if not s30.empty else None
+            chg_1yr = (last_price - float(s1yr.iloc[-1])) / float(s1yr.iloc[-1]) * 100 if not s1yr.empty else None
+
+            mc1, mc2, mc3, mc4 = st.columns(4)
+            mc1.metric("Current Price", f"${last_price:.2f}")
+            mc2.metric("1D Change", f"{chg_1d:+.2f}%")
+            mc3.metric("30D Change", f"{chg_30d:+.2f}%" if chg_30d is not None else "N/A")
+            mc4.metric("1YR Change", f"{chg_1yr:+.2f}%" if chg_1yr is not None else "N/A")
+
+            fig_etf = px.line(
+                etf_slice.reset_index(), x="Date", y=sel_etf,
+                title=f"{sel_etf} — {time_range} Price History",
+            )
+            fig_etf.update_layout(margin=dict(t=50, b=10, l=10, r=10), yaxis_title="Price ($)")
+            st.plotly_chart(fig_etf, use_container_width=True, theme="streamlit")
+
+        # ── Section 2: ETF Comparison ──────────────────────────────────────────
+        st.divider()
+        st.subheader("⚖️ ETF Comparison (Normalized to 100)")
+        default_compare = [s for s in ["SPY", "QQQ", "GLD", "TLT", "VTI"] if s in available_etfs][:3]
+        compare_etfs = st.multiselect(
+            "Select ETFs to compare (up to 5)", options=available_etfs,
+            default=default_compare, max_selections=5, key="etf_compare",
+        )
+        if compare_etfs:
+            comp_slice = etf_df[compare_etfs].loc[cutoff:].copy()
+            first_valid = comp_slice.apply(
+                lambda col: col.dropna().iloc[0] if not col.dropna().empty else 1.0
+            )
+            normalized = comp_slice / first_valid * 100
+            fig_comp = px.line(
+                normalized.reset_index(), x="Date", y=compare_etfs,
+                title=f"Normalized Performance ({time_range}, base=100)",
+            )
+            fig_comp.update_layout(margin=dict(t=50, b=10, l=10, r=10), yaxis_title="Normalized Price")
+            st.plotly_chart(fig_comp, use_container_width=True, theme="streamlit")
+
+        # ── Section 3: ETF Summary Table ──────────────────────────────────────
+        st.divider()
+        st.subheader("📋 ETF Summary Table")
+        ticker_filter = st.text_input("Filter by ticker", placeholder="e.g. VT", key="etf_filter")
+
+        summary_rows = []
+        for tk in available_etfs:
+            series = etf_df[tk].dropna()
+            if len(series) < 2:
+                continue
+            last_p = float(series.iloc[-1])
+            prev_p = float(series.iloc[-2])
+            d1 = (last_p - prev_p) / prev_p * 100
+            s30b = series.loc[series.index <= (last_date - pd.Timedelta(days=30))]
+            d30 = (last_p - float(s30b.iloc[-1])) / float(s30b.iloc[-1]) * 100 if not s30b.empty else None
+            s1yrb = series.loc[series.index <= (last_date - pd.Timedelta(days=365))]
+            d1yr = (last_p - float(s1yrb.iloc[-1])) / float(s1yrb.iloc[-1]) * 100 if not s1yrb.empty else None
+            s52 = series.loc[series.index >= (last_date - pd.Timedelta(days=365))]
+            summary_rows.append({
+                "Ticker": tk,
+                "Last Price": round(last_p, 2),
+                "1D %": round(d1, 2),
+                "30D %": round(d30, 2) if d30 is not None else None,
+                "1YR %": round(d1yr, 2) if d1yr is not None else None,
+                "52W High": round(float(s52.max()), 2) if not s52.empty else None,
+                "52W Low": round(float(s52.min()), 2) if not s52.empty else None,
+            })
+
+        full_summary_df = pd.DataFrame(summary_rows)
+        display_df = full_summary_df.copy()
+        if ticker_filter.strip():
+            display_df = display_df[display_df["Ticker"].str.contains(ticker_filter.strip().upper())]
+
+        def _color_1d_col(col):
+            return [
+                ("color: #16a34a; font-weight: 600;" if v >= 0 else "color: #dc2626; font-weight: 600;")
+                if pd.notna(v) else ""
+                for v in col
+            ]
+
+        st.dataframe(
+            display_df.style.apply(_color_1d_col, subset=["1D %"]),
+            use_container_width=True, hide_index=True,
+        )
+
+        # ── Section 4: Top Movers Today ───────────────────────────────────────
+        st.divider()
+        st.subheader("🚀 Top Movers Today")
+        movers_df = full_summary_df.dropna(subset=["1D %"]).sort_values("1D %", ascending=False)
+        col_g, col_l = st.columns(2)
+        with col_g:
+            st.markdown("**Top 5 Gainers**")
+            for _, row in movers_df.head(5).iterrows():
+                st.metric(row["Ticker"], f"${row['Last Price']:.2f}", f"{row['1D %']:+.2f}%")
+        with col_l:
+            st.markdown("**Top 5 Losers**")
+            for _, row in movers_df.tail(5).sort_values("1D %").iterrows():
+                st.metric(row["Ticker"], f"${row['Last Price']:.2f}", f"{row['1D %']:+.2f}%")
+
+    except FileNotFoundError as e:
+        st.error(f"ETF data not found: {e}. Run `python3 etf_updates.py` to generate it.")
+    except Exception as e:
+        st.error(f"ETF Explorer error: {e}")
+
+
 with tab_portfolio:
     # st.markdown("<h3 class='custom-font'>💰 Try Investing - Simulated $1000 Portfolio</h3>", unsafe_allow_html=True)
 

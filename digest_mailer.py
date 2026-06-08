@@ -33,6 +33,8 @@ from email.mime.text import MIMEText
 from pathlib import Path
 from typing import List, Optional
 
+import pandas as pd
+
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s", datefmt="%H:%M:%S")
 
@@ -45,6 +47,9 @@ INSIDER_PATH = Path("data/insider_signals.json")
 BACKTEST_PATH = Path("data/backtest_results.json")
 HEDGE_PATH = Path("data/hedge_fund_holdings.json")
 NEWS_CACHE_PATH = Path("data/news_signals.json")
+ETF_PRICES_PATH = Path("data/etf_prices_converted.csv")
+
+_BENCHMARK_ETFS = ["SPY", "QQQ", "VTI", "GLD", "TLT"]
 
 
 # ── Recipients ─────────────────────────────────────────────────────────────────
@@ -127,6 +132,76 @@ def _load_news_signals() -> List[dict]:
     return []
 
 
+def _load_etf_pulse() -> dict:
+    if not ETF_PRICES_PATH.exists():
+        return {}
+    try:
+        df = pd.read_csv(ETF_PRICES_PATH, index_col=0, parse_dates=True)
+        df = df.sort_index()
+        if len(df) < 2:
+            return {}
+        last = df.iloc[-1]
+        prev = df.iloc[-2]
+        changes = ((last - prev) / prev * 100).dropna()
+        return {"changes": changes.to_dict(), "last_date": str(df.index[-1].date())}
+    except Exception as e:
+        log.warning(f"Could not load ETF prices: {e}")
+        return {}
+
+
+# ── ETF Pulse section builder ──────────────────────────────────────────────────
+def _build_etf_pulse_section(etf_data: dict) -> str:
+    if not etf_data:
+        return _section(
+            "📊 ETF Pulse",
+            "<p style='color:#6b7280;'>ETF data unavailable. Run <code>python3 etf_updates.py</code> to generate it.</p>",
+        )
+
+    changes = etf_data.get("changes", {})
+    last_date = etf_data.get("last_date", "")
+    sorted_changes = sorted(changes.items(), key=lambda x: x[1], reverse=True)
+    gainers = sorted_changes[:3]
+    losers = list(reversed(sorted_changes[-3:]))
+
+    def _chg_cell(chg: float) -> str:
+        color = "#16a34a" if chg >= 0 else "#dc2626"
+        return f'<td style="padding:6px 10px;color:{color};font-weight:600;">{chg:+.2f}%</td>'
+
+    # Benchmark table
+    bench_rows = ""
+    for tk in _BENCHMARK_ETFS:
+        if tk in changes:
+            bench_rows += f'<tr><td style="padding:6px 10px;font-weight:700;">{tk}</td>{_chg_cell(changes[tk])}</tr>'
+
+    # Gainers / losers columns
+    def _mover_rows(items):
+        rows = ""
+        for tk, chg in items:
+            rows += f'<tr><td style="padding:5px 8px;font-weight:700;">{tk}</td>{_chg_cell(chg)}</tr>'
+        return rows
+
+    body = f"""
+      <p style="color:#6b7280;font-size:13px;">As of {last_date}</p>
+      <table style="width:100%;border-collapse:collapse;margin-bottom:14px;">
+        <tr style="background:#e2e8f0;">
+          <th style="padding:6px 10px;text-align:left;font-size:13px;">Benchmark</th>
+          <th style="padding:6px 10px;text-align:left;font-size:13px;">1D %</th>
+        </tr>
+        {bench_rows}
+      </table>
+      <div style="display:flex;gap:24px;">
+        <div style="flex:1;">
+          <p style="margin:0 0 6px 0;font-weight:600;color:#16a34a;">Top 3 Gainers</p>
+          <table style="width:100%;border-collapse:collapse;">{_mover_rows(gainers)}</table>
+        </div>
+        <div style="flex:1;">
+          <p style="margin:0 0 6px 0;font-weight:600;color:#dc2626;">Top 3 Losers</p>
+          <table style="width:100%;border-collapse:collapse;">{_mover_rows(losers)}</table>
+        </div>
+      </div>"""
+    return _section("📊 ETF Pulse", body)
+
+
 # ── HTML builder ───────────────────────────────────────────────────────────────
 _VERDICT_COLOR = {"STRONG BUY": "#16a34a", "BUY": "#22c55e", "WATCH": "#d97706", "NEUTRAL": "#6b7280", "AVOID": "#dc2626"}
 
@@ -152,6 +227,7 @@ def build_email_html() -> str:
     backtest = _load_backtest()
     hedge_notable = _load_hedge_notable()
     news_signals = _load_news_signals()
+    etf_data = _load_etf_pulse()
 
     strong_buys = [s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")][:5]
     high_insider = [s for s in insider if s.get("signal_strength") == "HIGH"]
@@ -262,6 +338,9 @@ def build_email_html() -> str:
         hf_body = "<p style='color:#6b7280;'>Run hedge_fund_mirror.py to populate fund data.</p>"
     hedge_section = _section("🐳 Hedge Fund Watch", hf_body)
 
+    # ── ETF Pulse ─────────────────────────────────────────────────────────────
+    etf_pulse_section = _build_etf_pulse_section(etf_data)
+
     # ── Section 6: Proven Signals ─────────────────────────────────────────────
     if backtest[:3]:
         rows = ""
@@ -315,6 +394,7 @@ def build_email_html() -> str:
       {insider_section}
       {news_section}
       {hedge_section}
+      {etf_pulse_section}
       {bt_section}
       {disc_section}
     </div>
