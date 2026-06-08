@@ -5,7 +5,7 @@ on:
     # Monday to Friday at 18:00 UTC (6pm) — S&P data update
     - cron: "0 18 * * 1-5"
     # Monday to Friday at 11:30 UTC (6:30 AM ET) — Morning digest
-    - cron: "30 11 * * 1-5"
+    - cron: "0 2 * * 2-6"
   workflow_dispatch:
 
 jobs:

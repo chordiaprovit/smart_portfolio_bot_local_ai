@@ -1,7 +1,7 @@
 """
 digest_mailer.py — Daily Market Update Email
 
-Sends at 6:30 AM ET (11:30 UTC) on weekdays via GitHub Actions.
+Sends at 9:00 PM ET on weekdays via GitHub Actions.
 Reads pre-cached data files — does NOT re-fetch live data.
 
 Email sections:
