@@ -1,17 +1,18 @@
 """
-digest_mailer.py — Daily Portfolio Intelligence Email Digest
+digest_mailer.py — Daily Market Update Email
 
 Sends at 6:30 AM ET (11:30 UTC) on weekdays via GitHub Actions.
 Reads pre-cached data files — does NOT re-fetch live data.
 
 Email sections:
-  1. 📊 Market Pulse
-  2. 🚨 Top Convergence Picks
-  3. 🕵️ Insider Activity
-  4. 🗞️ Political/News Signals
-  5. 🐳 Hedge Fund Watch
-  6. 📈 Proven Signals
-  7. ⚠️ Disclaimer
+  1. 📊 What's Happening Today
+  2. 🔎 Stocks Worth Watching Today
+  3. 👀 Company Insiders Are Buying Their Own Stock
+  4. 📰 News That Could Move Stocks
+  5. 🐳 What Big Investors Are Doing
+  6. 📊 How the Market Did Today
+  7. ✅ Signals That Have Actually Worked
+  8. ⚠️ Just So You Know
 
 CLI:
   python digest_mailer.py --preview   (saves HTML locally, does NOT send)
@@ -150,11 +151,20 @@ def _load_etf_pulse() -> dict:
 
 
 # ── ETF Pulse section builder ──────────────────────────────────────────────────
+_ETF_LABELS = {
+    "SPY": "S&P 500 (SPY) — most big US stocks",
+    "QQQ": "Tech stocks (QQQ) — mostly big tech companies",
+    "VTI": "All US stocks (VTI) — broad US market",
+    "GLD": "Gold (GLD) — the metal as an investment",
+    "TLT": "Long-term US bonds (TLT) — government debt",
+}
+
+
 def _build_etf_pulse_section(etf_data: dict) -> str:
     if not etf_data:
         return _section(
-            "📊 ETF Pulse",
-            "<p style='color:#6b7280;'>ETF data unavailable. Run <code>python3 etf_updates.py</code> to generate it.</p>",
+            "📊 How the Market Did Today",
+            "<p style='color:#6b7280;'>Market data not loaded yet — it updates automatically each evening.</p>",
         )
 
     changes = etf_data.get("changes", {})
@@ -165,45 +175,85 @@ def _build_etf_pulse_section(etf_data: dict) -> str:
 
     def _chg_cell(chg: float) -> str:
         color = "#16a34a" if chg >= 0 else "#dc2626"
-        return f'<td style="padding:6px 10px;color:{color};font-weight:600;">{chg:+.2f}%</td>'
+        arrow = "▲" if chg >= 0 else "▼"
+        return f'<td style="padding:6px 10px;color:{color};font-weight:600;">{arrow} {abs(chg):.2f}%</td>'
 
-    # Benchmark table
+    # Benchmark table with plain descriptions
     bench_rows = ""
     for tk in _BENCHMARK_ETFS:
         if tk in changes:
-            bench_rows += f'<tr><td style="padding:6px 10px;font-weight:700;">{tk}</td>{_chg_cell(changes[tk])}</tr>'
+            chg = changes[tk]
+            label = _ETF_LABELS.get(tk, tk)
+            direction = "up" if chg >= 0 else "down"
+            color = "#16a34a" if chg >= 0 else "#dc2626"
+            bench_rows += (
+                f'<tr>'
+                f'<td style="padding:8px 10px;">{label}</td>'
+                f'<td style="padding:8px 10px;color:{color};font-weight:600;">'
+                f'{direction} {abs(chg):.2f}%</td>'
+                f'</tr>'
+            )
 
     # Gainers / losers columns
     def _mover_rows(items):
         rows = ""
         for tk, chg in items:
-            rows += f'<tr><td style="padding:5px 8px;font-weight:700;">{tk}</td>{_chg_cell(chg)}</tr>'
+            color = "#16a34a" if chg >= 0 else "#dc2626"
+            rows += (
+                f'<tr>'
+                f'<td style="padding:5px 8px;font-weight:700;">{tk}</td>'
+                f'<td style="padding:5px 8px;color:{color};font-weight:600;">{chg:+.2f}%</td>'
+                f'</tr>'
+            )
         return rows
 
     body = f"""
-      <p style="color:#6b7280;font-size:13px;">As of {last_date}</p>
-      <table style="width:100%;border-collapse:collapse;margin-bottom:14px;">
+      <p style="color:#374151;font-size:14px;">Here's how the main market groups moved today ({last_date}):</p>
+      <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
         <tr style="background:#e2e8f0;">
-          <th style="padding:6px 10px;text-align:left;font-size:13px;">Benchmark</th>
-          <th style="padding:6px 10px;text-align:left;font-size:13px;">1D %</th>
+          <th style="padding:8px 10px;text-align:left;font-size:13px;">What it tracks</th>
+          <th style="padding:8px 10px;text-align:left;font-size:13px;">Today's change</th>
         </tr>
         {bench_rows}
       </table>
       <div style="display:flex;gap:24px;">
         <div style="flex:1;">
-          <p style="margin:0 0 6px 0;font-weight:600;color:#16a34a;">Top 3 Gainers</p>
+          <p style="margin:0 0 6px 0;font-weight:600;color:#16a34a;">Biggest winners today</p>
           <table style="width:100%;border-collapse:collapse;">{_mover_rows(gainers)}</table>
         </div>
         <div style="flex:1;">
-          <p style="margin:0 0 6px 0;font-weight:600;color:#dc2626;">Top 3 Losers</p>
+          <p style="margin:0 0 6px 0;font-weight:600;color:#dc2626;">Biggest drops today</p>
           <table style="width:100%;border-collapse:collapse;">{_mover_rows(losers)}</table>
         </div>
       </div>"""
-    return _section("📊 ETF Pulse", body)
+    return _section("📊 How the Market Did Today", body)
 
 
 # ── HTML builder ───────────────────────────────────────────────────────────────
 _VERDICT_COLOR = {"STRONG BUY": "#16a34a", "BUY": "#22c55e", "WATCH": "#d97706", "NEUTRAL": "#6b7280", "AVOID": "#dc2626"}
+
+_JARGON = {
+    "HIGH conviction insider open-market buy detected": "A top executive bought a large amount of their own company's stock with personal money",
+    "MEDIUM conviction insider buy detected": "A company insider recently bought their own stock",
+    "Bullish news sentiment": "News coverage looks positive",
+    "Bearish news sentiment": "News coverage looks negative",
+    "Price momentum:": "Recent price move:",
+    "ETF pressure:": "Related funds are also moving:",
+    "conviction": "confidence",
+    "momentum": "price trend",
+    "bullish": "positive",
+    "bearish": "negative",
+    "volatility": "price swings",
+    "portfolio": "investments",
+    "asset allocation": "how money is split",
+    "macroeconomic": "big-picture economic",
+}
+
+
+def _dejargon(text: str) -> str:
+    for term, replacement in _JARGON.items():
+        text = text.replace(term, replacement)
+    return text
 
 
 def _section(title: str, body: str) -> str:
@@ -232,25 +282,26 @@ def build_email_html() -> str:
     strong_buys = [s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")][:5]
     high_insider = [s for s in insider if s.get("signal_strength") == "HIGH"]
 
-    # ── Section 1: Market Pulse ────────────────────────────────────────────────
+    # ── Section 1: What's Happening Today ────────────────────────────────────
     total_buy = len([s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")])
     total_watch = len([s for s in convergence if s.get("verdict") == "WATCH"])
     pulse_body = f"""
       <p style="color:#374151;font-size:15px;">
         <strong>{date_str}</strong><br><br>
-        📡 <strong>{total_buy}</strong> buy signal(s) &nbsp;|&nbsp;
-        🟡 <strong>{total_watch}</strong> watch signal(s) &nbsp;|&nbsp;
-        🕵️ <strong>{len(high_insider)}</strong> high-conviction insider buy(s)
+        We looked at today's news, price moves, and what company insiders are doing. Here's the quick version:<br><br>
+        📈 <strong>{total_buy}</strong> stock{'s' if total_buy != 1 else ''} look interesting to buy right now &nbsp;|&nbsp;
+        👀 <strong>{total_watch}</strong> stock{'s' if total_watch != 1 else ''} we're keeping an eye on &nbsp;|&nbsp;
+        🏢 <strong>{len(high_insider)}</strong> company executive{'s' if len(high_insider) != 1 else ''} bought their own company's stock recently
       </p>"""
-    pulse_section = _section("📊 Market Pulse", pulse_body)
+    pulse_section = _section("📊 What's Happening Today", pulse_body)
 
-    # ── Section 2: Top Convergence Picks ──────────────────────────────────────
+    # ── Section 2: Stocks Worth Watching Today ────────────────────────────────
     if strong_buys:
         rows = ""
         for s in strong_buys:
             color = _VERDICT_COLOR.get(s["verdict"], "#6b7280")
             pill = _pill(s["verdict"], color)
-            reasons_html = "".join(f'<li style="color:#4b5563;font-size:13px;">{r}</li>' for r in s.get("reasons", [])[:2])
+            reasons_html = "".join(f'<li style="color:#4b5563;font-size:13px;">{_dejargon(r)}</li>' for r in s.get("reasons", [])[:2])
             rows += f"""
             <tr>
               <td style="padding:10px;font-weight:700;font-size:15px;">{s['ticker']}</td>
@@ -259,22 +310,24 @@ def build_email_html() -> str:
               <td style="padding:10px;"><ul style="margin:0;padding-left:16px;">{reasons_html}</ul></td>
             </tr>"""
         picks_body = f"""
+          <p style="color:#374151;font-size:14px;margin:0 0 12px 0;">
+            These stocks have multiple good signs at once — news looks positive, insiders may be buying, and the price is moving in the right direction. The score shows how many good signs lined up (out of 10).
+          </p>
           <table style="width:100%;border-collapse:collapse;">
             <tr style="background:#e2e8f0;">
-              <th style="padding:8px;text-align:left;">Ticker</th>
-              <th style="padding:8px;text-align:left;">Verdict</th>
-              <th style="padding:8px;text-align:left;">Score</th>
-              <th style="padding:8px;text-align:left;">Reasons</th>
+              <th style="padding:8px;text-align:left;">Stock</th>
+              <th style="padding:8px;text-align:left;">Our Take</th>
+              <th style="padding:8px;text-align:left;">How confident (out of 10)</th>
+              <th style="padding:8px;text-align:left;">Why we flagged it</th>
             </tr>{rows}
           </table>"""
     else:
-        picks_body = "<p style='color:#6b7280;'>No strong buy signals right now.</p>"
-    picks_section = _section("🚨 Top Convergence Picks", picks_body)
+        picks_body = "<p style='color:#6b7280;'>Nothing stands out today — check back tomorrow.</p>"
+    picks_section = _section("🔎 Stocks Worth Watching Today", picks_body)
 
-    # ── Section 3: Insider Activity ───────────────────────────────────────────
+    # ── Section 3: Insider Buying ─────────────────────────────────────────────
     if high_insider:
-        cutoff = (now - timedelta(hours=24)).isoformat(timespec="seconds")
-        recent = [s for s in high_insider] or high_insider  # show all if none in 24h
+        recent = [s for s in high_insider] or high_insider
         rows = ""
         for s in recent[:5]:
             rows += f"""
@@ -286,28 +339,34 @@ def build_email_html() -> str:
               <td style="padding:8px;color:#6b7280;">{s['transaction_date']}</td>
             </tr>"""
         insider_body = f"""
+          <p style="color:#374151;font-size:14px;margin:0 0 12px 0;">
+            When a CEO or CFO buys their own company's stock with personal money, that's usually a good sign — they know the company better than anyone and they're betting on it with their own cash.
+          </p>
           <table style="width:100%;border-collapse:collapse;">
             <tr style="background:#e2e8f0;">
-              <th style="padding:8px;text-align:left;">Ticker</th><th style="padding:8px;text-align:left;">Insider</th>
-              <th style="padding:8px;text-align:left;">Role</th><th style="padding:8px;text-align:left;">Amount</th>
-              <th style="padding:8px;text-align:left;">Date</th>
+              <th style="padding:8px;text-align:left;">Company</th><th style="padding:8px;text-align:left;">Who bought</th>
+              <th style="padding:8px;text-align:left;">Their role</th><th style="padding:8px;text-align:left;">Amount they spent</th>
+              <th style="padding:8px;text-align:left;">When</th>
             </tr>{rows}
           </table>"""
     else:
-        insider_body = "<p style='color:#6b7280;'>No high-conviction insider buys in the current lookback window.</p>"
-    insider_section = _section("🕵️ Insider Activity", insider_body)
+        insider_body = "<p style='color:#6b7280;'>No executives bought their own company's stock recently.</p>"
+    insider_section = _section("👀 Company Insiders Are Buying Their Own Stock", insider_body)
 
-    # ── Section 4: News Signals ────────────────────────────────────────────────
+    # ── Section 4: News That Could Move Stocks ────────────────────────────────
     if news_signals:
         rows = ""
         for s in news_signals[:5]:
-            dir_color = "#16a34a" if s["direction"] == "↑" else ("#dc2626" if s["direction"] == "↓" else "#6b7280")
+            going_up = s["direction"] == "↑"
+            going_down = s["direction"] == "↓"
+            dir_color = "#16a34a" if going_up else ("#dc2626" if going_down else "#6b7280")
+            dir_label = "might go up" if going_up else ("might drop" if going_down else "could be affected")
             headline_trunc = s["headline"][:100] + "…" if len(s["headline"]) > 100 else s["headline"]
             link = s.get("url", "#")
             rows += f"""
             <tr>
               <td style="padding:8px;font-weight:700;">{s['ticker']}</td>
-              <td style="padding:8px;color:{dir_color};font-size:18px;">{s['direction']}</td>
+              <td style="padding:8px;color:{dir_color};font-weight:600;">{dir_label}</td>
               <td style="padding:8px;color:#6b7280;">{s['keyword']}</td>
               <td style="padding:8px;"><a href="{link}" style="color:#3b82f6;text-decoration:none;">{headline_trunc}</a></td>
               <td style="padding:8px;color:#9ca3af;font-size:12px;">{s['source']}</td>
@@ -315,33 +374,36 @@ def build_email_html() -> str:
         news_body = f"""
           <table style="width:100%;border-collapse:collapse;">
             <tr style="background:#e2e8f0;">
-              <th style="padding:8px;text-align:left;">Ticker</th><th style="padding:8px;">Dir</th>
-              <th style="padding:8px;text-align:left;">Keyword</th><th style="padding:8px;text-align:left;">Headline</th>
+              <th style="padding:8px;text-align:left;">Stock</th><th style="padding:8px;text-align:left;">What might happen</th>
+              <th style="padding:8px;text-align:left;">Topic</th><th style="padding:8px;text-align:left;">Article</th>
               <th style="padding:8px;text-align:left;">Source</th>
             </tr>{rows}
           </table>"""
     else:
-        news_body = "<p style='color:#6b7280;'>No keyword-matched news signals today.</p>"
-    news_section = _section("🗞️ Political/News Signals", news_body)
+        news_body = "<p style='color:#6b7280;'>No news stories matched our watchlist today.</p>"
+    news_section = _section("📰 News That Could Move Stocks", news_body)
 
-    # ── Section 5: Hedge Fund Watch ───────────────────────────────────────────
+    # ── Section 5: What Big Investors Are Doing ───────────────────────────────
     if hedge_notable:
         hf_body = f"""
+          <p style="color:#374151;font-size:14px;margin:0 0 10px 0;">
+            These are large firms that manage billions of dollars. When they put a lot of money into a single stock, it's worth paying attention.
+          </p>
           <p style="color:#374151;font-size:15px;">
-            <strong>{hedge_notable['fund']}</strong> largest holding:
+            <strong>{hedge_notable['fund']}</strong>'s biggest bet right now is
             <strong>{hedge_notable['ticker']}</strong> ({hedge_notable['issuer']}) —
-            <strong>{hedge_notable['pct']:.2f}%</strong> of portfolio
-            (market value ${hedge_notable['value']:,.0f}).<br>
-            <span style="color:#6b7280;font-size:13px;">As of {hedge_notable['filing_date']} 13F filing.</span>
+            it makes up <strong>{hedge_notable['pct']:.2f}%</strong> of everything they own.
+            They hold roughly <strong>${hedge_notable['value']:,.0f}</strong> worth of it.<br>
+            <span style="color:#6b7280;font-size:13px;">From their most recent public filing, as of {hedge_notable['filing_date']}.</span>
           </p>"""
     else:
-        hf_body = "<p style='color:#6b7280;'>Run hedge_fund_mirror.py to populate fund data.</p>"
-    hedge_section = _section("🐳 Hedge Fund Watch", hf_body)
+        hf_body = "<p style='color:#6b7280;'>No fund data yet — check back after the next data refresh.</p>"
+    hedge_section = _section("🐳 What Big Investors Are Doing", hf_body)
 
     # ── ETF Pulse ─────────────────────────────────────────────────────────────
     etf_pulse_section = _build_etf_pulse_section(etf_data)
 
-    # ── Section 6: Proven Signals ─────────────────────────────────────────────
+    # ── Section 6: Signals That Have Actually Worked ──────────────────────────
     if backtest[:3]:
         rows = ""
         for r in backtest[:3]:
@@ -353,26 +415,29 @@ def build_email_html() -> str:
               <td style="padding:8px;font-weight:700;">{r['ticker']}</td>
               <td style="padding:8px;color:#16a34a;font-weight:600;">{r['hit_rate']*100:.0f}%</td>
               <td style="padding:8px;">{avg5_str}</td>
-              <td style="padding:8px;color:#6b7280;">{r['sample_size']} events</td>
+              <td style="padding:8px;color:#6b7280;">{r['sample_size']} times tracked</td>
             </tr>"""
         bt_body = f"""
+          <p style="color:#374151;font-size:14px;margin:0 0 12px 0;">
+            These are patterns we've tracked over time that have been right more often than not. Not a guarantee — just what the data actually shows.
+          </p>
           <table style="width:100%;border-collapse:collapse;">
             <tr style="background:#e2e8f0;">
-              <th style="padding:8px;text-align:left;">Keyword</th><th style="padding:8px;text-align:left;">Ticker</th>
-              <th style="padding:8px;text-align:left;">Hit Rate</th><th style="padding:8px;text-align:left;">Avg 5d Return</th>
-              <th style="padding:8px;text-align:left;">Samples</th>
+              <th style="padding:8px;text-align:left;">Pattern</th><th style="padding:8px;text-align:left;">Stock</th>
+              <th style="padding:8px;text-align:left;">How often it worked</th><th style="padding:8px;text-align:left;">Avg gain in 5 days</th>
+              <th style="padding:8px;text-align:left;">Times tracked</th>
             </tr>{rows}
           </table>"""
     else:
-        bt_body = "<p style='color:#6b7280;'>Backtest signals accumulate daily — check back as news cache grows.</p>"
-    bt_section = _section("📈 Proven Signals (Backtested)", bt_body)
+        bt_body = "<p style='color:#6b7280;'>Still collecting data — these patterns get more reliable over time as we track more news.</p>"
+    bt_section = _section("✅ Signals That Have Actually Worked", bt_body)
 
-    # ── Section 7: Disclaimer ─────────────────────────────────────────────────
+    # ── Section 7: Just So You Know ───────────────────────────────────────────
     disc_section = _section(
-        "⚠️ Disclaimer",
-        "<p style='color:#6b7280;font-size:13px;'>This digest is for personal research and educational purposes only. "
-        "It is <strong>not financial advice</strong>. Past signal performance does not guarantee future results. "
-        "Always do your own research before making investment decisions.</p>"
+        "⚠️ Just so you know",
+        "<p style='color:#6b7280;font-size:13px;'>This is an automated summary built for personal learning. "
+        "<strong>Nothing here is financial advice.</strong> "
+        "Always do your own research before buying or selling anything.</p>"
     )
 
     html = f"""<!DOCTYPE html>
@@ -380,12 +445,12 @@ def build_email_html() -> str:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Portfolio Digest — {date_str}</title>
+  <title>Your Daily Market Update — {date_str}</title>
 </head>
 <body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <div style="max-width:680px;margin:32px auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
     <div style="background:linear-gradient(135deg,#1e3a5f,#2563eb);padding:28px 32px;">
-      <h1 style="margin:0;color:white;font-size:22px;">📊 SmartPortfolioBot Digest</h1>
+      <h1 style="margin:0;color:white;font-size:22px;">📊 Your Daily Market Update</h1>
       <p style="margin:6px 0 0 0;color:#93c5fd;font-size:14px;">{date_str}</p>
     </div>
     <div style="padding:8px 24px 32px 24px;">
@@ -399,7 +464,7 @@ def build_email_html() -> str:
       {disc_section}
     </div>
     <div style="background:#f8fafc;padding:16px 32px;text-align:center;color:#9ca3af;font-size:12px;">
-      SmartPortfolioBot · Educational use only ·
+      SmartPortfolioBot · For learning purposes only · Not financial advice ·
       <a href="https://trendiq.streamlit.app" style="color:#3b82f6;">Open App</a>
     </div>
   </div>
@@ -417,11 +482,11 @@ def _build_subject() -> str:
     high_ins = len([s for s in insider if s.get("signal_strength") == "HIGH"])
     parts = []
     if strong:
-        parts.append(f"{strong} Strong Buy{'s' if strong > 1 else ''}")
+        parts.append(f"{strong} stock{'s' if strong > 1 else ''} worth watching today")
     if high_ins:
-        parts.append(f"{high_ins} Insider Alert{'s' if high_ins > 1 else ''}")
-    suffix = " · ".join(parts) if parts else "Daily Update"
-    return f"📊 Portfolio Digest — {now.strftime('%a %b %-d')} | {suffix}"
+        parts.append(f"{high_ins} exec{'s' if high_ins > 1 else ''} bought their own stock")
+    suffix = " · ".join(parts) if parts else "your daily update"
+    return f"📊 Your Daily Market Update — {now.strftime('%a %b %-d')} | {suffix}"
 
 
 def send_digest(recipients: List[str], html: str, subject: str) -> bool:

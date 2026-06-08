@@ -161,16 +161,16 @@ def score_ticker(
 
     reasons: List[str] = []
     if ins >= 10:
-        reasons.append("HIGH conviction insider open-market buy detected")
+        reasons.append("A top executive bought a large amount of their own company's stock with personal money")
     elif ins >= 7.5:
-        reasons.append("MEDIUM conviction insider buy detected")
+        reasons.append("A company insider recently bought their own stock")
     if ns >= 7:
-        reasons.append(f"Bullish news sentiment (score {ns:.1f}/10)")
+        reasons.append(f"News coverage looks positive (score {ns:.1f}/10)")
     elif ns <= 3:
-        reasons.append(f"Bearish news sentiment (score {ns:.1f}/10)")
-    reasons.append(f"Price momentum: {mom_reason}")
+        reasons.append(f"News coverage looks negative (score {ns:.1f}/10)")
+    reasons.append(f"Recent price move: {mom_reason}")
     if etf > 5:
-        reasons.append(f"ETF pressure: {etf_reason}")
+        reasons.append(f"Related funds are also moving: {etf_reason}")
 
     return {
         "ticker": ticker,
