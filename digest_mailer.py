@@ -460,6 +460,7 @@ def build_email_html() -> str:
       <p style="margin:6px 0 0 0;color:#93c5fd;font-size:14px;">{date_str}</p>
     </div>
     <div style="padding:8px 24px 32px 24px;">
+      <p style="color:#374151;font-size:15px;margin:16px 0 0 0;">Here's today's market recap — what happened today and what to watch tomorrow.</p>
       {pulse_section}
       {picks_section}
       {insider_section}
@@ -492,7 +493,7 @@ def _build_subject() -> str:
     if high_ins:
         parts.append(f"{high_ins} exec{'s' if high_ins > 1 else ''} bought their own stock")
     suffix = " · ".join(parts) if parts else "your daily update"
-    return f"📊 Your Daily Market Update — {now.strftime('%a %b %-d')} | {suffix}"
+    return f"📊 Market Recap — {now.strftime('%a %b %-d')} | Tomorrow's watchlist inside"
 
 
 def send_digest(recipients: List[str], html: str, subject: str) -> bool:
