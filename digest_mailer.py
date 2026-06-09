@@ -34,7 +34,7 @@ import logging
 import os
 import smtplib
 import ssl
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -275,7 +275,7 @@ def _pill(text: str, color: str = "#3b82f6") -> str:
 
 
 def build_email_html() -> str:
-    now = datetime.utcnow()
+    now = datetime.now(timezone(timedelta(hours=-5)))  # ET (UTC-5; handles EST; close enough for date display)
     date_str = now.strftime("%A, %B %-d, %Y")
 
     convergence = _load_convergence()
@@ -482,7 +482,7 @@ def build_email_html() -> str:
 
 # ── Send ───────────────────────────────────────────────────────────────────────
 def _build_subject() -> str:
-    now = datetime.utcnow()
+    now = datetime.now(timezone(timedelta(hours=-5)))
     convergence = _load_convergence()
     insider = _load_insider()
     strong = len([s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")])
@@ -527,7 +527,7 @@ def send_digest(recipients: List[str], html: str, subject: str) -> bool:
 
 def _save_preview(html: str) -> Path:
     DIGESTS_DIR.mkdir(parents=True, exist_ok=True)
-    fname = DIGESTS_DIR / f"digest_{datetime.utcnow().strftime('%Y%m%d')}.html"
+    fname = DIGESTS_DIR / f"digest_{datetime.now(timezone(timedelta(hours=-5))).strftime('%Y%m%d')}.html"
     fname.write_text(html, encoding="utf-8")
     return fname
 
