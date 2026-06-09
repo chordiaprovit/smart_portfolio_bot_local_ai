@@ -4,8 +4,8 @@ on:
   schedule:
     # Monday to Friday at 18:00 UTC (6pm) — S&P data update
     - cron: "0 18 * * 1-5"
-    # Tuesday to Saturday at 02:00 UTC (9:00 PM ET Mon-Fri) — Evening digest
-    - cron: "0 2 * * 2-6"
+    # Monday to Friday at 23:00 UTC (6:00 PM ET) — Evening digest
+    - cron: "0 23 * * 1-5"
   workflow_dispatch:
 
 jobs:
@@ -61,7 +61,7 @@ jobs:
 
   send_morning_digest:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && contains(github.event.schedule, '0 2'))
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && contains(github.event.schedule, '0 23'))
 
     steps:
       - name: Checkout
