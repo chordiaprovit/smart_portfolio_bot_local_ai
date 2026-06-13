@@ -59,6 +59,35 @@ jobs:
           git commit -m "Update ETF data [skip ci]" || echo "No changes to commit"
           git push
 
+      - name: Run insider tracker
+        run: python3 insider_tracker.py --tickers AAPL MSFT NVDA AMZN GOOGL META TSLA JPM BAC GS WFC XOM CVX DELL MU AMD INTC QCOM
+        continue-on-error: true
+
+      - name: Run news signals
+        run: |
+          python3 -c "
+          from news_fetcher import get_news_signals
+          import json, pathlib
+          tickers = ['AAPL','MSFT','NVDA','AMZN','GOOGL','META','TSLA','JPM','BAC','GS','WFC','XOM','CVX','DELL','MU','AMD','INTC','QCOM']
+          sigs = get_news_signals(tickers, use_cache=False)
+          pathlib.Path('data/news_signals.json').write_text(json.dumps({'fetched_at': __import__('datetime').datetime.utcnow().isoformat(timespec='seconds'), 'signals': sigs}, indent=2))
+          print(f'Saved {len(sigs)} news signals')
+          "
+        continue-on-error: true
+
+      - name: Run convergence scores
+        run: python3 convergence_score.py --top 20
+        continue-on-error: true
+
+      - name: Commit signal data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/insider_signals.json data/news_signals.json data/convergence_scores.json || true
+          git commit -m "Update signal data [skip ci]" || echo "No changes to commit"
+          git push
+        continue-on-error: true
+
   send_morning_digest:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && contains(github.event.schedule, '0 23'))

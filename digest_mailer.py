@@ -34,6 +34,7 @@ import logging
 import os
 import smtplib
 import ssl
+import time
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -129,14 +130,17 @@ def _load_hedge_notable() -> Optional[dict]:
 
 
 def _load_news_signals() -> List[dict]:
+    if not NEWS_CACHE_PATH.exists():
+        log.warning("news_signals.json not found")
+        return []
     try:
-        from news_fetcher import get_news_signals
-        cached = _load_json(NEWS_CACHE_PATH, {})
-        if cached:
-            return cached.get("signals", [])[:5]
-    except Exception:
-        pass
-    return []
+        data = json.loads(NEWS_CACHE_PATH.read_text(encoding="utf-8"))
+        signals = data if isinstance(data, list) else data.get("signals", [])
+        log.info(f"Loaded {len(signals)} news signals from cache")
+        return signals
+    except Exception as e:
+        log.error(f"Failed to load news_signals.json: {e}")
+        return []
 
 
 def _load_etf_pulse() -> dict:
@@ -285,12 +289,21 @@ def build_email_html() -> str:
     news_signals = _load_news_signals()
     etf_data = _load_etf_pulse()
 
+    # Staleness check
+    staleness_warning = ""
+    if CONVERGENCE_PATH.exists():
+        file_age_hours = (time.time() - CONVERGENCE_PATH.stat().st_mtime) / 3600
+        if file_age_hours > 36:
+            log.warning(f"convergence_scores.json is {file_age_hours:.0f} hours old — signals may be stale")
+            staleness_warning = f"⚠️ Note: Signal data is {file_age_hours:.0f} hours old and may not reflect today's market."
+
     strong_buys = [s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")][:5]
     high_insider = [s for s in insider if s.get("signal_strength") == "HIGH"]
 
     # ── Section 1: What Happened Today ────────────────────────────────────
     total_buy = len([s for s in convergence if s.get("verdict") in ("STRONG BUY", "BUY")])
     total_watch = len([s for s in convergence if s.get("verdict") == "WATCH"])
+    staleness_html = f'<p style="color:#9ca3af;font-size:12px;margin:8px 0 0 0;">{staleness_warning}</p>' if staleness_warning else ""
     pulse_body = f"""
       <p style="color:#374151;font-size:15px;">
         <strong>{date_str}</strong><br><br>
@@ -298,7 +311,8 @@ def build_email_html() -> str:
         📈 <strong>{total_buy}</strong> stock{'s' if total_buy != 1 else ''} look interesting to buy right now &nbsp;|&nbsp;
         👀 <strong>{total_watch}</strong> stock{'s' if total_watch != 1 else ''} we're keeping an eye on &nbsp;|&nbsp;
         🏢 <strong>{len(high_insider)}</strong> company executive{'s' if len(high_insider) != 1 else ''} bought their own company's stock recently
-      </p>"""
+      </p>
+      {staleness_html}"""
     pulse_section = _section("📊 What Happened Today", pulse_body)
 
     # ── Section 2: Stocks Worth Watching Tomorrow ────────────────────────────────

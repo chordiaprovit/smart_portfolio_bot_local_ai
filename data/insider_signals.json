@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-06-13T12:28:59",
+  "count": 11,
+  "signals": [
+    {
+      "ticker": "ABT",
+      "insider_name": "Daniel J Starks",
+      "insider_role": "Director",
+      "shares_bought": 10000.0,
+      "price_per_share": 92.6537,
+      "total_value": 926537.0,
+      "transaction_date": "2026-04-27",
+      "filing_date": "2026-04-28",
+      "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "ADSK",
+      "insider_name": "Stacy J Smith",
+      "insider_role": "Director",
+      "shares_bought": 3435.0,
+      "price_per_share": 231.1657,
+      "total_value": 794054.34,
+      "transaction_date": "2026-05-29",
+      "filing_date": "2026-05-29",
+      "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "ADP",
+      "insider_name": "Robert Holmes Swan",
+      "insider_role": "Director",
+      "shares_bought": 3619.0,
+      "price_per_share": 206.05,
+      "total_value": 745694.95,
+      "transaction_date": "2026-05-07",
+      "filing_date": "2026-05-11",
+      "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "ACGL",
+      "insider_name": "Daniel Joseph Houston",
+      "insider_role": "Director",
+      "shares_bought": 5300.0,
+      "price_per_share": 94.085,
+      "total_value": 498650.5,
+      "transaction_date": "2026-04-30",
+      "filing_date": "2026-05-04",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ARE",
+      "insider_name": "Joel S Marcus",
+      "insider_role": "Executive Chairman",
+      "shares_bought": 10000.0,
+      "price_per_share": 41.02,
+      "total_value": 410200.0,
+      "transaction_date": "2026-05-04",
+      "filing_date": "2026-05-05",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "APTV",
+      "insider_name": "Hakan Agnevall",
+      "insider_role": "Director",
+      "shares_bought": 6100.0,
+      "price_per_share": 57.73,
+      "total_value": 352153.0,
+      "transaction_date": "2026-05-08",
+      "filing_date": "2026-05-12",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ARE",
+      "insider_name": "Joel S Marcus",
+      "insider_role": "Executive Chairman",
+      "shares_bought": 7500.0,
+      "price_per_share": 46.3411,
+      "total_value": 347558.25,
+      "transaction_date": "2026-05-06",
+      "filing_date": "2026-05-07",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ARE",
+      "insider_name": "Joel S Marcus",
+      "insider_role": "Executive Chairman",
+      "shares_bought": 7500.0,
+      "price_per_share": 42.7221,
+      "total_value": 320415.7,
+      "transaction_date": "2026-05-05",
+      "filing_date": "2026-05-06",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ABT",
+      "insider_name": "Philip P Boudreau",
+      "insider_role": "EVP AND CFO",
+      "shares_bought": 2200.0,
+      "price_per_share": 91.5,
+      "total_value": 201300.0,
+      "transaction_date": "2026-04-23",
+      "filing_date": "2026-04-27",
+      "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "ARE",
+      "insider_name": "Gregory Calvin Thomas",
+      "insider_role": "EVP - CTO",
+      "shares_bought": 3500.0,
+      "price_per_share": 41.0,
+      "total_value": 143500.0,
+      "transaction_date": "2026-04-30",
+      "filing_date": "2026-05-04",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "MMM",
+      "insider_name": "Christian T Goralski JR",
+      "insider_role": "Group President",
+      "shares_bought": 17.0,
+      "price_per_share": 107.1783,
+      "total_value": 1822.03,
+      "transaction_date": "2024-05-30",
+      "filing_date": "2026-04-09",
+      "signal_strength": "LOW"
+    }
+  ]
+}
