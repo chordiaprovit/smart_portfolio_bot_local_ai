@@ -1,25 +1,15 @@
 {
-  "fetched_at": "2026-06-15T20:50:33",
+  "fetched_at": "2026-06-16T20:41:29",
   "signals": [
     {
-      "ticker": "ABBV",
-      "headline": "Why a Dividend Portfolio That Pays Your Rent May Beat Homeownership by $500,000 Over 20 Years",
-      "keyword": "dividend",
-      "direction": "\u2191",
-      "score": 8.0,
-      "source": "Yahoo Finance",
-      "url": "https://247wallst.com/personal-finance/2026/06/13/why-a-dividend-portfolio-that-pays-your-rent-may-beat-homeownership-by-500000-over-20-years/?.tsrc=rss",
-      "published": "Sat, 13 Jun 2026 12:02:12 +0000"
-    },
-    {
       "ticker": "AMD",
-      "headline": "Chip stocks surge, oil slides closer to $80 on US-Iran deal, Fox to acquire Roku",
-      "keyword": "surge",
+      "headline": "Intel Tumbles 7% Despite BoA Double Upgrade, AMD Slides 6% as AI Infrastructure Deal Can\u2019t Stop Profit-Taking",
+      "keyword": "deal",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/video/chip-stocks-surge-oil-slides-closer-to-80-on-us-iran-deal-fox-to-acquire-roku-195425964.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 19:54:25 +0000"
+      "url": "https://247wallst.com/investing/2026/06/16/intel-tumbles-7-despite-boa-double-upgrade-amd-slides-6-as-ai-infrastructure-deal-cant-stop-profit-taking/?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 15:55:46 +0000"
     },
     {
       "ticker": "A",
@@ -34,7 +24,7 @@
     {
       "ticker": "APD",
       "headline": "Are You Looking for a High-Growth Dividend Stock?",
-      "keyword": "dividend",
+      "keyword": "growth",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -54,7 +44,7 @@
     {
       "ticker": "ALGN",
       "headline": "Align Technology (ALGN): Record Aligner Shipments and Stifel Stays Bullish at $210",
-      "keyword": "bullish",
+      "keyword": "record",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -64,7 +54,7 @@
     {
       "ticker": "AIG",
       "headline": "Are You Looking for a High-Growth Dividend Stock?",
-      "keyword": "dividend",
+      "keyword": "growth",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -74,7 +64,7 @@
     {
       "ticker": "AWK",
       "headline": "Are You Looking for a High-Growth Dividend Stock?",
-      "keyword": "dividend",
+      "keyword": "growth",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -82,19 +72,9 @@
       "published": "Mon, 15 Jun 2026 15:45:03 +0000"
     },
     {
-      "ticker": "AWK",
-      "headline": "Will Rate Hike Approval Support PPL's Investment and Growth Strategy?",
-      "keyword": "approval",
-      "direction": "\u2191",
-      "score": 8.0,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/energy/articles/rate-hike-approval-support-ppls-170700160.html?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 17:07:00 +0000"
-    },
-    {
       "ticker": "AMGN",
       "headline": "Morgan Stanley Raises Amgen (AMGN) Price Target Following a Strong Start for Uplizna",
-      "keyword": "strong",
+      "keyword": "raises",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -103,8 +83,18 @@
     },
     {
       "ticker": "APH",
+      "headline": "Analyst Raises Amphenol (APH) Price Target Citing AI-Related Growth Opportunities",
+      "keyword": "growth",
+      "direction": "\u2191",
+      "score": 8.0,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/analyst-raises-amphenol-aph-price-020531814.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 02:05:31 +0000"
+    },
+    {
+      "ticker": "APH",
       "headline": "Amphenol (APH) Stock After 67% Annual Surge Are Growth Expectations Getting Stretched",
-      "keyword": "surge",
+      "keyword": "growth",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -133,6 +123,16 @@
     },
     {
       "ticker": "APA",
+      "headline": "APA Corporation Acquires Savant Alaska in $70 Million Deal",
+      "keyword": "deal",
+      "direction": "\u2191",
+      "score": 8.0,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/energy/articles/apa-corporation-acquires-savant-alaska-020839773.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 02:08:39 +0000"
+    },
+    {
+      "ticker": "APA",
       "headline": "APA Expands Alaska Footprint With $70M Savant Acquisition Deal",
       "keyword": "deal",
       "direction": "\u2191",
@@ -142,14 +142,14 @@
       "published": "Thu, 11 Jun 2026 14:42:00 +0000"
     },
     {
-      "ticker": "ANET",
-      "headline": "Ciena's Strong Free Cash Flow: Can It Balance Growth and Returns?",
-      "keyword": "strong",
+      "ticker": "AMAT",
+      "headline": "ASML Surges 36% in 3 Months: Should Investors Buy the Stock?",
+      "keyword": "surges",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cienas-strong-free-cash-flow-171100836.html?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 17:11:00 +0000"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/asml-surges-36-3-months-174500574.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 17:45:00 +0000"
     },
     {
       "ticker": "AJG",
@@ -174,7 +174,7 @@
     {
       "ticker": "ATO",
       "headline": "Are You Looking for a High-Growth Dividend Stock?",
-      "keyword": "dividend",
+      "keyword": "growth",
       "direction": "\u2191",
       "score": 8.0,
       "source": "Yahoo Finance",
@@ -243,6 +243,16 @@
     },
     {
       "ticker": "ABT",
+      "headline": "Abbott's CGM Growth Story Stays Intact Despite Q1 Moderation",
+      "keyword": "growth",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/healthcare/articles/abbotts-cgm-growth-story-stays-134800644.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 13:48:00 +0000"
+    },
+    {
+      "ticker": "ABT",
       "headline": "How Investors May Respond To Abbott (ABT) Dividend And CE Mark For Dual Glucose\u2011Ketone Sensor",
       "keyword": "dividend",
       "direction": "\u2191",
@@ -253,8 +263,18 @@
     },
     {
       "ticker": "ABBV",
+      "headline": "Allergan Aesthetics Receives U.S. FDA Approval for SKINVIVE by JUV\u00c9DERM\u00ae for the Improvement of Neck Appearance",
+      "keyword": "approval",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/healthcare/articles/allergan-aesthetics-receives-u-fda-120000621.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 12:00:00 +0000"
+    },
+    {
+      "ticker": "ABBV",
       "headline": "64 Years of Raises: How DGRO Finds Companies That Never Cut Dividends",
-      "keyword": "dividend",
+      "keyword": "raises",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
@@ -262,14 +282,24 @@
       "published": "Mon, 15 Jun 2026 16:56:00 +0000"
     },
     {
-      "ticker": "ABBV",
-      "headline": "3 High-Yield Dividend Stocks to Buy Hand Over Fist in June",
-      "keyword": "dividend",
+      "ticker": "ACN",
+      "headline": "Acquisition & Transformation Strategies Aid ADP Amid High Costs",
+      "keyword": "acquisition",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://www.fool.com/investing/2026/06/15/3-high-yield-dividend-stocks-to-buy-hand-over-fist/?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 09:04:00 +0000"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/acquisition-transformation-strategies-aid-adp-143200087.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 14:32:00 +0000"
+    },
+    {
+      "ticker": "ACN",
+      "headline": "Unilever Scales Digital Twins Across Global Manufacturing Network with Accenture",
+      "keyword": "wins",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/unilever-scales-digital-twins-across-065900399.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 06:59:00 +0000"
     },
     {
       "ticker": "ACN",
@@ -292,74 +322,54 @@
       "published": "Mon, 15 Jun 2026 18:32:40 +0000"
     },
     {
-      "ticker": "ACN",
-      "headline": "Automatic Data Processing And 2 Other Reliable Dividend Stocks To Consider",
-      "keyword": "dividend",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/automatic-data-processing-2-other-173223168.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 17:32:23 +0000"
-    },
-    {
-      "ticker": "ACN",
-      "headline": "Accenture (ACN) Stock After 44% Slide Are Cash Flows Pointing To A Rebound?",
-      "keyword": "rebound",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/accenture-acn-stock-44-slide-160931119.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 16:09:31 +0000"
-    },
-    {
       "ticker": "ADBE",
-      "headline": "Adobe Stock Set for 46% Gain After Earnings Beat",
-      "keyword": "beat",
+      "headline": "Comparably Announces 2026 Best Career Growth, Best Leadership Teams, and Best Departments Awards",
+      "keyword": "growth",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/15/adobe-stock-set-for-46-gain-after-earnings-beat/?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 13:00:48 +0000"
+      "url": "https://finance.yahoo.com/small-business/articles/comparably-announces-2026-best-career-144000780.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 14:40:00 +0000"
     },
     {
       "ticker": "AMD",
-      "headline": "Micron, AMD Lead Chip Stocks Rally On U.S.-Iran Deal",
+      "headline": "AMD and Rackspace Sign 30 MW AI Compute Deal for Regulated Enterprises",
       "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/m/a24b5d00-7cf7-37aa-9ed3-33810a290dd8/micron%2C-amd-lead-chip-stocks.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 20:38:33 +0000"
+      "url": "https://finance.yahoo.com/technology/ai/articles/amd-rackspace-sign-30-mw-192100084.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 19:21:00 +0000"
     },
     {
       "ticker": "AMD",
-      "headline": "AMD Acquires MEXT to Tackle Data Center Memory Constraints",
-      "keyword": "acquires",
+      "headline": "New AI Memory Deal Sends AMD Shares Higher",
+      "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/technology/articles/amd-acquires-mext-tackle-data-201825648.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 20:18:25 +0000"
+      "url": "https://finance.yahoo.com/technology/ai/articles/ai-memory-deal-sends-amd-185506901.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 18:55:06 +0000"
     },
     {
       "ticker": "AMD",
-      "headline": "AMD vs Intel: Both Are Positioned for AI Data Center Growth But There Will Be Only One Winner",
-      "keyword": "growth",
+      "headline": "Why This AI Data Center Stock Is Surging on an AMD Partnership",
+      "keyword": "partnership",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/15/amd-vs-intel-both-are-positioned-for-ai-data-center-growth-but-there-will-be-only-one-winner/?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 19:39:32 +0000"
+      "url": "https://finance.yahoo.com/m/4546f66b-7c35-37a0-90b2-418ab5acabe0/why-this-ai-data-center-stock.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 18:54:00 +0000"
     },
     {
       "ticker": "AMD",
-      "headline": "Quantum Stocks Jump as Growth Trade Revives",
-      "keyword": "growth",
+      "headline": "Micron Stock Slips From Record High. Where It Goes Next.",
+      "keyword": "record",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/quantum-stocks-jump-growth-trade-180020171.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 18:00:20 +0000"
+      "url": "https://finance.yahoo.com/m/eb1baa90-d90d-3100-82ca-1514dd972630/micron-stock-slips-from.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 16:22:00 +0000"
     },
     {
       "ticker": "AES",
@@ -463,6 +473,16 @@
     },
     {
       "ticker": "ABNB",
+      "headline": "Residence Acquires Influencer Agency  GateMaker",
+      "keyword": "acquires",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://www.mediapost.com/publications/article/415824/residence-acquires-influencer-agency-gatemaker.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 11:54:05 +0000"
+    },
+    {
+      "ticker": "ABNB",
       "headline": "Payoneer to be acquired by Nuvei in $2.75B all-cash deal",
       "keyword": "deal",
       "direction": "\u2191",
@@ -480,26 +500,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/payoneer-acquired-canada-apos-nuvei-152014586.html?.tsrc=rss",
       "published": "Mon, 15 Jun 2026 15:20:14 +0000"
-    },
-    {
-      "ticker": "ABNB",
-      "headline": "3 Reasons Airbnb Is a Top Growth Stock to Buy in June",
-      "keyword": "growth",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.fool.com/investing/2026/06/12/3-reasons-airbnb-top-growth-stock-to-buy-june/?.tsrc=rss",
-      "published": "Fri, 12 Jun 2026 09:57:00 +0000"
-    },
-    {
-      "ticker": "ABNB",
-      "headline": "SpaceX\u2019s IPO could be largest in history. Here\u2019s how it compares to previous record-holders",
-      "keyword": "record",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/spacex-ipo-could-largest-history-070400060.html?.tsrc=rss",
-      "published": "Fri, 12 Jun 2026 07:04:00 +0000"
     },
     {
       "ticker": "AKAM",
@@ -533,6 +533,26 @@
     },
     {
       "ticker": "ALB",
+      "headline": "RIO-China Baowu Partnership Reaches Low-Carbon Steelmaking Milestone",
+      "keyword": "partnership",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/energy/articles/rio-china-baowu-partnership-reaches-135800111.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 13:58:00 +0000"
+    },
+    {
+      "ticker": "ALB",
+      "headline": "SSRM Boots Financial Position With Additional $500M Share Buyback",
+      "keyword": "buyback",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ssrm-boots-financial-position-additional-135700940.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 13:57:00 +0000"
+    },
+    {
+      "ticker": "ALB",
       "headline": "Is Albemarle (ALB) Outperforming Other Basic Materials Stocks This Year?",
       "keyword": "outperform",
       "direction": "\u2191",
@@ -540,56 +560,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/albemarle-alb-outperforming-other-basic-134004459.html?.tsrc=rss",
       "published": "Mon, 15 Jun 2026 13:40:04 +0000"
-    },
-    {
-      "ticker": "ALB",
-      "headline": "Albemarle (ALB) Stock After 184% One Year Surge Are Recent Gains Already Priced In",
-      "keyword": "surge",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/albemarle-alb-stock-184-one-231416086.html?.tsrc=rss",
-      "published": "Sat, 13 Jun 2026 23:14:16 +0000"
-    },
-    {
-      "ticker": "ALB",
-      "headline": "ATI and BWX Technologies Extend Strategic Partnership Through 2030",
-      "keyword": "partnership",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/technology/articles/ati-bwx-technologies-extend-strategic-142300553.html?.tsrc=rss",
-      "published": "Fri, 12 Jun 2026 14:23:00 +0000"
-    },
-    {
-      "ticker": "ALB",
-      "headline": "BHP Advances Lower-Carbon Conveyor Solutions With BOTON Partnership",
-      "keyword": "partnership",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/energy/articles/bhp-advances-lower-carbon-conveyor-135300052.html?.tsrc=rss",
-      "published": "Fri, 12 Jun 2026 13:53:00 +0000"
-    },
-    {
-      "ticker": "ALB",
-      "headline": "Batteries Beat the S&P 500: BATT Is Up 25% While SPY Hugs 11%",
-      "keyword": "beat",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/12/batteries-beat-the-sp-500-batt-is-up-25-while-spy-hugs-11/?.tsrc=rss",
-      "published": "Fri, 12 Jun 2026 11:30:02 +0000"
-    },
-    {
-      "ticker": "ALB",
-      "headline": "DuPont MemCor MBR Selected for Riverstone Upgrade in Australia",
-      "keyword": "upgrade",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/technology/articles/dupont-memcor-mbr-selected-riverstone-133900862.html?.tsrc=rss",
-      "published": "Thu, 11 Jun 2026 13:39:00 +0000"
     },
     {
       "ticker": "ARE",
@@ -612,16 +582,6 @@
       "published": "Tue, 26 May 2026 12:30:00 +0000"
     },
     {
-      "ticker": "ARE",
-      "headline": "Are Wall Street Analysts Bullish on Alexandria Real Estate Stock?",
-      "keyword": "bullish",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2114331/are-wall-street-analysts-bullish-on-alexandria-real-estate-stock?.tsrc=rss",
-      "published": "Mon, 25 May 2026 11:54:36 +0000"
-    },
-    {
       "ticker": "ALGN",
       "headline": "Q1 Earnings Outperformers: Align Technology (NASDAQ:ALGN) And The Rest Of The Dental Equipment & Technology Stocks",
       "keyword": "outperform",
@@ -640,6 +600,16 @@
       "source": "Yahoo Finance",
       "url": "https://www.marketbeat.com/instant-alerts/align-technology-cfo-global-growth-dsos-offset-north-america-demand-pressure-2026-06-04/?utm_source=yahoofinance&utm_medium=yahoofinance&.tsrc=rss",
       "published": "Fri, 05 Jun 2026 02:02:22 +0000"
+    },
+    {
+      "ticker": "ALGN",
+      "headline": "Align Technology (ALGN) Down 1.6% Since Last Earnings Report: Can It Rebound?",
+      "keyword": "rebound",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/align-technology-algn-down-1-153009019.html?.tsrc=rss",
+      "published": "Fri, 29 May 2026 15:30:09 +0000"
     },
     {
       "ticker": "ALGN",
@@ -680,16 +650,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/sure-check-allegion-plc-nyse-122042148.html?.tsrc=rss",
       "published": "Thu, 11 Jun 2026 12:20:42 +0000"
-    },
-    {
-      "ticker": "ALLE",
-      "headline": "Allegion (ALLE) Down 4.5% Since Last Earnings Report: Can It Rebound?",
-      "keyword": "rebound",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/allegion-alle-down-4-5-153004598.html?.tsrc=rss",
-      "published": "Thu, 28 May 2026 15:30:04 +0000"
     },
     {
       "ticker": "LNT",
@@ -753,23 +713,33 @@
     },
     {
       "ticker": "GOOGL",
-      "headline": "MediaTek eyes Google TPU and Musk AI rack deals in system-level pivot - Kuo",
+      "headline": "Palantir stock faces hidden AI risk after Google deal",
       "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/technology/articles/mediatek-eyes-google-tpu-musk-175315940.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 17:53:15 +0000"
+      "url": "https://www.thestreet.com/investing/stocks/palantir-stock-faces-hidden-ai-risk-after-google-deal?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 18:17:00 +0000"
     },
     {
       "ticker": "GOOG",
-      "headline": "MediaTek eyes Google TPU and Musk AI rack deals in system-level pivot - Kuo",
+      "headline": "Palantir stock faces hidden AI risk after Google deal",
       "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/technology/articles/mediatek-eyes-google-tpu-musk-175315940.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 17:53:15 +0000"
+      "url": "https://www.thestreet.com/investing/stocks/palantir-stock-faces-hidden-ai-risk-after-google-deal?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 18:17:00 +0000"
+    },
+    {
+      "ticker": "MO",
+      "headline": "$10,000 in This Dividend Stock Pays You More Than You\u2019d Expect",
+      "keyword": "dividend",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://247wallst.com/investing/2026/06/16/10000-in-this-dividend-stock-pays-you-more-than-youd-expect/?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 12:59:39 +0000"
     },
     {
       "ticker": "MO",
@@ -802,46 +772,6 @@
       "published": "Wed, 10 Jun 2026 12:09:17 +0000"
     },
     {
-      "ticker": "MO",
-      "headline": "15 of the Highest-Yielding Dividend Stocks in the S&P 500",
-      "keyword": "dividend",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.kiplinger.com/investing/stocks-with-the-highest-dividend-yields-in-the-sandp-500?.tsrc=rss",
-      "published": "Tue, 09 Jun 2026 21:11:23 +0000"
-    },
-    {
-      "ticker": "MO",
-      "headline": "Earn $5,000+ Yearly With These 4 Dividend Stocks",
-      "keyword": "dividend",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/09/earn-5000-yearly-with-these-4-dividend-stocks/?.tsrc=rss",
-      "published": "Tue, 09 Jun 2026 18:53:46 +0000"
-    },
-    {
-      "ticker": "AMZN",
-      "headline": "AI Stocks Are Rallying on Iran Peace Deal News, but the Risks Just Got a Lot Bigger",
-      "keyword": "deal",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/m/cb4fdebb-41c8-3c3c-b254-e38c45067e55/ai-stocks-are-rallying-on.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 19:56:00 +0000"
-    },
-    {
-      "ticker": "AMZN",
-      "headline": "Stock Market Today: Dow Pops On Trump-Iran Deal; Elon Musk's SpaceX Rockets, Tesla Does This",
-      "keyword": "deal",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/m/c127c423-0673-3825-8ed0-8b4d7cf1454f/stock-market-today%3A-dow-pops.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 20:43:16 +0000"
-    },
-    {
       "ticker": "AMCR",
       "headline": "Amcor announces key leadership appointments to accelerate growth",
       "keyword": "growth",
@@ -860,16 +790,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/amcor-amcr-down-5-7-153019127.html?.tsrc=rss",
       "published": "Fri, 05 Jun 2026 15:30:19 +0000"
-    },
-    {
-      "ticker": "AMCR",
-      "headline": "Is Amcor (AMCR) One of the Top 10 Dividend Aristocrat Stocks Ranked by Yield?",
-      "keyword": "dividend",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/amcor-amcr-one-top-10-021241633.html?.tsrc=rss",
-      "published": "Sun, 31 May 2026 02:12:41 +0000"
     },
     {
       "ticker": "AEE",
@@ -943,6 +863,36 @@
     },
     {
       "ticker": "AXP",
+      "headline": "TheFork Joins AmEx's Growing Global Dining Network in $700M Deal",
+      "keyword": "deal",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/thefork-joins-amexs-growing-global-181600681.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 18:16:00 +0000"
+    },
+    {
+      "ticker": "AXP",
+      "headline": "TRIP Stock Gains Premarket As Analysts Raise Tripadvisor Targets \u2013 See Value Creation From TheFork Deal",
+      "keyword": "deal",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://stocktwits.com/news-articles/markets/equity/trip-stock-gains-premarket-analysts-raise-tripadvisor-targets-see-value-creation-from-the-fork-deal/cZKWkcbR7El?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 08:50:05 +0000"
+    },
+    {
+      "ticker": "AXP",
+      "headline": "American Express Expands Dining Ecosystem With TheFork Acquisition From Tripadvisor",
+      "keyword": "acquisition",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/american-express-expands-dining-ecosystem-061129805.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 06:11:29 +0000"
+    },
+    {
+      "ticker": "AXP",
       "headline": "Stock Market Today: Dow Pops On Trump-Iran Deal; Elon Musk's SpaceX Rockets, Tesla Does This",
       "keyword": "deal",
       "direction": "\u2191",
@@ -950,36 +900,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/m/c127c423-0673-3825-8ed0-8b4d7cf1454f/stock-market-today%3A-dow-pops.html?.tsrc=rss",
       "published": "Mon, 15 Jun 2026 20:43:16 +0000"
-    },
-    {
-      "ticker": "AXP",
-      "headline": "American Express Shares Edge Higher on Planned $700 Million TheFork Acquisition (AXP)",
-      "keyword": "acquisition",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://investorshub.advfn.com/market-news/article/30424/american-express-shares-edge-higher-on-planned-700-million-thefork-acquisition-axp?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 13:41:10 +0000"
-    },
-    {
-      "ticker": "AXP",
-      "headline": "Tripadvisor Shares Surge After $700 Million Sale of TheFork to American Express (TRIP)",
-      "keyword": "surge",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://investorshub.advfn.com/market-news/article/30416/tripadvisor-shares-surge-after-700-million-sale-of-thefork-to-american-express-trip?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 13:31:13 +0000"
-    },
-    {
-      "ticker": "AXP",
-      "headline": "TRIP Stock\u2019s 10% Surge Gets It On Track To Cross 200-DMA For First Time In 6 Months \u2014 What Is The American Express Connection?",
-      "keyword": "surge",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://stocktwits.com/news-articles/markets/equity/trip-stock-on-track-cross-200-dma-first-time-six-months-american-express/cZKfSmaR73T?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 12:59:44 +0000"
     },
     {
       "ticker": "AIG",
@@ -990,6 +910,16 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/sectors/technology/articles/moneymasters-podcast-6-11-26-163000493.html?.tsrc=rss",
       "published": "Thu, 11 Jun 2026 16:30:00 +0000"
+    },
+    {
+      "ticker": "AMT",
+      "headline": "OUTFRONT Media Stock Outlook as Digital Transit Growth Builds in 2026",
+      "keyword": "growth",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/outfront-media-stock-outlook-digital-123600653.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 12:36:00 +0000"
     },
     {
       "ticker": "AMT",
@@ -1082,36 +1012,6 @@
       "published": "Thu, 11 Jun 2026 13:47:00 +0000"
     },
     {
-      "ticker": "APH",
-      "headline": "These 7 Stocks Are Analyst Favorites For Magnificent Earnings Growth; Google Strengthens",
-      "keyword": "growth",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/m/2b47c372-177e-3051-aa01-406a8d82b220/these-7-stocks-are-analyst.html?.tsrc=rss",
-      "published": "Thu, 11 Jun 2026 12:00:21 +0000"
-    },
-    {
-      "ticker": "APH",
-      "headline": "2 Growth Stocks to Add to Your Roster and 1 Facing Challenges",
-      "keyword": "growth",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/2-growth-stocks-add-roster-111337804.html?.tsrc=rss",
-      "published": "Thu, 11 Jun 2026 11:13:37 +0000"
-    },
-    {
-      "ticker": "APH",
-      "headline": "Is Corning Stock Outperforming the S&P 500?",
-      "keyword": "outperform",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2416975/is-corning-stock-outperforming-the-s-p-500?.tsrc=rss",
-      "published": "Thu, 11 Jun 2026 10:44:58 +0000"
-    },
-    {
       "ticker": "ADI",
       "headline": "Stocks Supported by a Rebound in Chipmakers and AI Stocks",
       "keyword": "rebound",
@@ -1132,24 +1032,24 @@
       "published": "Thu, 11 Jun 2026 13:03:00 +0000"
     },
     {
-      "ticker": "ADI",
-      "headline": "Stock Market Today, June 10: Broadcom Falls as Strong AI Quarter Tests Stock\u2019s Premium Valuation",
-      "keyword": "strong",
+      "ticker": "APA",
+      "headline": "Stocks Settle Sharply Higher as US-Iran Peace Deal Spurs Optimism",
+      "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/06/10/stock-market-today-june-10-broadcom-falls-as-strong-ai-quarter-tests-stock-s-premium-valuation/?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 22:11:12 +0000"
+      "url": "https://www.barchart.com/story/news/2480274/stocks-settle-sharply-higher-as-us-iran-peace-deal-spurs-optimism?.tsrc=rss",
+      "published": "Mon, 15 Jun 2026 20:36:56 +0000"
     },
     {
-      "ticker": "ADI",
-      "headline": "Cisco Is Up 61% in 2026. It\u2019s One of 3 Dividend Stocks Quietly Riding the AI Boom.",
-      "keyword": "dividend",
+      "ticker": "APA",
+      "headline": "Stocks Rally as US-Iran Peace Deal Sinks Oil and Bond Yields",
+      "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2399784/cisco-is-up-61-in-2026-its-one-of-3-dividend-stocks-quietly-riding-the-ai-boom?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 13:00:02 +0000"
+      "url": "https://www.barchart.com/story/news/2474936/stocks-rally-as-us-iran-peace-deal-sinks-oil-and-bond-yields?.tsrc=rss",
+      "published": "Mon, 15 Jun 2026 15:19:00 +0000"
     },
     {
       "ticker": "APO",
@@ -1183,63 +1083,63 @@
     },
     {
       "ticker": "AAPL",
-      "headline": "64 Years of Raises: How DGRO Finds Companies That Never Cut Dividends",
-      "keyword": "dividend",
+      "headline": "Dow Jones Tech Titan Apple Rebounds From Support; AI Leader Teradyne Breaks Out",
+      "keyword": "rebound",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/15/64-years-of-raises-how-dgro-finds-companies-that-never-cut-dividends/?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 16:56:00 +0000"
+      "url": "https://finance.yahoo.com/m/17453e5c-806a-3e4b-a715-89de3fc76184/dow-jones-tech-titan-apple.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 17:17:25 +0000"
     },
     {
-      "ticker": "AAPL",
-      "headline": "Liberty All-Star\u00ae Growth Fund, Inc. May 2026 Monthly Update",
+      "ticker": "AMAT",
+      "headline": "Lam Research (LRCX) Is Betting On Advanced Packaging For 50% Growth In 2026",
       "keyword": "growth",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/liberty-star-growth-fund-inc-164600601.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 16:46:00 +0000"
-    },
-    {
-      "ticker": "AAPL",
-      "headline": "SpaceX Extends Its Record IPO Gains",
-      "keyword": "record",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/spacex-extends-record-ipo-gains-142801514.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 14:28:01 +0000"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/lam-research-lrcx-betting-advanced-200933179.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 20:09:33 +0000"
     },
     {
       "ticker": "AMAT",
-      "headline": "Buy, Hold, or Sell: Applied Materials Surged Right Back Toward $500 Following a Brutal June Flush. Here\u2019s Where I\u2019d Buy",
-      "keyword": "surge",
+      "headline": "EssilorLuxottica, Applied Materials strike deal to develop smart glasses, AR technology",
+      "keyword": "deal",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/15/buy-hold-or-sell-applied-materials-surged-right-back-toward-500-following-a-brutal-june-flush-heres-where-id-buy/?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 14:28:52 +0000"
+      "url": "https://finance.yahoo.com/technology/ai/articles/essilorluxottica-applied-materials-strike-deal-161353824.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 16:13:53 +0000"
     },
     {
       "ticker": "AMAT",
-      "headline": "Applied Materials Tampines Campus Expansion Tests AI Growth And Rich Valuation",
+      "headline": "How Much Upside Can LRCX Stock's Growth Deliver?",
       "keyword": "growth",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/applied-materials-tampines-campus-expansion-110919314.html?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 11:09:19 +0000"
+      "url": "https://www.trefis.com/articles/603105/how-much-upside-can-lrcx-stocks-growth-deliver/2026-06-16?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 16:09:29 +0000"
     },
     {
       "ticker": "AMAT",
-      "headline": "Cantor Fitzgerald Raises its Price Target on Applied Materials (AMAT)",
-      "keyword": "raises",
+      "headline": "Strong Results Lifted Applied Materials (AMAT) in Q1",
+      "keyword": "strong",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cantor-fitzgerald-raises-price-target-171342746.html?.tsrc=rss",
-      "published": "Sat, 13 Jun 2026 17:13:42 +0000"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/strong-results-lifted-applied-materials-144639918.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 14:46:39 +0000"
+    },
+    {
+      "ticker": "AMAT",
+      "headline": "Lam Research Expects Packaging Growth of 50%: Is It a Hidden Catalyst?",
+      "keyword": "growth",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/articles/lam-research-expects-packaging-growth-131600390.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 13:16:00 +0000"
     },
     {
       "ticker": "APTV",
@@ -1333,6 +1233,26 @@
     },
     {
       "ticker": "ANET",
+      "headline": "BofA Securities Raises Price Target for Arista Networks (ANET)",
+      "keyword": "raises",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bofa-securities-raises-price-target-110253831.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 11:02:53 +0000"
+    },
+    {
+      "ticker": "ANET",
+      "headline": "Morgan Stanley Raises Price Target on Arista Networks (ANET). Here is Why",
+      "keyword": "raises",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-raises-price-target-020648491.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 02:06:48 +0000"
+    },
+    {
+      "ticker": "ANET",
       "headline": "Cisco Systems (CSCO) \u2013 Among the 10 Best S&P 500 Dividend Stocks to Buy Right Now",
       "keyword": "dividend",
       "direction": "\u2191",
@@ -1342,24 +1262,14 @@
       "published": "Sun, 14 Jun 2026 04:35:44 +0000"
     },
     {
-      "ticker": "ANET",
-      "headline": "Will RLS Hyper-Rail Emerge as Ciena's Next Growth Catalyst?",
-      "keyword": "growth",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rls-hyper-rail-emerge-cienas-133200534.html?.tsrc=rss",
-      "published": "Fri, 12 Jun 2026 13:32:00 +0000"
-    },
-    {
       "ticker": "AIZ",
-      "headline": "Assurant Outlook Rises As Global Lifestyle Earnings And Buybacks Draw Focus",
-      "keyword": "buyback",
+      "headline": "Assurant Reports $1.6 Billion in Value Returned to Consumers in Q1 2026, Highlighting How Trade-Ins Help Offset Smartphone Upgrade Costs",
+      "keyword": "upgrade",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/assurant-outlook-rises-global-lifestyle-210639581.html?.tsrc=rss",
-      "published": "Sat, 30 May 2026 21:06:39 +0000"
+      "url": "https://finance.yahoo.com/technology/articles/assurant-reports-1-6-billion-120000755.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 12:00:00 +0000"
     },
     {
       "ticker": "T",
@@ -1392,16 +1302,6 @@
       "published": "Mon, 15 Jun 2026 04:16:59 +0000"
     },
     {
-      "ticker": "T",
-      "headline": "Tutor Perini (TPC) Is Up 6.2% After Securing US$651.8M Guam Defense Contract Is The Bull Case Changed?",
-      "keyword": "contract",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/tutor-perini-tpc-6-2-090820379.html?.tsrc=rss",
-      "published": "Sun, 14 Jun 2026 09:08:20 +0000"
-    },
-    {
       "ticker": "ADSK",
       "headline": "Stocks Supported by a Rebound in Chipmakers and AI Stocks",
       "keyword": "rebound",
@@ -1412,14 +1312,34 @@
       "published": "Thu, 11 Jun 2026 15:16:24 +0000"
     },
     {
-      "ticker": "ADSK",
-      "headline": "Stocks Edge Higher as Chipmakers and AI Stocks Rebound",
-      "keyword": "rebound",
+      "ticker": "ADP",
+      "headline": "Attention Retirees: This 51-Year Dividend Aristocrat Is Secretly Riding a Multi-Billion Dollar Cash Wave",
+      "keyword": "dividend",
       "direction": "\u2191",
       "score": 6.5,
       "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2422896/stocks-edge-higher-as-chipmakers-and-ai-stocks-rebound?.tsrc=rss",
-      "published": "Thu, 11 Jun 2026 14:07:43 +0000"
+      "url": "https://247wallst.com/investing/2026/06/16/attention-retirees-this-51-year-dividend-aristocrat-is-secretly-riding-a-multi-billion-dollar-cash-wave/?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 14:50:48 +0000"
+    },
+    {
+      "ticker": "ADP",
+      "headline": "Acquisition & Transformation Strategies Aid ADP Amid High Costs",
+      "keyword": "acquisition",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/acquisition-transformation-strategies-aid-adp-143200087.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 14:32:00 +0000"
+    },
+    {
+      "ticker": "ADP",
+      "headline": "Intuit Stock's Real Growth Story Isn't The One You're Watching",
+      "keyword": "growth",
+      "direction": "\u2191",
+      "score": 6.5,
+      "source": "Yahoo Finance",
+      "url": "https://www.trefis.com/articles/602904/intuit-stocks-real-growth-story-isnt-the-one-youre-watching/2026-06-15?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 01:07:14 +0000"
     },
     {
       "ticker": "ADP",
@@ -1430,16 +1350,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/automatic-data-processing-2-other-173223168.html?.tsrc=rss",
       "published": "Mon, 15 Jun 2026 17:32:23 +0000"
-    },
-    {
-      "ticker": "ADP",
-      "headline": "Datadog Stock: Is DDOG Outperforming the Technology Sector?",
-      "keyword": "outperform",
-      "direction": "\u2191",
-      "score": 6.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2417165/datadog-stock-is-ddog-outperforming-the-technology-sector?.tsrc=rss",
-      "published": "Thu, 11 Jun 2026 10:58:35 +0000"
     },
     {
       "ticker": "MMM",
@@ -1482,16 +1392,6 @@
       "published": "Wed, 03 Jun 2026 13:51:49 +0000"
     },
     {
-      "ticker": "ARE",
-      "headline": "Alexandria Dividend Cut Tests Life Science REIT Valuation And Income Appeal",
-      "keyword": "dividend",
-      "direction": "\u2192",
-      "score": 5.0,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/alexandria-dividend-cut-tests-life-121413319.html?.tsrc=rss",
-      "published": "Tue, 12 May 2026 12:14:13 +0000"
-    },
-    {
       "ticker": "AJG",
       "headline": "Toll Brothers upgraded, Lennar downgraded: Wall Street's top analyst calls",
       "keyword": "upgraded",
@@ -1522,24 +1422,24 @@
       "published": "Mon, 15 Jun 2026 14:02:04 +0000"
     },
     {
-      "ticker": "ABT",
-      "headline": "Abbott Diabetes And Cancer Milestones Contrast With Prolonged Share Price Weakness",
-      "keyword": "weak",
+      "ticker": "ACN",
+      "headline": "Accenture Gets a Cautious Price-Target Cut",
+      "keyword": "cut",
       "direction": "\u2193",
       "score": 3.5,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/healthcare/articles/abbott-diabetes-cancer-milestones-contrast-221350827.html?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 22:13:50 +0000"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/accenture-gets-cautious-price-target-192027323.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 19:20:27 +0000"
     },
     {
       "ticker": "ADBE",
-      "headline": "Why Did ADBE, CHWY, BSX Slump To 52-Week Lows Last Week?",
-      "keyword": "slump",
+      "headline": "CloudBees Names Moritz Plassnig Chief Executive Officer",
+      "keyword": "cut",
       "direction": "\u2193",
       "score": 3.5,
       "source": "Yahoo Finance",
-      "url": "https://stocktwits.com/news-articles/markets/equity/why-did-adbe-chwy-bsx-slump-to-52-week-lows-last-week/cZKf2WzR7dJ?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 02:53:59 +0000"
+      "url": "https://finance.yahoo.com/technology/ai/articles/cloudbees-names-moritz-plassnig-chief-130000097.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 13:00:00 +0000"
     },
     {
       "ticker": "APD",
@@ -1550,6 +1450,16 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/did-us-70-million-missouri-020710936.html?.tsrc=rss",
       "published": "Mon, 15 Jun 2026 02:07:10 +0000"
+    },
+    {
+      "ticker": "ARE",
+      "headline": "Is Alexandria Real Estate Stock Underperforming the Dow?",
+      "keyword": "underperform",
+      "direction": "\u2193",
+      "score": 3.5,
+      "source": "Yahoo Finance",
+      "url": "https://www.barchart.com/story/news/2484906/is-alexandria-real-estate-stock-underperforming-the-dow?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 06:13:33 +0000"
     },
     {
       "ticker": "ALL",
@@ -1573,6 +1483,16 @@
     },
     {
       "ticker": "AEE",
+      "headline": "Ameren Missouri Announces Pricing of First Mortgage Bonds due 2056",
+      "keyword": "miss",
+      "direction": "\u2193",
+      "score": 3.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ameren-missouri-announces-pricing-first-232000767.html?.tsrc=rss",
+      "published": "Mon, 15 Jun 2026 23:20:00 +0000"
+    },
+    {
+      "ticker": "AEE",
       "headline": "Aaron Melda Named Chairman and President of Ameren Missouri",
       "keyword": "miss",
       "direction": "\u2193",
@@ -1580,16 +1500,6 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/sectors/energy/articles/aaron-melda-named-chairman-president-114500589.html?.tsrc=rss",
       "published": "Thu, 21 May 2026 11:45:00 +0000"
-    },
-    {
-      "ticker": "AEE",
-      "headline": "Google commits $15 billion to Missouri expansion with new data center project (GOOG)",
-      "keyword": "miss",
-      "direction": "\u2193",
-      "score": 3.5,
-      "source": "Yahoo Finance",
-      "url": "https://investorshub.advfn.com/market-news/article/28813/google-commits-15-billion-to-missouri-expansion-with-new-data-center-project-goog?.tsrc=rss",
-      "published": "Thu, 21 May 2026 10:23:23 +0000"
     },
     {
       "ticker": "AEP",
@@ -1620,6 +1530,16 @@
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/american-international-group-aig-fell-142518918.html?.tsrc=rss",
       "published": "Tue, 09 Jun 2026 14:25:18 +0000"
+    },
+    {
+      "ticker": "AWK",
+      "headline": "Missouri American Water Proudly Recognizes American Water Charitable Foundation State Strategic Impact Grantees",
+      "keyword": "miss",
+      "direction": "\u2193",
+      "score": 3.5,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/healthcare/articles/missouri-american-water-proudly-recognizes-120000797.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 12:00:00 +0000"
     },
     {
       "ticker": "AWK",
@@ -1672,44 +1592,24 @@
       "published": "Thu, 04 Jun 2026 21:02:28 +0000"
     },
     {
-      "ticker": "AON",
-      "headline": "Is Arthur J. Gallagher Stock Underperforming the Dow?",
-      "keyword": "underperform",
-      "direction": "\u2193",
-      "score": 3.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2303897/is-arthur-j-gallagher-stock-underperforming-the-dow?.tsrc=rss",
-      "published": "Thu, 04 Jun 2026 12:51:39 +0000"
-    },
-    {
-      "ticker": "APA",
-      "headline": "Stocks Resume Decline as Chipmakers and AI Companies Fall",
-      "keyword": "decline",
-      "direction": "\u2193",
-      "score": 3.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2403295/stocks-resume-decline-as-chipmakers-and-ai-companies-fall?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 15:21:45 +0000"
-    },
-    {
-      "ticker": "APA",
-      "headline": "Stocks Fall on Weakness in Tech and Trucking Companies",
-      "keyword": "weak",
-      "direction": "\u2193",
-      "score": 3.5,
-      "source": "Yahoo Finance",
-      "url": "https://www.barchart.com/story/news/2401843/stocks-fall-on-weakness-in-tech-and-trucking-companies?.tsrc=rss",
-      "published": "Wed, 10 Jun 2026 14:09:04 +0000"
-    },
-    {
-      "ticker": "AMAT",
-      "headline": "Wall Street Is Missing a Massive $500 Million AI Inflection: Here Is the 1 Unstoppable Tech Giant I\u2019m Loading Up on Over and Over",
+      "ticker": "AAPL",
+      "headline": "QQQI\u2019s 13.8 Percent Monthly Yield Comes With a Hidden Cost Most Income Investors Miss",
       "keyword": "miss",
       "direction": "\u2193",
       "score": 3.5,
       "source": "Yahoo Finance",
-      "url": "https://247wallst.com/investing/2026/06/15/wall-street-is-missing-a-massive-500-million-ai-inflection-here-is-the-1-unstoppable-tech-giant-im-loading-up-on-over-and-over/?.tsrc=rss",
-      "published": "Mon, 15 Jun 2026 12:27:57 +0000"
+      "url": "https://247wallst.com/investing/2026/06/16/qqqis-13-8-percent-monthly-yield-comes-with-a-hidden-cost-most-income-investors-miss/?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 19:05:37 +0000"
+    },
+    {
+      "ticker": "APTV",
+      "headline": "Is Aptiv Stock Underperforming the S&P 500?",
+      "keyword": "underperform",
+      "direction": "\u2193",
+      "score": 3.5,
+      "source": "Yahoo Finance",
+      "url": "https://www.barchart.com/story/news/2471522/is-aptiv-stock-underperforming-the-s-p-500?.tsrc=rss",
+      "published": "Mon, 15 Jun 2026 12:30:13 +0000"
     },
     {
       "ticker": "ACGL",
@@ -1772,19 +1672,9 @@
       "published": "Wed, 03 Jun 2026 03:10:45 +0000"
     },
     {
-      "ticker": "ADP",
-      "headline": "Possible Bearish Signals With Automatic Data Processing Insiders Disposing Stock",
-      "keyword": "bearish",
-      "direction": "\u2193",
-      "score": 3.5,
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/possible-bearish-signals-automatic-data-140019283.html?.tsrc=rss",
-      "published": "Mon, 08 Jun 2026 14:00:19 +0000"
-    },
-    {
       "ticker": "ABT",
       "headline": "Abbott (ABT) Stock Declines While Market Improves: Some Information for Investors",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1794,7 +1684,7 @@
     {
       "ticker": "ACN",
       "headline": "Accenture downgraded by Morgan Stanley as AI spending crowds out IT service demand",
-      "keyword": "downgraded",
+      "keyword": "downgrade",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1802,14 +1692,14 @@
       "published": "Mon, 15 Jun 2026 17:40:36 +0000"
     },
     {
-      "ticker": "APD",
-      "headline": "Air Products Membrane Solutions Holds Ribbon-Cutting Event for $70 Million Expansion of its Missouri Manufacturing and Logistics Center",
-      "keyword": "miss",
+      "ticker": "ADBE",
+      "headline": "Adobe (ADBE) Price Target Cut as TD Cowen Flags Slowing Spend and Weak AI Credit Demand",
+      "keyword": "cut",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/sectors/energy/articles/air-products-membrane-solutions-holds-195200637.html?.tsrc=rss",
-      "published": "Wed, 03 Jun 2026 19:52:00 +0000"
+      "url": "https://finance.yahoo.com/markets/stocks/articles/adobe-adbe-price-target-cut-190421474.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 19:04:21 +0000"
     },
     {
       "ticker": "AEE",
@@ -1834,7 +1724,7 @@
     {
       "ticker": "AON",
       "headline": "BRO Stock Declines 43.7% in a Year: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1844,7 +1734,7 @@
     {
       "ticker": "AON",
       "headline": "WTW Stock Declines 21.4% YTD: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1852,9 +1742,19 @@
       "published": "Tue, 09 Jun 2026 15:49:00 +0000"
     },
     {
+      "ticker": "APTV",
+      "headline": "Aptiv PLC (APTV) Stock Declines While Market Improves: Some Information for Investors",
+      "keyword": "declines",
+      "direction": "\u2193",
+      "score": 2.0,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aptiv-plc-aptv-stock-declines-215005138.html?.tsrc=rss",
+      "published": "Mon, 15 Jun 2026 21:50:05 +0000"
+    },
+    {
       "ticker": "ACGL",
       "headline": "PLMR Stock Declines 39.1% in a Year: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1874,7 +1774,7 @@
     {
       "ticker": "AJG",
       "headline": "BRO Stock Declines 43.7% in a Year: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1884,7 +1784,7 @@
     {
       "ticker": "AJG",
       "headline": "AJG Stock Declines 31% in a Year: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1894,7 +1794,7 @@
     {
       "ticker": "AJG",
       "headline": "WTW Stock Declines 21.4% YTD: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
@@ -1904,12 +1804,22 @@
     {
       "ticker": "AIZ",
       "headline": "MKL Stock Declines 15.4% in YTD: What Should Investors Do Now?",
-      "keyword": "decline",
+      "keyword": "declines",
       "direction": "\u2193",
       "score": 2.0,
       "source": "Yahoo Finance",
       "url": "https://finance.yahoo.com/markets/stocks/articles/mkl-stock-declines-15-4-161000046.html?.tsrc=rss",
       "published": "Mon, 08 Jun 2026 16:10:00 +0000"
+    },
+    {
+      "ticker": "T",
+      "headline": "Verizon targets wireless customers with new simpler plans, drops some fees",
+      "keyword": "drop",
+      "direction": "\u2193",
+      "score": 2.0,
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/articles/verizon-targets-wireless-customers-simpler-110350448.html?.tsrc=rss",
+      "published": "Tue, 16 Jun 2026 11:03:50 +0000"
     }
   ]
 }

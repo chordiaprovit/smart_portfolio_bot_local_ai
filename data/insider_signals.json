@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-15T21:02:04",
-  "count": 11,
+  "generated_at": "2026-06-16T20:52:13",
+  "count": 12,
   "signals": [
     {
       "ticker": "ABT",
@@ -45,6 +45,17 @@
       "transaction_date": "2026-04-30",
       "filing_date": "2026-05-04",
       "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ADSK",
+      "insider_name": "Janesh Moorjani",
+      "insider_role": "EVP, Chief Financial Officer",
+      "shares_bought": 2500.0,
+      "price_per_share": 197.67,
+      "total_value": 494175.0,
+      "transaction_date": "2026-06-15",
+      "filing_date": "2026-06-15",
+      "signal_strength": "MEDIUM"
     },
     {
       "ticker": "ARE",
