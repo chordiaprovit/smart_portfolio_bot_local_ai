@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-16T20:52:13",
-  "count": 12,
+  "generated_at": "2026-06-17T20:12:43",
+  "count": 13,
   "signals": [
     {
       "ticker": "ABT",
@@ -45,6 +45,17 @@
       "transaction_date": "2026-04-30",
       "filing_date": "2026-05-04",
       "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ADSK",
+      "insider_name": "Andrew Anagnost",
+      "insider_role": "President and CEO",
+      "shares_bought": 2460.0,
+      "price_per_share": 202.66,
+      "total_value": 498543.6,
+      "transaction_date": "2026-06-16",
+      "filing_date": "2026-06-17",
+      "signal_strength": "MEDIUM"
     },
     {
       "ticker": "ADSK",
