@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-18T20:23:31",
-  "count": 13,
+  "generated_at": "2026-06-19T19:39:19",
+  "count": 14,
   "signals": [
     {
       "ticker": "ABT",
@@ -122,6 +122,17 @@
       "transaction_date": "2026-04-23",
       "filing_date": "2026-04-27",
       "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "ABT",
+      "insider_name": "John G Stratton",
+      "insider_role": "Director",
+      "shares_bought": 2000.0,
+      "price_per_share": 86.82,
+      "total_value": 173640.0,
+      "transaction_date": "2026-05-07",
+      "filing_date": "2026-06-18",
+      "signal_strength": "LOW"
     },
     {
       "ticker": "ARE",
