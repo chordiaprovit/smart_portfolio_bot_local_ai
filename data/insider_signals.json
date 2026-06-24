@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-23T20:03:40",
-  "count": 14,
+  "generated_at": "2026-06-24T19:39:56",
+  "count": 15,
   "signals": [
     {
       "ticker": "ABT",
@@ -77,6 +77,17 @@
       "total_value": 410200.0,
       "transaction_date": "2026-05-04",
       "filing_date": "2026-05-05",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ADSK",
+      "insider_name": "John T Cahill",
+      "insider_role": "Director",
+      "shares_bought": 2000.0,
+      "price_per_share": 189.2,
+      "total_value": 378400.0,
+      "transaction_date": "2026-06-23",
+      "filing_date": "2026-06-23",
       "signal_strength": "LOW"
     },
     {
