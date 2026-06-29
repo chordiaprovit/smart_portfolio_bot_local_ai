@@ -1,7 +1,18 @@
 {
-  "generated_at": "2026-06-26T19:45:18",
-  "count": 15,
+  "generated_at": "2026-06-29T19:47:03",
+  "count": 16,
   "signals": [
+    {
+      "ticker": "ADBE",
+      "insider_name": "David A Ricks",
+      "insider_role": "Director",
+      "shares_bought": 10000.0,
+      "price_per_share": 194.513,
+      "total_value": 1945130.0,
+      "transaction_date": "2026-06-25",
+      "filing_date": "2026-06-26",
+      "signal_strength": "MEDIUM"
+    },
     {
       "ticker": "ABT",
       "insider_name": "Daniel J Starks",
