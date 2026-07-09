@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-08T19:19:08",
-  "count": 16,
+  "generated_at": "2026-07-09T19:36:44",
+  "count": 15,
   "signals": [
     {
       "ticker": "ADBE",
@@ -165,17 +165,6 @@
       "total_value": 143500.0,
       "transaction_date": "2026-04-30",
       "filing_date": "2026-05-04",
-      "signal_strength": "LOW"
-    },
-    {
-      "ticker": "MMM",
-      "insider_name": "Christian T Goralski JR",
-      "insider_role": "Group President",
-      "shares_bought": 17.0,
-      "price_per_share": 107.1783,
-      "total_value": 1822.03,
-      "transaction_date": "2024-05-30",
-      "filing_date": "2026-04-09",
       "signal_strength": "LOW"
     }
   ]
