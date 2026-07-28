@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-27T19:22:26",
-  "count": 14,
+  "generated_at": "2026-07-28T19:19:17",
+  "count": 13,
   "signals": [
     {
       "ticker": "ADBE",
@@ -11,17 +11,6 @@
       "total_value": 1945130.0,
       "transaction_date": "2026-06-25",
       "filing_date": "2026-06-26",
-      "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "ABT",
-      "insider_name": "Daniel J Starks",
-      "insider_role": "Director",
-      "shares_bought": 10000.0,
-      "price_per_share": 92.6537,
-      "total_value": 926537.0,
-      "transaction_date": "2026-04-27",
-      "filing_date": "2026-04-28",
       "signal_strength": "MEDIUM"
     },
     {
