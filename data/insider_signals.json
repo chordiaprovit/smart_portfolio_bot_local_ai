@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-31T19:17:39",
-  "count": 13,
+  "generated_at": "2026-08-03T19:31:05",
+  "count": 11,
   "signals": [
     {
       "ticker": "ADBE",
@@ -34,17 +34,6 @@
       "transaction_date": "2026-05-07",
       "filing_date": "2026-05-11",
       "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "ACGL",
-      "insider_name": "Daniel Joseph Houston",
-      "insider_role": "Director",
-      "shares_bought": 5300.0,
-      "price_per_share": 94.085,
-      "total_value": 498650.5,
-      "transaction_date": "2026-04-30",
-      "filing_date": "2026-05-04",
-      "signal_strength": "LOW"
     },
     {
       "ticker": "ADSK",
@@ -132,17 +121,6 @@
       "total_value": 173640.0,
       "transaction_date": "2026-05-07",
       "filing_date": "2026-06-18",
-      "signal_strength": "LOW"
-    },
-    {
-      "ticker": "ARE",
-      "insider_name": "Gregory Calvin Thomas",
-      "insider_role": "EVP - CTO",
-      "shares_bought": 3500.0,
-      "price_per_share": 41.0,
-      "total_value": 143500.0,
-      "transaction_date": "2026-04-30",
-      "filing_date": "2026-05-04",
       "signal_strength": "LOW"
     }
   ]
