@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-04T19:31:07",
-  "count": 10,
+  "generated_at": "2026-08-05T19:23:18",
+  "count": 9,
   "signals": [
     {
       "ticker": "ADBE",
@@ -88,17 +88,6 @@
       "total_value": 347558.25,
       "transaction_date": "2026-05-06",
       "filing_date": "2026-05-07",
-      "signal_strength": "LOW"
-    },
-    {
-      "ticker": "ARE",
-      "insider_name": "Joel S Marcus",
-      "insider_role": "Executive Chairman",
-      "shares_bought": 7500.0,
-      "price_per_share": 42.7221,
-      "total_value": 320415.7,
-      "transaction_date": "2026-05-05",
-      "filing_date": "2026-05-06",
       "signal_strength": "LOW"
     },
     {
