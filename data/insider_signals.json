@@ -1,7 +1,18 @@
 {
-  "generated_at": "2026-08-05T19:23:18",
+  "generated_at": "2026-08-06T22:57:21",
   "count": 9,
   "signals": [
+    {
+      "ticker": "APTV",
+      "insider_name": "Paul M Meister",
+      "insider_role": "Director",
+      "shares_bought": 105631.0,
+      "price_per_share": 47.3342,
+      "total_value": 4999958.88,
+      "transaction_date": "2026-08-05",
+      "filing_date": "2026-08-06",
+      "signal_strength": "MEDIUM"
+    },
     {
       "ticker": "ADBE",
       "insider_name": "David A Ricks",
@@ -77,17 +88,6 @@
       "total_value": 352153.0,
       "transaction_date": "2026-05-08",
       "filing_date": "2026-05-12",
-      "signal_strength": "LOW"
-    },
-    {
-      "ticker": "ARE",
-      "insider_name": "Joel S Marcus",
-      "insider_role": "Executive Chairman",
-      "shares_bought": 7500.0,
-      "price_per_share": 46.3411,
-      "total_value": 347558.25,
-      "transaction_date": "2026-05-06",
-      "filing_date": "2026-05-07",
       "signal_strength": "LOW"
     },
     {
