@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-07T18:53:46",
-  "count": 9,
+  "generated_at": "2026-08-10T18:54:28",
+  "count": 8,
   "signals": [
     {
       "ticker": "APTV",
@@ -33,17 +33,6 @@
       "total_value": 794054.34,
       "transaction_date": "2026-05-29",
       "filing_date": "2026-05-29",
-      "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "ADP",
-      "insider_name": "Robert Holmes Swan",
-      "insider_role": "Director",
-      "shares_bought": 3619.0,
-      "price_per_share": 206.05,
-      "total_value": 745694.95,
-      "transaction_date": "2026-05-07",
-      "filing_date": "2026-05-11",
       "signal_strength": "MEDIUM"
     },
     {
