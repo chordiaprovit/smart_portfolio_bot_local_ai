@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-11T18:58:21",
-  "count": 7,
+  "generated_at": "2026-08-12T18:58:33",
+  "count": 9,
   "signals": [
     {
       "ticker": "APTV",
@@ -12,6 +12,17 @@
       "transaction_date": "2026-08-05",
       "filing_date": "2026-08-06",
       "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "APTV",
+      "insider_name": "Kevin P Clark",
+      "insider_role": "Chair and CEO",
+      "shares_bought": 51190.0,
+      "price_per_share": 48.8901,
+      "total_value": 2502684.22,
+      "transaction_date": "2026-08-10",
+      "filing_date": "2026-08-11",
+      "signal_strength": "HIGH"
     },
     {
       "ticker": "ADBE",
@@ -77,6 +88,17 @@
       "total_value": 173640.0,
       "transaction_date": "2026-05-07",
       "filing_date": "2026-06-18",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ATO",
+      "insider_name": "William James Ware",
+      "insider_role": "Director",
+      "shares_bought": 300.0,
+      "price_per_share": 167.5945,
+      "total_value": 50278.35,
+      "transaction_date": "2026-08-11",
+      "filing_date": "2026-08-12",
       "signal_strength": "LOW"
     }
   ]
