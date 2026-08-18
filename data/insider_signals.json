@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-17T18:35:01",
-  "count": 11,
+  "generated_at": "2026-08-18T18:32:09",
+  "count": 12,
   "signals": [
     {
       "ticker": "APTV",
@@ -99,6 +99,17 @@
       "total_value": 378400.0,
       "transaction_date": "2026-06-23",
       "filing_date": "2026-06-23",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "APTV",
+      "insider_name": "Hakan Agnevall",
+      "insider_role": "Director",
+      "shares_bought": 4100.0,
+      "price_per_share": 48.581,
+      "total_value": 199182.1,
+      "transaction_date": "2026-08-13",
+      "filing_date": "2026-08-17",
       "signal_strength": "LOW"
     },
     {
