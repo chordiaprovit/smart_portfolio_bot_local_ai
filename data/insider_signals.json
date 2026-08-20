@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-19T18:28:19",
-  "count": 12,
+  "generated_at": "2026-08-20T18:34:50",
+  "count": 13,
   "signals": [
     {
       "ticker": "APTV",
@@ -99,6 +99,17 @@
       "total_value": 378400.0,
       "transaction_date": "2026-06-23",
       "filing_date": "2026-06-23",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ARE",
+      "insider_name": "Joel S Marcus",
+      "insider_role": "Executive Chairman",
+      "shares_bought": 5000.0,
+      "price_per_share": 46.28,
+      "total_value": 231400.0,
+      "transaction_date": "2026-08-17",
+      "filing_date": "2026-08-19",
       "signal_strength": "LOW"
     },
     {
