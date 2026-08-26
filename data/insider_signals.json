@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-25T18:34:27",
-  "count": 13,
+  "generated_at": "2026-08-26T19:41:25",
+  "count": 14,
   "signals": [
     {
       "ticker": "APTV",
@@ -66,6 +66,17 @@
       "total_value": 552683.2,
       "transaction_date": "2026-08-11",
       "filing_date": "2026-08-12",
+      "signal_strength": "MEDIUM"
+    },
+    {
+      "ticker": "AMT",
+      "insider_name": "Rajesh Kalathur",
+      "insider_role": "Director",
+      "shares_bought": 2829.0,
+      "price_per_share": 177.0,
+      "total_value": 500733.0,
+      "transaction_date": "2026-08-21",
+      "filing_date": "2026-08-25",
       "signal_strength": "MEDIUM"
     },
     {

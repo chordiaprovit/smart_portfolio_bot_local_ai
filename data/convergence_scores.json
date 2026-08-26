@@ -1,374 +1,457 @@
 {
-  "generated_at": "2026-08-25T18:34:44",
+  "generated_at": "2026-08-26T19:41:42",
   "count": 50,
   "scores": [
     {
       "ticker": "APTV",
-      "convergence_score": 7.03,
+      "convergence_score": 6.81,
       "signal_count": 2,
-      "news_score": 7.25,
+      "news_score": 6.5,
       "insider_signal": 10.0,
-      "price_momentum": 3.57,
+      "price_momentum": 3.43,
       "etf_pressure": 5.0,
       "verdict": "BUY",
       "reasons": [
         "A top executive bought a large amount of their own company's stock with personal money",
-        "News coverage looks positive (score 7.2/10)",
-        "Recent price move: 5d=-4.1%, 1d=-1.6%"
+        "Recent price move: 5d=-5.5%, 1d=-0.8%"
       ],
-      "scored_at": "2026-08-25T18:34:41"
-    },
-    {
-      "ticker": "ADBE",
-      "convergence_score": 6.35,
-      "signal_count": 2,
-      "news_score": 6.5,
-      "insider_signal": 7.5,
-      "price_momentum": 5.51,
-      "etf_pressure": 5.0,
-      "verdict": "BUY",
-      "reasons": [
-        "A company insider recently bought their own stock",
-        "Recent price move: 5d=+3.5%, 1d=-1.4%"
-      ],
-      "scored_at": "2026-08-25T18:34:29"
+      "scored_at": "2026-08-26T19:41:39"
     },
     {
       "ticker": "ADSK",
-      "convergence_score": 6.25,
+      "convergence_score": 6.39,
       "signal_count": 2,
       "news_score": 6.5,
       "insider_signal": 7.5,
-      "price_momentum": 4.99,
+      "price_momentum": 5.71,
       "etf_pressure": 5.0,
       "verdict": "BUY",
       "reasons": [
         "A company insider recently bought their own stock",
-        "Recent price move: 5d=+1.5%, 1d=-1.5%"
+        "Recent price move: 5d=+1.4%, 1d=+1.4%"
       ],
-      "scored_at": "2026-08-25T18:34:43"
+      "scored_at": "2026-08-26T19:41:41"
     },
     {
       "ticker": "AME",
-      "convergence_score": 6.09,
+      "convergence_score": 6.38,
       "signal_count": 2,
       "news_score": 6.5,
       "insider_signal": 7.5,
-      "price_momentum": 4.19,
+      "price_momentum": 5.65,
       "etf_pressure": 5.0,
       "verdict": "BUY",
       "reasons": [
         "A company insider recently bought their own stock",
-        "Recent price move: 5d=-3.2%, 1d=-0.1%"
+        "Recent price move: 5d=+1.0%, 1d=+1.6%"
       ],
-      "scored_at": "2026-08-25T18:34:38"
+      "scored_at": "2026-08-26T19:41:36"
     },
     {
-      "ticker": "AMD",
-      "convergence_score": 6.06,
+      "ticker": "AMT",
+      "convergence_score": 6.22,
       "signal_count": 2,
-      "news_score": 8.38,
-      "insider_signal": 5.0,
-      "price_momentum": 6.08,
+      "news_score": 6.5,
+      "insider_signal": 7.5,
+      "price_momentum": 4.85,
       "etf_pressure": 5.0,
       "verdict": "BUY",
       "reasons": [
-        "News coverage looks positive (score 8.4/10)",
-        "Recent price move: 5d=-0.8%, 1d=+5.2%"
+        "A company insider recently bought their own stock",
+        "Recent price move: 5d=+0.9%, 1d=-1.5%"
       ],
-      "scored_at": "2026-08-25T18:34:29"
+      "scored_at": "2026-08-26T19:41:35"
     },
     {
-      "ticker": "ARE",
-      "convergence_score": 5.99,
+      "ticker": "ADBE",
+      "convergence_score": 6.06,
       "signal_count": 1,
-      "news_score": 5.0,
-      "insider_signal": 6.0,
-      "price_momentum": 8.21,
+      "news_score": 5.75,
+      "insider_signal": 7.5,
+      "price_momentum": 5.01,
       "etf_pressure": 5.0,
-      "verdict": "WATCH",
+      "verdict": "BUY",
       "reasons": [
-        "Recent price move: 5d=+15.2%, 1d=-2.3%"
+        "A company insider recently bought their own stock",
+        "Recent price move: 5d=+0.3%, 1d=-0.2%"
       ],
-      "scored_at": "2026-08-25T18:34:32"
+      "scored_at": "2026-08-26T19:41:27"
     },
     {
-      "ticker": "ABT",
-      "convergence_score": 5.86,
+      "ticker": "ANET",
+      "convergence_score": 5.97,
       "signal_count": 1,
-      "news_score": 6.5,
-      "insider_signal": 6.0,
-      "price_momentum": 5.66,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+3.1%, 1d=-0.4%"
-      ],
-      "scored_at": "2026-08-25T18:34:28"
-    },
-    {
-      "ticker": "AMGN",
-      "convergence_score": 5.8,
-      "signal_count": 2,
-      "news_score": 7.25,
+      "news_score": 6.0,
       "insider_signal": 5.0,
-      "price_momentum": 6.21,
+      "price_momentum": 8.59,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "News coverage looks positive (score 7.2/10)",
-        "Recent price move: 5d=+4.9%, 1d=-0.1%"
+        "Recent price move: 5d=+8.4%, 1d=+5.9%"
       ],
-      "scored_at": "2026-08-25T18:34:38"
+      "scored_at": "2026-08-26T19:41:40"
     },
     {
-      "ticker": "AMCR",
-      "convergence_score": 5.71,
-      "signal_count": 1,
-      "news_score": 7.5,
-      "insider_signal": 5.0,
-      "price_momentum": 5.45,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "News coverage looks positive (score 7.5/10)",
-        "Recent price move: 5d=+3.1%, 1d=-1.3%"
-      ],
-      "scored_at": "2026-08-25T18:34:35"
-    },
-    {
-      "ticker": "AMP",
-      "convergence_score": 5.71,
+      "ticker": "AMD",
+      "convergence_score": 5.92,
       "signal_count": 1,
       "news_score": 8.0,
-      "insider_signal": 5.0,
-      "price_momentum": 4.82,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "News coverage looks positive (score 8.0/10)",
-        "Recent price move: 5d=-0.4%, 1d=-0.3%"
-      ],
-      "scored_at": "2026-08-25T18:34:37"
-    },
-    {
-      "ticker": "ADP",
-      "convergence_score": 5.69,
-      "signal_count": 1,
-      "news_score": 7.0,
-      "insider_signal": 5.0,
-      "price_momentum": 5.97,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "News coverage looks positive (score 7.0/10)",
-        "Recent price move: 5d=+4.5%, 1d=-0.6%"
-      ],
-      "scored_at": "2026-08-25T18:34:44"
-    },
-    {
-      "ticker": "ATO",
-      "convergence_score": 5.68,
-      "signal_count": 1,
-      "news_score": 6.5,
-      "insider_signal": 6.0,
-      "price_momentum": 4.79,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-0.9%, 1d=+0.1%"
-      ],
-      "scored_at": "2026-08-25T18:34:43"
-    },
-    {
-      "ticker": "AJG",
-      "convergence_score": 5.64,
-      "signal_count": 2,
-      "news_score": 6.25,
-      "insider_signal": 5.0,
-      "price_momentum": 6.63,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+8.0%, 1d=-1.4%"
-      ],
-      "scored_at": "2026-08-25T18:34:42"
-    },
-    {
-      "ticker": "A",
-      "convergence_score": 5.63,
-      "signal_count": 2,
-      "news_score": 6.5,
-      "insider_signal": 5.0,
-      "price_momentum": 6.29,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+4.3%, 1d=+0.9%"
-      ],
-      "scored_at": "2026-08-25T18:34:30"
-    },
-    {
-      "ticker": "ALLE",
-      "convergence_score": 5.62,
-      "signal_count": 1,
-      "news_score": 7.5,
-      "insider_signal": 5.0,
-      "price_momentum": 5.0,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "News coverage looks positive (score 7.5/10)",
-        "Recent price move: 5d=+0.9%, 1d=-0.9%"
-      ],
-      "scored_at": "2026-08-25T18:34:32"
-    },
-    {
-      "ticker": "MO",
-      "convergence_score": 5.58,
-      "signal_count": 2,
-      "news_score": 6.5,
-      "insider_signal": 5.0,
-      "price_momentum": 6.01,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+4.5%, 1d=-0.5%"
-      ],
-      "scored_at": "2026-08-25T18:34:34"
-    },
-    {
-      "ticker": "AIZ",
-      "convergence_score": 5.58,
-      "signal_count": 1,
-      "news_score": 7.1,
-      "insider_signal": 5.0,
-      "price_momentum": 5.28,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "News coverage looks positive (score 7.1/10)",
-        "Recent price move: 5d=+1.9%, 1d=-0.8%"
-      ],
-      "scored_at": "2026-08-25T18:34:42"
-    },
-    {
-      "ticker": "T",
-      "convergence_score": 5.55,
-      "signal_count": 1,
-      "news_score": 6.5,
       "insider_signal": 5.0,
       "price_momentum": 5.87,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+3.3%, 1d=+0.2%"
+        "News coverage looks positive (score 8.0/10)",
+        "Recent price move: 5d=+3.1%, 1d=+0.4%"
       ],
-      "scored_at": "2026-08-25T18:34:43"
+      "scored_at": "2026-08-26T19:41:28"
     },
     {
-      "ticker": "AOS",
-      "convergence_score": 5.54,
+      "ticker": "AAPL",
+      "convergence_score": 5.81,
       "signal_count": 1,
+      "news_score": 8.0,
+      "insider_signal": 5.0,
+      "price_momentum": 5.31,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "News coverage looks positive (score 8.0/10)",
+        "Recent price move: 5d=-0.5%, 1d=+1.7%"
+      ],
+      "scored_at": "2026-08-26T19:41:38"
+    },
+    {
+      "ticker": "AMP",
+      "convergence_score": 5.8,
+      "signal_count": 1,
+      "news_score": 8.0,
+      "insider_signal": 5.0,
+      "price_momentum": 5.23,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "News coverage looks positive (score 8.0/10)",
+        "Recent price move: 5d=+0.5%, 1d=+0.4%"
+      ],
+      "scored_at": "2026-08-26T19:41:35"
+    },
+    {
+      "ticker": "AIZ",
+      "convergence_score": 5.77,
+      "signal_count": 2,
       "news_score": 7.1,
       "insider_signal": 5.0,
-      "price_momentum": 5.07,
+      "price_momentum": 6.24,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
         "News coverage looks positive (score 7.1/10)",
-        "Recent price move: 5d=+1.6%, 1d=-1.4%"
+        "Recent price move: 5d=+3.7%, 1d=+1.2%"
       ],
-      "scored_at": "2026-08-25T18:34:27"
+      "scored_at": "2026-08-26T19:41:40"
     },
     {
-      "ticker": "AMT",
-      "convergence_score": 5.54,
+      "ticker": "ATO",
+      "convergence_score": 5.74,
       "signal_count": 1,
       "news_score": 6.5,
-      "insider_signal": 5.0,
-      "price_momentum": 5.85,
+      "insider_signal": 6.0,
+      "price_momentum": 5.1,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+3.5%, 1d=-0.1%"
+        "Recent price move: 5d=-0.6%, 1d=+1.0%"
       ],
-      "scored_at": "2026-08-25T18:34:36"
+      "scored_at": "2026-08-26T19:41:41"
+    },
+    {
+      "ticker": "MO",
+      "convergence_score": 5.71,
+      "signal_count": 2,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 6.67,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+4.9%, 1d=+1.8%"
+      ],
+      "scored_at": "2026-08-26T19:41:32"
     },
     {
       "ticker": "ALL",
-      "convergence_score": 5.44,
+      "convergence_score": 5.68,
       "signal_count": 1,
       "news_score": 7.25,
       "insider_signal": 5.0,
-      "price_momentum": 4.39,
+      "price_momentum": 5.59,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
         "News coverage looks positive (score 7.2/10)",
-        "Recent price move: 5d=-1.4%, 1d=-1.0%"
+        "Recent price move: 5d=+0.8%, 1d=+1.6%"
       ],
-      "scored_at": "2026-08-25T18:34:33"
+      "scored_at": "2026-08-26T19:41:31"
     },
     {
-      "ticker": "ABBV",
-      "convergence_score": 5.42,
-      "signal_count": 0,
-      "news_score": 6.0,
+      "ticker": "APH",
+      "convergence_score": 5.65,
+      "signal_count": 2,
+      "news_score": 6.5,
       "insider_signal": 5.0,
-      "price_momentum": 5.86,
+      "price_momentum": 6.36,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+2.8%, 1d=+0.6%"
+        "Recent price move: 5d=+3.6%, 1d=+1.8%"
       ],
-      "scored_at": "2026-08-25T18:34:28"
+      "scored_at": "2026-08-26T19:41:36"
+    },
+    {
+      "ticker": "ABT",
+      "convergence_score": 5.63,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 6.0,
+      "price_momentum": 4.51,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-0.3%, 1d=-1.7%"
+      ],
+      "scored_at": "2026-08-26T19:41:26"
+    },
+    {
+      "ticker": "ADP",
+      "convergence_score": 5.63,
+      "signal_count": 1,
+      "news_score": 7.25,
+      "insider_signal": 5.0,
+      "price_momentum": 5.36,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "News coverage looks positive (score 7.2/10)",
+        "Recent price move: 5d=+1.7%, 1d=-0.3%"
+      ],
+      "scored_at": "2026-08-26T19:41:41"
+    },
+    {
+      "ticker": "AMCR",
+      "convergence_score": 5.6,
+      "signal_count": 1,
+      "news_score": 7.5,
+      "insider_signal": 5.0,
+      "price_momentum": 4.88,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "News coverage looks positive (score 7.5/10)",
+        "Recent price move: 5d=-0.4%, 1d=-0.1%"
+      ],
+      "scored_at": "2026-08-26T19:41:33"
+    },
+    {
+      "ticker": "T",
+      "convergence_score": 5.59,
+      "signal_count": 2,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 6.09,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+3.5%, 1d=+0.9%"
+      ],
+      "scored_at": "2026-08-26T19:41:41"
+    },
+    {
+      "ticker": "ARE",
+      "convergence_score": 5.55,
+      "signal_count": 0,
+      "news_score": 5.0,
+      "insider_signal": 6.0,
+      "price_momentum": 6.0,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+4.3%, 1d=-0.3%"
+      ],
+      "scored_at": "2026-08-26T19:41:30"
+    },
+    {
+      "ticker": "AJG",
+      "convergence_score": 5.55,
+      "signal_count": 1,
+      "news_score": 6.75,
+      "insider_signal": 5.0,
+      "price_momentum": 5.56,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+3.3%, 1d=-1.0%"
+      ],
+      "scored_at": "2026-08-26T19:41:40"
+    },
+    {
+      "ticker": "AIG",
+      "convergence_score": 5.52,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.71,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+1.9%, 1d=+1.0%"
+      ],
+      "scored_at": "2026-08-26T19:41:34"
+    },
+    {
+      "ticker": "APD",
+      "convergence_score": 5.5,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.61,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+1.3%, 1d=+1.1%"
+      ],
+      "scored_at": "2026-08-26T19:41:29"
+    },
+    {
+      "ticker": "AOS",
+      "convergence_score": 5.45,
+      "signal_count": 1,
+      "news_score": 7.1,
+      "insider_signal": 5.0,
+      "price_momentum": 4.6,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "News coverage looks positive (score 7.1/10)",
+        "Recent price move: 5d=-2.1%, 1d=+0.5%"
+      ],
+      "scored_at": "2026-08-26T19:41:26"
+    },
+    {
+      "ticker": "APO",
+      "convergence_score": 5.43,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.28,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+0.4%, 1d=+0.7%"
+      ],
+      "scored_at": "2026-08-26T19:41:38"
+    },
+    {
+      "ticker": "ALB",
+      "convergence_score": 5.41,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.19,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-0.0%, 1d=+0.8%"
+      ],
+      "scored_at": "2026-08-26T19:41:30"
     },
     {
       "ticker": "ADM",
-      "convergence_score": 5.42,
+      "convergence_score": 5.39,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.09,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-0.8%, 1d=+1.2%"
+      ],
+      "scored_at": "2026-08-26T19:41:39"
+    },
+    {
+      "ticker": "MMM",
+      "convergence_score": 5.38,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.05,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-0.0%, 1d=+0.2%"
+      ],
+      "scored_at": "2026-08-26T19:41:26"
+    },
+    {
+      "ticker": "AES",
+      "convergence_score": 5.38,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.02,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+0.1%, 1d=-0.1%"
+      ],
+      "scored_at": "2026-08-26T19:41:28"
+    },
+    {
+      "ticker": "AMGN",
+      "convergence_score": 5.38,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.04,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+0.4%, 1d=-0.2%"
+      ],
+      "scored_at": "2026-08-26T19:41:36"
+    },
+    {
+      "ticker": "ABBV",
+      "convergence_score": 5.37,
       "signal_count": 1,
       "news_score": 7.0,
       "insider_signal": 5.0,
-      "price_momentum": 4.59,
+      "price_momentum": 4.35,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
         "News coverage looks positive (score 7.0/10)",
-        "Recent price move: 5d=-3.1%, 1d=+1.5%"
+        "Recent price move: 5d=-1.3%, 1d=-1.3%"
       ],
-      "scored_at": "2026-08-25T18:34:41"
+      "scored_at": "2026-08-26T19:41:27"
     },
     {
-      "ticker": "ACN",
-      "convergence_score": 5.39,
-      "signal_count": 1,
-      "news_score": 5.0,
-      "insider_signal": 5.0,
-      "price_momentum": 6.93,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+7.8%, 1d=-0.1%"
-      ],
-      "scored_at": "2026-08-25T18:34:28"
-    },
-    {
-      "ticker": "AIG",
-      "convergence_score": 5.37,
+      "ticker": "AEE",
+      "convergence_score": 5.36,
       "signal_count": 1,
       "news_score": 6.5,
       "insider_signal": 5.0,
-      "price_momentum": 4.97,
+      "price_momentum": 4.94,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+0.8%, 1d=-0.9%"
+        "Recent price move: 5d=-1.3%, 1d=+1.0%"
       ],
-      "scored_at": "2026-08-25T18:34:36"
+      "scored_at": "2026-08-26T19:41:33"
     },
     {
-      "ticker": "AES",
+      "ticker": "AWK",
       "convergence_score": 5.36,
       "signal_count": 1,
       "news_score": 6.5,
@@ -377,149 +460,149 @@
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-0.1%, 1d=-0.2%"
+        "Recent price move: 5d=-0.5%, 1d=+0.3%"
       ],
-      "scored_at": "2026-08-25T18:34:29"
-    },
-    {
-      "ticker": "AWK",
-      "convergence_score": 5.36,
-      "signal_count": 1,
-      "news_score": 6.5,
-      "insider_signal": 5.0,
-      "price_momentum": 4.92,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+1.2%, 1d=-1.5%"
-      ],
-      "scored_at": "2026-08-25T18:34:37"
-    },
-    {
-      "ticker": "APO",
-      "convergence_score": 5.36,
-      "signal_count": 1,
-      "news_score": 6.5,
-      "insider_signal": 5.0,
-      "price_momentum": 4.9,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-0.4%, 1d=-0.0%"
-      ],
-      "scored_at": "2026-08-25T18:34:40"
-    },
-    {
-      "ticker": "ANET",
-      "convergence_score": 5.34,
-      "signal_count": 1,
-      "news_score": 6.8,
-      "insider_signal": 5.0,
-      "price_momentum": 4.43,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-2.4%, 1d=+0.2%"
-      ],
-      "scored_at": "2026-08-25T18:34:42"
-    },
-    {
-      "ticker": "APH",
-      "convergence_score": 5.31,
-      "signal_count": 0,
-      "news_score": 5.9,
-      "insider_signal": 5.0,
-      "price_momentum": 5.41,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-0.5%, 1d=+2.1%"
-      ],
-      "scored_at": "2026-08-25T18:34:38"
-    },
-    {
-      "ticker": "ABNB",
-      "convergence_score": 5.28,
-      "signal_count": 0,
-      "news_score": 5.5,
-      "insider_signal": 5.0,
-      "price_momentum": 5.79,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+3.5%, 1d=-0.3%"
-      ],
-      "scored_at": "2026-08-25T18:34:31"
+      "scored_at": "2026-08-26T19:41:35"
     },
     {
       "ticker": "ADI",
-      "convergence_score": 5.27,
-      "signal_count": 1,
-      "news_score": 6.12,
-      "insider_signal": 5.0,
-      "price_momentum": 4.97,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-0.8%, 1d=+0.7%"
-      ],
-      "scored_at": "2026-08-25T18:34:39"
-    },
-    {
-      "ticker": "AEE",
-      "convergence_score": 5.26,
+      "convergence_score": 5.33,
       "signal_count": 1,
       "news_score": 6.5,
       "insider_signal": 5.0,
-      "price_momentum": 4.42,
+      "price_momentum": 4.77,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-2.3%, 1d=-0.0%"
+        "Recent price move: 5d=-0.4%, 1d=-0.5%"
       ],
-      "scored_at": "2026-08-25T18:34:35"
+      "scored_at": "2026-08-26T19:41:37"
     },
     {
-      "ticker": "AON",
-      "convergence_score": 5.26,
-      "signal_count": 0,
-      "news_score": 5.5,
+      "ticker": "A",
+      "convergence_score": 5.32,
+      "signal_count": 1,
+      "news_score": 6.5,
       "insider_signal": 5.0,
-      "price_momentum": 5.66,
+      "price_momentum": 4.71,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+3.6%, 1d=-1.0%"
+        "Recent price move: 5d=-0.8%, 1d=-0.4%"
       ],
-      "scored_at": "2026-08-25T18:34:39"
+      "scored_at": "2026-08-26T19:41:28"
     },
     {
       "ticker": "ACGL",
-      "convergence_score": 5.26,
+      "convergence_score": 5.31,
       "signal_count": 0,
       "news_score": 5.75,
       "insider_signal": 5.0,
-      "price_momentum": 5.36,
+      "price_momentum": 5.62,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+1.8%, 1d=-0.4%"
+        "Recent price move: 5d=+2.3%, 1d=+0.2%"
       ],
-      "scored_at": "2026-08-25T18:34:41"
+      "scored_at": "2026-08-26T19:41:39"
     },
     {
       "ticker": "ALGN",
-      "convergence_score": 5.17,
+      "convergence_score": 5.28,
       "signal_count": 1,
       "news_score": 6.5,
       "insider_signal": 5.0,
-      "price_momentum": 3.98,
+      "price_momentum": 4.5,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-4.5%, 1d=+0.4%"
+        "Recent price move: 5d=-2.1%, 1d=+0.0%"
       ],
-      "scored_at": "2026-08-25T18:34:32"
+      "scored_at": "2026-08-26T19:41:30"
+    },
+    {
+      "ticker": "ALLE",
+      "convergence_score": 5.28,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 4.52,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-1.7%, 1d=-0.2%"
+      ],
+      "scored_at": "2026-08-26T19:41:31"
+    },
+    {
+      "ticker": "GOOG",
+      "convergence_score": 5.28,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 4.5,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-0.8%, 1d=-1.2%"
+      ],
+      "scored_at": "2026-08-26T19:41:32"
+    },
+    {
+      "ticker": "GOOGL",
+      "convergence_score": 5.26,
+      "signal_count": 1,
+      "news_score": 6.5,
+      "insider_signal": 5.0,
+      "price_momentum": 4.44,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-0.8%, 1d=-1.4%"
+      ],
+      "scored_at": "2026-08-26T19:41:32"
+    },
+    {
+      "ticker": "AON",
+      "convergence_score": 5.22,
+      "signal_count": 0,
+      "news_score": 5.5,
+      "insider_signal": 5.0,
+      "price_momentum": 5.48,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+1.9%, 1d=+0.0%"
+      ],
+      "scored_at": "2026-08-26T19:41:37"
+    },
+    {
+      "ticker": "AKAM",
+      "convergence_score": 5.21,
+      "signal_count": 0,
+      "news_score": 5.75,
+      "insider_signal": 5.0,
+      "price_momentum": 5.09,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-3.1%, 1d=+3.4%"
+      ],
+      "scored_at": "2026-08-26T19:41:29"
+    },
+    {
+      "ticker": "AFL",
+      "convergence_score": 5.2,
+      "signal_count": 0,
+      "news_score": 5.38,
+      "insider_signal": 5.0,
+      "price_momentum": 5.54,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=+0.9%, 1d=+1.2%"
+      ],
+      "scored_at": "2026-08-26T19:41:28"
     },
     {
       "ticker": "AXP",
@@ -527,195 +610,111 @@
       "signal_count": 0,
       "news_score": 5.75,
       "insider_signal": 5.0,
-      "price_momentum": 4.92,
+      "price_momentum": 4.9,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-0.3%, 1d=+0.0%"
+        "Recent price move: 5d=-0.8%, 1d=+0.4%"
       ],
-      "scored_at": "2026-08-25T18:34:36"
-    },
-    {
-      "ticker": "GOOGL",
-      "convergence_score": 5.12,
-      "signal_count": 0,
-      "news_score": 5.5,
-      "insider_signal": 5.0,
-      "price_momentum": 4.97,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+0.5%, 1d=-0.6%"
-      ],
-      "scored_at": "2026-08-25T18:34:33"
-    },
-    {
-      "ticker": "ALB",
-      "convergence_score": 5.09,
-      "signal_count": 1,
-      "news_score": 6.5,
-      "insider_signal": 5.0,
-      "price_momentum": 3.6,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+0.3%, 1d=-5.9%"
-      ],
-      "scored_at": "2026-08-25T18:34:31"
-    },
-    {
-      "ticker": "APA",
-      "convergence_score": 5.07,
-      "signal_count": 1,
-      "news_score": 6.12,
-      "insider_signal": 5.0,
-      "price_momentum": 3.93,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-1.5%, 1d=-2.8%"
-      ],
-      "scored_at": "2026-08-25T18:34:39"
-    },
-    {
-      "ticker": "MMM",
-      "convergence_score": 5.03,
-      "signal_count": 0,
-      "news_score": 5.0,
-      "insider_signal": 5.0,
-      "price_momentum": 5.13,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-0.1%, 1d=+0.6%"
-      ],
-      "scored_at": "2026-08-25T18:34:27"
+      "scored_at": "2026-08-26T19:41:34"
     },
     {
       "ticker": "LNT",
-      "convergence_score": 5.0,
+      "convergence_score": 5.08,
       "signal_count": 0,
       "news_score": 5.43,
       "insider_signal": 5.0,
-      "price_momentum": 4.44,
+      "price_momentum": 4.84,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-2.2%, 1d=-0.0%"
+        "Recent price move: 5d=-1.6%, 1d=+1.0%"
       ],
-      "scored_at": "2026-08-25T18:34:33"
+      "scored_at": "2026-08-26T19:41:31"
     },
     {
-      "ticker": "AAPL",
+      "ticker": "APA",
+      "convergence_score": 5.04,
+      "signal_count": 1,
+      "news_score": 6.12,
+      "insider_signal": 5.0,
+      "price_momentum": 3.81,
+      "etf_pressure": 5.0,
+      "verdict": "WATCH",
+      "reasons": [
+        "Recent price move: 5d=-4.8%, 1d=+0.0%"
+      ],
+      "scored_at": "2026-08-26T19:41:37"
+    },
+    {
+      "ticker": "ABNB",
       "convergence_score": 4.98,
       "signal_count": 0,
       "news_score": 5.0,
       "insider_signal": 5.0,
-      "price_momentum": 4.89,
+      "price_momentum": 4.92,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-0.2%, 1d=-0.3%"
+        "Recent price move: 5d=+0.9%, 1d=-1.2%"
       ],
-      "scored_at": "2026-08-25T18:34:40"
-    },
-    {
-      "ticker": "APD",
-      "convergence_score": 4.96,
-      "signal_count": 0,
-      "news_score": 5.0,
-      "insider_signal": 5.0,
-      "price_momentum": 4.81,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+0.1%, 1d=-0.9%"
-      ],
-      "scored_at": "2026-08-25T18:34:30"
+      "scored_at": "2026-08-26T19:41:29"
     },
     {
       "ticker": "AEP",
-      "convergence_score": 4.89,
+      "convergence_score": 4.92,
       "signal_count": 0,
       "news_score": 5.0,
       "insider_signal": 5.0,
-      "price_momentum": 4.47,
+      "price_momentum": 4.59,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-2.8%, 1d=+0.7%"
+        "Recent price move: 5d=-2.2%, 1d=+0.6%"
       ],
-      "scored_at": "2026-08-25T18:34:35"
-    },
-    {
-      "ticker": "GOOG",
-      "convergence_score": 4.87,
-      "signal_count": 0,
-      "news_score": 4.5,
-      "insider_signal": 5.0,
-      "price_momentum": 4.96,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=+0.4%, 1d=-0.6%"
-      ],
-      "scored_at": "2026-08-25T18:34:34"
+      "scored_at": "2026-08-26T19:41:34"
     },
     {
       "ticker": "AMZN",
-      "convergence_score": 4.85,
+      "convergence_score": 4.88,
       "signal_count": 0,
-      "news_score": 4.5,
+      "news_score": 5.0,
       "insider_signal": 5.0,
-      "price_momentum": 4.89,
+      "price_momentum": 4.38,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=+0.3%, 1d=-0.7%"
+        "Recent price move: 5d=-2.1%, 1d=-0.3%"
       ],
-      "scored_at": "2026-08-25T18:34:34"
+      "scored_at": "2026-08-26T19:41:33"
     },
     {
-      "ticker": "AFL",
-      "convergence_score": 4.84,
+      "ticker": "ACN",
+      "convergence_score": 4.83,
       "signal_count": 0,
-      "news_score": 5.38,
+      "news_score": 5.0,
       "insider_signal": 5.0,
-      "price_momentum": 3.73,
+      "price_momentum": 4.17,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-3.7%, 1d=-1.4%"
+        "Recent price move: 5d=-0.7%, 1d=-2.7%"
       ],
-      "scored_at": "2026-08-25T18:34:30"
-    },
-    {
-      "ticker": "AKAM",
-      "convergence_score": 4.68,
-      "signal_count": 0,
-      "news_score": 5.75,
-      "insider_signal": 5.0,
-      "price_momentum": 2.45,
-      "etf_pressure": 5.0,
-      "verdict": "WATCH",
-      "reasons": [
-        "Recent price move: 5d=-9.2%, 1d=-1.0%"
-      ],
-      "scored_at": "2026-08-25T18:34:31"
+      "scored_at": "2026-08-26T19:41:27"
     },
     {
       "ticker": "AMAT",
-      "convergence_score": 4.33,
+      "convergence_score": 4.74,
       "signal_count": 0,
-      "news_score": 4.0,
+      "news_score": 4.62,
       "insider_signal": 5.0,
-      "price_momentum": 2.92,
+      "price_momentum": 4.16,
       "etf_pressure": 5.0,
       "verdict": "WATCH",
       "reasons": [
-        "Recent price move: 5d=-7.0%, 1d=-1.3%"
+        "Recent price move: 5d=-3.3%, 1d=-0.1%"
       ],
-      "scored_at": "2026-08-25T18:34:40"
+      "scored_at": "2026-08-26T19:41:38"
     }
   ]
 }
