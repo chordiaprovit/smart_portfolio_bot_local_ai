@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-26T19:41:25",
-  "count": 14,
+  "generated_at": "2026-08-28T02:02:09",
+  "count": 13,
   "signals": [
     {
       "ticker": "APTV",
@@ -44,17 +44,6 @@
       "total_value": 1023400.0,
       "transaction_date": "2026-08-11",
       "filing_date": "2026-08-12",
-      "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "ADSK",
-      "insider_name": "Stacy J Smith",
-      "insider_role": "Director",
-      "shares_bought": 3435.0,
-      "price_per_share": 231.1657,
-      "total_value": 794054.34,
-      "transaction_date": "2026-05-29",
-      "filing_date": "2026-05-29",
       "signal_strength": "MEDIUM"
     },
     {
