@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-29T01:27:29",
-  "count": 13,
+  "generated_at": "2026-08-31T22:19:48",
+  "count": 14,
   "signals": [
     {
       "ticker": "APTV",
@@ -143,6 +143,17 @@
       "total_value": 50278.35,
       "transaction_date": "2026-08-11",
       "filing_date": "2026-08-12",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ALLE",
+      "insider_name": "Steven Mizell",
+      "insider_role": "Director",
+      "shares_bought": 170.0,
+      "price_per_share": 158.28,
+      "total_value": 26907.6,
+      "transaction_date": "2026-08-28",
+      "filing_date": "2026-08-31",
       "signal_strength": "LOW"
     }
   ]
