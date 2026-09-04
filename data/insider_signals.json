@@ -1,7 +1,18 @@
 {
-  "generated_at": "2026-09-03T20:24:05",
-  "count": 14,
+  "generated_at": "2026-09-04T20:11:43",
+  "count": 15,
   "signals": [
+    {
+      "ticker": "AON",
+      "insider_name": "Lester B Knight",
+      "insider_role": "Director",
+      "shares_bought": 20000.0,
+      "price_per_share": 327.4844,
+      "total_value": 6549688.29,
+      "transaction_date": "2026-09-02",
+      "filing_date": "2026-09-03",
+      "signal_strength": "MEDIUM"
+    },
     {
       "ticker": "APTV",
       "insider_name": "Paul M Meister",
