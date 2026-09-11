@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-10T20:21:47",
-  "count": 15,
+  "generated_at": "2026-09-11T20:19:59",
+  "count": 16,
   "signals": [
     {
       "ticker": "AON",
@@ -143,6 +143,17 @@
       "total_value": 173640.0,
       "transaction_date": "2026-05-07",
       "filing_date": "2026-06-18",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "MO",
+      "insider_name": "Kathryn B. Mcquade",
+      "insider_role": "Director",
+      "shares_bought": 1500.0,
+      "price_per_share": 67.62,
+      "total_value": 101430.0,
+      "transaction_date": "2026-09-09",
+      "filing_date": "2026-09-11",
       "signal_strength": "LOW"
     },
     {
