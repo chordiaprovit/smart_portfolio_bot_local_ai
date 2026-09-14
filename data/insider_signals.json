@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-11T20:19:59",
-  "count": 16,
+  "generated_at": "2026-09-14T21:18:19",
+  "count": 15,
   "signals": [
     {
       "ticker": "AON",
@@ -88,17 +88,6 @@
       "total_value": 498543.6,
       "transaction_date": "2026-06-16",
       "filing_date": "2026-06-17",
-      "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "ADSK",
-      "insider_name": "Janesh Moorjani",
-      "insider_role": "EVP, Chief Financial Officer",
-      "shares_bought": 2500.0,
-      "price_per_share": 197.67,
-      "total_value": 494175.0,
-      "transaction_date": "2026-06-15",
-      "filing_date": "2026-06-15",
       "signal_strength": "MEDIUM"
     },
     {
