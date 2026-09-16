@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T20:44:48",
+  "generated_at": "2026-09-16T20:43:46",
   "count": 15,
   "signals": [
     {
@@ -81,17 +81,6 @@
     },
     {
       "ticker": "ADSK",
-      "insider_name": "Andrew Anagnost",
-      "insider_role": "President and CEO",
-      "shares_bought": 2460.0,
-      "price_per_share": 202.66,
-      "total_value": 498543.6,
-      "transaction_date": "2026-06-16",
-      "filing_date": "2026-06-17",
-      "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "ADSK",
       "insider_name": "John T Cahill",
       "insider_role": "Director",
       "shares_bought": 2000.0,
@@ -99,6 +88,17 @@
       "total_value": 378400.0,
       "transaction_date": "2026-06-23",
       "filing_date": "2026-06-23",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "ARE",
+      "insider_name": "Joel S Marcus",
+      "insider_role": "Executive Chairman",
+      "shares_bought": 5000.0,
+      "price_per_share": 49.68,
+      "total_value": 248400.0,
+      "transaction_date": "2026-09-11",
+      "filing_date": "2026-09-15",
       "signal_strength": "LOW"
     },
     {
