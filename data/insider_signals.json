@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-16T20:43:46",
-  "count": 15,
+  "generated_at": "2026-09-17T20:51:10",
+  "count": 14,
   "signals": [
     {
       "ticker": "AON",
@@ -121,17 +121,6 @@
       "total_value": 199182.1,
       "transaction_date": "2026-08-13",
       "filing_date": "2026-08-17",
-      "signal_strength": "LOW"
-    },
-    {
-      "ticker": "ABT",
-      "insider_name": "John G Stratton",
-      "insider_role": "Director",
-      "shares_bought": 2000.0,
-      "price_per_share": 86.82,
-      "total_value": 173640.0,
-      "transaction_date": "2026-05-07",
-      "filing_date": "2026-06-18",
       "signal_strength": "LOW"
     },
     {
