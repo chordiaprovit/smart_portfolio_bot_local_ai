@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-24T21:04:48",
-  "count": 13,
+  "generated_at": "2026-09-25T21:01:18",
+  "count": 12,
   "signals": [
     {
       "ticker": "AON",
@@ -34,17 +34,6 @@
       "transaction_date": "2026-08-10",
       "filing_date": "2026-08-11",
       "signal_strength": "HIGH"
-    },
-    {
-      "ticker": "ADBE",
-      "insider_name": "David A Ricks",
-      "insider_role": "Director",
-      "shares_bought": 10000.0,
-      "price_per_share": 194.513,
-      "total_value": 1945130.0,
-      "transaction_date": "2026-06-25",
-      "filing_date": "2026-06-26",
-      "signal_strength": "MEDIUM"
     },
     {
       "ticker": "AME",
