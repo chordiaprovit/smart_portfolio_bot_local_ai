@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T21:08:25",
-  "count": 12,
+  "generated_at": "2026-10-23T20:57:22",
+  "count": 13,
   "signals": [
     {
       "ticker": "AON",
@@ -110,6 +110,17 @@
       "total_value": 101430.0,
       "transaction_date": "2026-09-09",
       "filing_date": "2026-09-11",
+      "signal_strength": "LOW"
+    },
+    {
+      "ticker": "AMT",
+      "insider_name": "Teresa Hillary Clarke",
+      "insider_role": "Director",
+      "shares_bought": 338.0,
+      "price_per_share": 188.3845,
+      "total_value": 63718.03,
+      "transaction_date": "2023-04-28",
+      "filing_date": "2026-10-22",
       "signal_strength": "LOW"
     },
     {
