@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-04T23:10:55",
-  "count": 15,
+  "generated_at": "2026-11-05T23:11:29",
+  "count": 14,
   "signals": [
     {
       "ticker": "AON",
@@ -11,17 +11,6 @@
       "total_value": 6549688.29,
       "transaction_date": "2026-09-02",
       "filing_date": "2026-09-03",
-      "signal_strength": "MEDIUM"
-    },
-    {
-      "ticker": "APTV",
-      "insider_name": "Paul M Meister",
-      "insider_role": "Director",
-      "shares_bought": 105631.0,
-      "price_per_share": 47.3342,
-      "total_value": 4999958.88,
-      "transaction_date": "2026-08-05",
-      "filing_date": "2026-08-06",
       "signal_strength": "MEDIUM"
     },
     {
