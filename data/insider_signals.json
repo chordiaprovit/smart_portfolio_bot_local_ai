@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-12T23:09:18",
-  "count": 13,
+  "generated_at": "2026-11-13T23:12:34",
+  "count": 14,
   "signals": [
     {
       "ticker": "AON",
@@ -22,6 +22,17 @@
       "total_value": 3001041.24,
       "transaction_date": "2026-10-26",
       "filing_date": "2026-10-28",
+      "signal_strength": "HIGH"
+    },
+    {
+      "ticker": "AKAM",
+      "insider_name": "Thomson F Leighton",
+      "insider_role": "Chief Executive Officer",
+      "shares_bought": 30000.0,
+      "price_per_share": 85.08,
+      "total_value": 2552400.0,
+      "transaction_date": "2026-11-13",
+      "filing_date": "2026-11-13",
       "signal_strength": "HIGH"
     },
     {
