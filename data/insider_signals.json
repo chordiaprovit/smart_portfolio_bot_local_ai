@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-13T23:12:34",
-  "count": 14,
+  "generated_at": "2026-11-17T01:25:32",
+  "count": 13,
   "signals": [
     {
       "ticker": "AON",
@@ -88,17 +88,6 @@
       "total_value": 199847.76,
       "transaction_date": "2026-10-26",
       "filing_date": "2026-10-28",
-      "signal_strength": "LOW"
-    },
-    {
-      "ticker": "APTV",
-      "insider_name": "Hakan Agnevall",
-      "insider_role": "Director",
-      "shares_bought": 4100.0,
-      "price_per_share": 48.581,
-      "total_value": 199182.1,
-      "transaction_date": "2026-08-13",
-      "filing_date": "2026-08-17",
       "signal_strength": "LOW"
     },
     {
